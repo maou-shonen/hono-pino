@@ -1,14 +1,14 @@
-import type pino from "pino"
-import type { PinoLogger } from "./logger"
+import type pino from "pino";
+import type { PinoLogger } from "./logger";
 
 declare module "hono" {
   export interface ContextVariableMap {
-    logger: PinoLogger
+    logger: PinoLogger;
   }
 }
 
-export type LoggerContext = {
+export interface LoggerContext {
   Variables: {
-    logger: pino.Logger
-  }
+    logger: pino.Logger;
+  };
 }

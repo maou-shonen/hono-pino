@@ -2,23 +2,48 @@
   "name": "hono-pino",
   "version": "0.0.0",
   "description": "",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": {
-    "name": "maou-shonen",
-    "email": "hi@maou.app"
-  },
   "license": "MIT",
+  "author": "maou-shonen",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "hono",
+    "pino",
+    "logger"
+  ],
+  "scripts": {
+    "prepare": "husky",
+    "build": "tsup",
+    "format": "prettier --write .",
+    "lint": "eslint --quiet ."
+  },
   "dependencies": {
     "deepmerge": "^4.3.1",
     "pino": "^9.2.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.5.0",
     "@types/node": "^20.14.2",
-    "hono": "^4.4.6"
+    "esbuild": "^0.21.5",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-unicorn": "^54.0.0",
+    "hono": "^4.4.6",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.7",
+    "prettier": "^3.3.2",
+    "tsup": "^8.1.0",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.13.0"
   }
 }

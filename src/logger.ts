@@ -1,10 +1,10 @@
-import { createMiddleware } from "hono/factory"
-import { pino } from "pino"
-import { Context } from "hono"
-import deepmerge from "deepmerge"
+import { createMiddleware } from "hono/factory";
+import { pino } from "pino";
+import { Context } from "hono";
+import deepmerge from "deepmerge";
 
 interface Options {
-  pino?: pino.Logger | pino.LoggerOptions
+  pino?: pino.Logger | pino.LoggerOptions;
 
   /**
    *
@@ -14,7 +14,7 @@ interface Options {
      * enable / disable http logger
      * @default true
      */
-    enable?: boolean
+    enable?: boolean;
     /**
      * custom request id
      * @description set to null to disable
@@ -24,7 +24,7 @@ interface Options {
      * // UUID v4
      * () => crypto.randomUUID()
      */
-    reqId?: (() => string) | null
+    reqId?: (() => string) | null;
     /**
      * custom received bindings
      * @default
@@ -36,12 +36,12 @@ interface Options {
      *   },
      * })
      */
-    receivedBindings?: (ctx: Context) => pino.Bindings
+    receivedBindings?: (ctx: Context) => pino.Bindings;
     /**
      * custom received level
      * @default (ctx) => "info"
      */
-    receivedLevel?: (ctx: Context) => pino.Level
+    receivedLevel?: (ctx: Context) => pino.Level;
     /**
      * custom received message
      * @description set to null to disable
@@ -50,7 +50,7 @@ interface Options {
      * @example
      * (ctx) => "Request received"
      */
-    receivedMessage?: ((ctx: Context) => string) | null
+    receivedMessage?: ((ctx: Context) => string) | null;
     /**
      * custom completed bindings
      * @default
@@ -61,7 +61,7 @@ interface Options {
      *   },
      * })
      */
-    completedBindings?: (ctx: Context) => pino.Bindings
+    completedBindings?: (ctx: Context) => pino.Bindings;
     /**
      * custom completed level
      * @default (ctx) => ctx.error ? "error" : "info"
@@ -77,54 +77,78 @@ interface Options {
      *   if (ctx.status >= 400) return "warn"
      *   return "info"
      */
-    completedLevel?: (ctx: Context) => pino.Level
+    completedLevel?: (ctx: Context) => pino.Level;
     /**
      * custom completed message
      * @description set to null to disable
      * @default (ctx) => ctx.error ? ctx.error.message : "Request completed"
      */
-    completedMessage?: ((ctx: Context) => string) | null
+    completedMessage?: ((ctx: Context) => string) | null;
     /**
      * adding response time to bindings
      * @default true
      */
-    responseTime?: boolean
-  }
+    responseTime?: boolean;
+  };
 }
 
 export class PinoLogger {
-  rootLogger: pino.Logger
-  logger: pino.Logger
+  rootLogger: pino.Logger;
+  logger: pino.Logger;
 
   constructor(rootLogger: pino.Logger) {
-    this.rootLogger = rootLogger
-    this.logger = rootLogger
+    this.rootLogger = rootLogger;
+    this.logger = rootLogger;
   }
 
   assign(bindings: pino.Bindings) {
     this.logger = this.rootLogger.child({
       ...this.logger.bindings(),
       ...bindings,
-    })
+    });
   }
 
-  trace: pino.LogFn = (...args: [any, ...any]) => this.logger.trace(...args)
-  debug: pino.LogFn = (...args: [any, ...any]) => this.logger.debug(...args)
-  info: pino.LogFn = (...args: [any, ...any]) => this.logger.info(...args)
-  warn: pino.LogFn = (...args: [any, ...any]) => this.logger.warn(...args)
-  error: pino.LogFn = (...args: [any, ...any]) => this.logger.error(...args)
-  fatal: pino.LogFn = (...args: [any, ...any]) => this.logger.fatal(...args)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  trace: pino.LogFn = (...args: [any, ...any]) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    this.logger.trace(...args);
+  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  debug: pino.LogFn = (...args: [any, ...any]) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    this.logger.debug(...args);
+  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  info: pino.LogFn = (...args: [any, ...any]) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    this.logger.info(...args);
+  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  warn: pino.LogFn = (...args: [any, ...any]) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    this.logger.warn(...args);
+  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  error: pino.LogFn = (...args: [any, ...any]) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    this.logger.error(...args);
+  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fatal: pino.LogFn = (...args: [any, ...any]) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    this.logger.fatal(...args);
+  };
 }
 
 /**
  * Pino logger middleware
  */
 export const logger = (opts?: Options) => {
-  const rootLogger = isPinoLogger(opts?.pino) ? opts.pino : pino(opts?.pino)
+  const rootLogger = isPinoLogger(opts?.pino) ? opts.pino : pino(opts?.pino);
 
   return createMiddleware(async (ctx, next) => {
-    const logger = new PinoLogger(rootLogger)
-    ctx.set("logger", logger)
+    const logger = new PinoLogger(rootLogger);
+    ctx.set("logger", logger);
 
     if (opts?.http?.enable ?? true) {
       let bindings = opts?.http?.receivedBindings?.(ctx) ?? {
@@ -133,27 +157,27 @@ export const logger = (opts?: Options) => {
           method: ctx.req.method,
           headers: ctx.req.header(),
         },
-      }
+      };
 
       if (opts?.http?.reqId !== null) {
-        bindings.reqId = opts?.http?.reqId?.() ?? defaultReqIdGenerator()
+        bindings.reqId = opts?.http?.reqId?.() ?? defaultReqIdGenerator();
       }
 
       if (opts?.http?.receivedMessage) {
-        const level = opts?.http?.receivedLevel?.(ctx) ?? "info"
-        const msg = opts?.http?.receivedMessage(ctx)
-        logger[level](bindings, msg)
+        const level = opts.http.receivedLevel?.(ctx) ?? "info";
+        const msg = opts.http.receivedMessage(ctx);
+        logger[level](bindings, msg);
       }
 
       if (opts?.http?.responseTime ?? true) {
-        const startTime = performance.now()
-        await next()
-        const endTime = performance.now()
-        const responseTime = Math.round(endTime - startTime)
-        bindings.responseTime = responseTime
+        const startTime = performance.now();
+        await next();
+        const endTime = performance.now();
+        const responseTime = Math.round(endTime - startTime);
+        bindings.responseTime = responseTime;
         // Object.assign(bindings, { responseTime })
       } else {
-        await next()
+        await next();
       }
 
       const completedBindings = opts?.http?.completedBindings?.(ctx) ?? {
@@ -161,29 +185,30 @@ export const logger = (opts?: Options) => {
           status: ctx.res.status,
           headers: ctx.res.headers,
         },
-      }
+      };
       // Object.assign(bindings, completedBindings)
-      bindings = deepmerge(bindings, completedBindings)
+      bindings = deepmerge(bindings, completedBindings);
 
       const level =
-        opts?.http?.completedLevel?.(ctx) ?? (ctx.error ? "error" : "info")
+        opts?.http?.completedLevel?.(ctx) ?? (ctx.error ? "error" : "info");
       const msg =
         opts?.http?.completedMessage?.(ctx) ??
-        (ctx.error ? ctx.error.message : "Request completed")
-      logger[level](bindings, msg)
+        (ctx.error ? ctx.error.message : "Request completed");
+      logger[level](bindings, msg);
     }
 
     // disable http logger
     else {
-      await next()
+      await next();
     }
-  })
-}
+  });
+};
 
 const isPinoLogger = (value: unknown): value is pino.Logger =>
   typeof value === "object" &&
   value !== null &&
-  typeof value["child"] === "function"
+  "child" in value &&
+  typeof value.child === "function";
 
-let defaultReqId = 0n
-const defaultReqIdGenerator = () => (defaultReqId += 1n)
+let defaultReqId = 0n;
+const defaultReqIdGenerator = () => (defaultReqId += 1n);
