@@ -1,6 +1,6 @@
 {
   "name": "hono-pino",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A pino logger plugin for hono",
   "license": "MIT",
   "author": "maou-shonen",
@@ -23,7 +23,7 @@
   ],
   "scripts": {
     "prepare": "husky",
-    "build": "tsup",
+    "build": "tsup-node",
     "format": "prettier --write .",
     "lint": "eslint --quiet ."
   },
