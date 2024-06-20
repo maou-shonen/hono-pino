@@ -93,7 +93,7 @@ interface Options {
 }
 
 export class PinoLogger {
-  rootLogger: pino.Logger;
+  private rootLogger: pino.Logger;
   logger: pino.Logger;
 
   constructor(rootLogger: pino.Logger) {
@@ -175,7 +175,6 @@ export const logger = (opts?: Options) => {
         const endTime = performance.now();
         const responseTime = Math.round(endTime - startTime);
         bindings.responseTime = responseTime;
-        // Object.assign(bindings, { responseTime })
       } else {
         await next();
       }
@@ -186,7 +185,6 @@ export const logger = (opts?: Options) => {
           headers: ctx.res.headers,
         },
       };
-      // Object.assign(bindings, completedBindings)
       bindings = deepmerge(bindings, completedBindings);
 
       const level =
