@@ -3,7 +3,7 @@ import type { Context } from "hono";
 import { pino } from "pino";
 import deepmerge from "deepmerge";
 
-interface Options {
+export interface Options {
   /**
    * a pino instance or pino options
    */
