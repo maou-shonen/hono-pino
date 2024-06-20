@@ -1,7 +1,7 @@
 {
   "name": "hono-pino",
-  "version": "0.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "A pino logger plugin for hono",
   "license": "MIT",
   "author": "maou-shonen",
   "sideEffects": false,
