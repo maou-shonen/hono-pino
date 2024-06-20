@@ -1,13 +1,16 @@
 import { createMiddleware } from "hono/factory";
+import type { Context } from "hono";
 import { pino } from "pino";
-import { Context } from "hono";
 import deepmerge from "deepmerge";
 
 interface Options {
+  /**
+   * a pino instance or pino options
+   */
   pino?: pino.Logger | pino.LoggerOptions;
 
   /**
-   *
+   * http request log options
    */
   http?: {
     /**
@@ -101,6 +104,9 @@ export class PinoLogger {
     this.logger = rootLogger;
   }
 
+  /**
+   * assign bindings to http log context
+   */
   assign(bindings: pino.Bindings) {
     this.logger = this.rootLogger.child({
       ...this.logger.bindings(),
