@@ -1,6 +1,6 @@
 {
   "name": "hono-pino",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A pino logger plugin for hono",
   "license": "MIT",
   "author": "maou-shonen",
@@ -13,6 +13,7 @@
     }
   },
   "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -21,6 +22,10 @@
     "pino",
     "logger"
   ],
+  "homepage": "https://github.com/maou-shonen/hono-pino#readme",
+  "bugs": {
+    "url": "https://github.com/maou-shonen/hono-pino/issues"
+  },
   "scripts": {
     "prepare": "husky",
     "build": "tsup-node",
@@ -41,9 +46,11 @@
     "hono": "^4.4.6",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.7",
+    "pino-test": "^1.0.1",
     "prettier": "^3.3.2",
     "tsup": "^8.1.0",
     "typescript": "^5.4.5",
-    "typescript-eslint": "^7.13.0"
+    "typescript-eslint": "^7.13.0",
+    "vitest": "^1.6.0"
   }
 }
