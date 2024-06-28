@@ -2,6 +2,7 @@ import { createMiddleware } from "hono/factory";
 import type { Context } from "hono";
 import { pino } from "pino";
 import deepmerge from "deepmerge";
+import { isPinoLogger } from "./utils";
 
 export interface Options {
   /**
@@ -204,12 +205,6 @@ export const logger = (opts?: Options) => {
     }
   });
 };
-
-const isPinoLogger = (value: unknown): value is pino.Logger =>
-  typeof value === "object" &&
-  value !== null &&
-  "child" in value &&
-  typeof value.child === "function";
 
 let defaultReqId = 0n;
 const defaultReqIdGenerator = () => (defaultReqId += 1n);
