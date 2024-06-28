@@ -1,6 +1,6 @@
 {
   "name": "hono-pino",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A pino logger plugin for hono",
   "license": "MIT",
   "author": "maou-shonen",
@@ -25,6 +25,9 @@
   "homepage": "https://github.com/maou-shonen/hono-pino#readme",
   "bugs": {
     "url": "https://github.com/maou-shonen/hono-pino/issues"
+  },
+  "engines": {
+    "node": ">=18"
   },
   "scripts": {
     "prepare": "husky",
