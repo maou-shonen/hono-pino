@@ -7,92 +7,89 @@ export interface Options {
   /**
    * a pino instance or pino options
    */
-  pino?: pino.Logger | pino.LoggerOptions;
+  pino?: pino.Logger | pino.LoggerOptions | pino.DestinationStream;
 
   /**
    * http request log options
    */
-  http?: {
-    /**
-     * enable / disable http logger
-     * @default true
-     */
-    enable?: boolean;
-    /**
-     * custom request id
-     * @description set to null to disable
-     * @default () => n + 1
-     *
-     * @example
-     * // UUID v4
-     * () => crypto.randomUUID()
-     */
-    reqId?: (() => string) | null;
-    /**
-     * custom received bindings
-     * @default
-     * (ctx) => ({
-     *   req: {
-     *     url: ctx.req.path,
-     *     method: ctx.req.method,
-     *     headers: ctx.req.header(),
-     *   },
-     * })
-     */
-    receivedBindings?: (ctx: Context) => pino.Bindings;
-    /**
-     * custom received level
-     * @default (ctx) => "info"
-     */
-    receivedLevel?: (ctx: Context) => pino.Level;
-    /**
-     * custom received message
-     * @description set to null to disable
-     * @default null // disable
-     *
-     * @example
-     * (ctx) => "Request received"
-     */
-    receivedMessage?: ((ctx: Context) => string) | null;
-    /**
-     * custom completed bindings
-     * @default
-     * (ctx) => ({
-     *   res: {
-     *     status: ctx.res.status,
-     *     headers: ctx.res.headers,
-     *   },
-     * })
-     */
-    completedBindings?: (ctx: Context) => pino.Bindings;
-    /**
-     * custom completed level
-     * @default (ctx) => ctx.error ? "error" : "info"
-     *
-     * @example
-     * // always trace
-     * () => "trace"
-     *
-     * @example
-     * // 4xx=warn, 5xx=error, default=info
-     * (ctx) => {
-     *   if (ctx.status >= 500) return "error"
-     *   if (ctx.status >= 400) return "warn"
-     *   return "info"
-     */
-    completedLevel?: (ctx: Context) => pino.Level;
-    /**
-     * custom completed message
-     * @description set to null to disable
-     * @default (ctx) => ctx.error ? ctx.error.message : "Request completed"
-     */
-    completedMessage?: ((ctx: Context) => string) | null;
-    /**
-     * adding response time to bindings
-     * @default true
-     */
-    responseTime?: boolean;
-  };
+  http?:
+    | false
+    | {
+        /**
+         * custom request id
+         * @description set to false to disable
+         * @default () => n + 1
+         *
+         * @example
+         * // UUID v4
+         * () => crypto.randomUUID()
+         */
+        reqId?: false | (() => string);
+        /**
+         * custom received bindings
+         * @default
+         * (ctx) => ({
+         *   req: {
+         *     url: ctx.req.path,
+         *     method: ctx.req.method,
+         *     headers: ctx.req.header(),
+         *   },
+         * })
+         */
+        receivedBindings?: (ctx: Context) => pino.Bindings;
+        /**
+         * custom received level
+         * @default (ctx) => "info"
+         */
+        receivedLevel?: (ctx: Context) => pino.Level;
+        /**
+         * custom received message
+         * @description set to null to disable
+         * @default null // disable
+         *
+         * @example
+         * (ctx) => "Request received"
+         */
+        receivedMessage?: ((ctx: Context) => string) | null;
+        /**
+         * custom completed bindings
+         * @default
+         * (ctx) => ({
+         *   res: {
+         *     status: ctx.res.status,
+         *     headers: ctx.res.headers,
+         *   },
+         * })
+         */
+        completedBindings?: (ctx: Context) => pino.Bindings;
+        /**
+         * custom completed level
+         * @default (ctx) => ctx.error ? "error" : "info"
+         *
+         * @example
+         * // always trace
+         * () => "trace"
+         *
+         * @example
+         * // 4xx=warn, 5xx=error, default=info
+         * (ctx) => {
+         *   if (ctx.status >= 500) return "error"
+         *   if (ctx.status >= 400) return "warn"
+         *   return "info"
+         */
+        completedLevel?: (ctx: Context) => pino.Level;
+        /**
+         * custom completed message
+         * @description set to null to disable
+         * @default (ctx) => ctx.error ? ctx.error.message : "Request completed"
+         */
+        completedMessage?: ((ctx: Context) => string) | null;
+        /**
+         * adding response time to bindings
+         * @default true
+         */
+        responseTime?: boolean;
+      };
 }
 
 export class PinoLogger {
@@ -100,7 +97,7 @@ export class PinoLogger {
   logger: pino.Logger;
 
   constructor(rootLogger: pino.Logger) {
-    this.rootLogger = rootLogger;
+    this.rootLogger = rootLogger.child({});
     this.logger = rootLogger;
   }
 
@@ -156,8 +153,8 @@ export const logger = (opts?: Options) => {
     const logger = new PinoLogger(rootLogger);
     ctx.set("logger", logger);
 
-    if (opts?.http?.enable ?? true) {
-      let bindings = opts?.http?.receivedBindings?.(ctx) ?? {
+    if (opts?.http) {
+      let bindings = opts.http.receivedBindings?.(ctx) ?? {
         req: {
           url: ctx.req.path,
           method: ctx.req.method,
@@ -165,17 +162,17 @@ export const logger = (opts?: Options) => {
         },
       };
 
-      if (opts?.http?.reqId !== null) {
-        bindings.reqId = opts?.http?.reqId?.() ?? defaultReqIdGenerator();
+      if (opts.http.reqId !== false) {
+        bindings.reqId = opts.http.reqId?.() ?? defaultReqIdGenerator();
       }
 
-      if (opts?.http?.receivedMessage) {
+      if (opts.http.receivedMessage) {
         const level = opts.http.receivedLevel?.(ctx) ?? "info";
         const msg = opts.http.receivedMessage(ctx);
         logger[level](bindings, msg);
       }
 
-      if (opts?.http?.responseTime ?? true) {
+      if (opts.http.responseTime ?? true) {
         const startTime = performance.now();
         await next();
         const endTime = performance.now();
@@ -185,7 +182,7 @@ export const logger = (opts?: Options) => {
         await next();
       }
 
-      const completedBindings = opts?.http?.completedBindings?.(ctx) ?? {
+      const completedBindings = opts.http.completedBindings?.(ctx) ?? {
         res: {
           status: ctx.res.status,
           headers: ctx.res.headers,
@@ -194,9 +191,9 @@ export const logger = (opts?: Options) => {
       bindings = deepmerge(bindings, completedBindings);
 
       const level =
-        opts?.http?.completedLevel?.(ctx) ?? (ctx.error ? "error" : "info");
+        opts.http.completedLevel?.(ctx) ?? (ctx.error ? "error" : "info");
       const msg =
-        opts?.http?.completedMessage?.(ctx) ??
+        opts.http.completedMessage?.(ctx) ??
         (ctx.error ? ctx.error.message : "Request completed");
       logger[level](bindings, msg);
     }
