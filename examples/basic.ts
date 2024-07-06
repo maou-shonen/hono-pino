@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { logger } from "../src/logger";
+import { logger } from "../src";
 
 const app = new Hono()
   .use(logger())
