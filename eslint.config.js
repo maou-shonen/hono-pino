@@ -5,7 +5,13 @@ import { config, configs as typescriptConfigs } from "typescript-eslint";
 
 export default config(
   {
-    ignores: ["dist", "examples", "eslint.config.js"],
+    ignores: [
+      "dist",
+      "examples",
+      "eslint.config.js",
+      "**/*.test.ts",
+      "coverage",
+    ],
   },
   core.configs.recommended,
   ...typescriptConfigs.strictTypeChecked,
