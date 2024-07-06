@@ -9,7 +9,44 @@ on:
       - main
 
 jobs:
-  ci:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: corepack enable
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install
+
+      - run: pnpm run typecheck
+      - run: pnpm run lint
+
+  coverage:
+    needs:
+      - lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: corepack enable
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install
+
+      - run: pnpm run coverage
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+  unit-test:
+    needs:
+      - coverage
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -21,15 +58,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "pnpm"
+          cache: pnpm
       - run: pnpm install
 
-      - run: pnpm run typecheck
-      - run: pnpm run lint
-      - run: pnpm run build
       - run: pnpm run test
-
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v4
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
