@@ -2,7 +2,10 @@
   "name": "hono-pino",
   "version": "0.1.0",
   "description": "A pino logger plugin for hono",
-  "repository": "github:maou-shonen/hono-pino",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maou-shonen/hono-pino.git"
+  },
   "license": "MIT",
   "author": "maou-shonen",
   "type": "module",
