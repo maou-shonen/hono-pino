@@ -4,9 +4,13 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "**/*.{ts,js}"
   pull_request:
     branches:
       - main
+    paths:
+      - "**/*.{ts,js}"
 
 jobs:
   lint:
