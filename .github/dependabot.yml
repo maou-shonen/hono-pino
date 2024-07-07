@@ -5,4 +5,4 @@ updates:
     schedule:
       interval: "weekly"
     allow:
-      - dependency-type: "all"
+      - dependency-name: "pino"
