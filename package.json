@@ -1,6 +1,6 @@
 {
   "name": "hono-pino",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A pino logger plugin for hono",
   "repository": {
     "type": "git",

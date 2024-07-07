@@ -1,5 +1,11 @@
 # hono-pino
 
+## 0.1.1
+
+### Patch Changes
+
+- 4143bf2: Fix npm release
+
 ## 0.1.0
 
 ### Minor Changes
