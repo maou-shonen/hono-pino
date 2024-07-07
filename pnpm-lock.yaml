@@ -38,7 +38,7 @@ importers:
         version: 54.0.0(eslint@8.57.0)
       hono:
         specifier: ^4.4.6
-        version: 4.4.6
+        version: 4.4.12
       husky:
         specifier: ^9.0.11
         version: 9.0.11
@@ -1071,8 +1071,8 @@ packages:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
 
-  hono@4.4.6:
-    resolution: {integrity: sha512-XGRnoH8WONv60+PPvP9Sn067A9r/8JdHDJ5bgon0DVEHeR1cJPkWjv2aT+DBfMH9/mEkYa1+VEVFp1DT1lIwjw==}
+  hono@4.4.12:
+    resolution: {integrity: sha512-Lx4Vwbws0IqFfXIVYychxUW0A4EE+7dn/jsjVeM34OXSA2Xs45MkDDP14Mzznp7LlDemUNHQG2uv2N5jQld0hA==}
     engines: {node: '>=16.0.0'}
 
   hosted-git-info@2.8.9:
@@ -3222,7 +3222,7 @@ snapshots:
     dependencies:
       function-bind: 1.1.2
 
-  hono@4.4.6: {}
+  hono@4.4.12: {}
 
   hosted-git-info@2.8.9: {}
 
