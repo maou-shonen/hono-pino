@@ -60,7 +60,6 @@
     "@eslint/js": "^9.5.0",
     "@types/node": "^20.14.2",
     "@vitest/coverage-v8": "^1.6.0",
-    "esbuild": "^0.21.5",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-unicorn": "^54.0.0",
