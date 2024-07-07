@@ -1,6 +1,6 @@
 {
   "name": "hono-pino",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "A pino logger plugin for hono",
   "repository": "github:maou-shonen/hono-pino",
   "license": "MIT",
