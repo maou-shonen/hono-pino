@@ -5,12 +5,14 @@ on:
     branches:
       - main
     paths:
-      - "**/*.{ts,js}"
+      - .github/**
+      - src/**
   pull_request:
     branches:
       - main
     paths:
-      - "**/*.{ts,js}"
+      - .github/**
+      - src/**
 
 jobs:
   lint:
