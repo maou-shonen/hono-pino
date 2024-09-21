@@ -33,7 +33,7 @@ importers:
         specifier: ^54.0.0
         version: 54.0.0(eslint@8.57.0)
       hono:
-        specifier: ^4.6.2
+        specifier: ^4.4.6
         version: 4.6.2
       husky:
         specifier: ^9.0.11
