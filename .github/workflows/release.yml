@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - ".changeset/*.md"
+      - ".github/workflows/release.yml"
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -21,7 +22,7 @@ jobs:
         with:
           node-version: 20
           cache: pnpm
-      - run: pnpm install
+      - run: pnpm install --no-frozen-lockfile
 
       - name: Build
         run: pnpm run build
