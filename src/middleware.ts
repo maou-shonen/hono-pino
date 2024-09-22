@@ -1,6 +1,6 @@
 import { createMiddleware } from "hono/factory";
 import { pino } from "pino";
-import deepmerge from "deepmerge";
+import { defu } from "defu";
 import { isPinoLogger } from "./utils";
 import type { Options } from "./types";
 import { PinoLogger } from "./logger";
@@ -58,7 +58,7 @@ export const logger = (opts?: Options) => {
           headers: c.res.headers,
         },
       };
-      bindings = deepmerge(bindings, onResBindings);
+      bindings = defu(bindings, onResBindings);
 
       const level = opts?.http?.onResLevel?.(c) ?? (c.error ? "error" : "info");
       const msg =

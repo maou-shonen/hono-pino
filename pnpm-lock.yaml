@@ -7,9 +7,9 @@ settings:
 importers:
   .:
     dependencies:
-      deepmerge:
-        specifier: ^4.3.1
-        version: 4.3.1
+      defu:
+        specifier: ^6.1.4
+        version: 6.1.4
     devDependencies:
       "@changesets/cli":
         specifier: ^2.27.7
@@ -1457,12 +1457,11 @@ packages:
         integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==,
       }
 
-  deepmerge@4.3.1:
+  defu@6.1.4:
     resolution:
       {
-        integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==,
+        integrity: sha512-mEQCMmwJu317oSz8CwdIOdwf3xMif1ttiM8LTufzc3g6kR+9Pe236twL8j3IYT1F7GfRgGcW6MWxzZjLIkuHIg==,
       }
-    engines: { node: ">=0.10.0" }
 
   detect-indent@6.1.0:
     resolution:
@@ -4599,7 +4598,7 @@ snapshots:
 
   deep-is@0.1.4: {}
 
-  deepmerge@4.3.1: {}
+  defu@6.1.4: {}
 
   detect-indent@6.1.0: {}
 
