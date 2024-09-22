@@ -54,6 +54,6 @@ todo
 [codecov-src]: https://img.shields.io/codecov/c/gh/maou-shonen/hono-pino/main
 [codecov-href]: https://codecov.io/gh/maou-shonen/hono-pino
 [bundle-src]: https://img.shields.io/bundlephobia/minzip/hono-pino
-[bundle-href]: https://bundlephobia.com/result?p=defu
+[bundle-href]: https://bundlephobia.com/result?p=hono-pino
 [license-src]: https://img.shields.io/github/license/maou-shonen/hono-pino.svg
 [license-href]: https://github.com/maou-shonen/hono-pino/blob/main/LICENSE
