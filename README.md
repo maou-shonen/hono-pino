@@ -1,8 +1,10 @@
 # Hono + Pino
 
-![NPM Version](https://img.shields.io/npm/v/hono-pino)
-![npm bundle size](https://img.shields.io/bundlephobia/min/hono-pino)
-[![codecov](https://codecov.io/github/maou-shonen/hono-pino/graph/badge.svg?token=FBGZOOXDTH)](https://codecov.io/github/maou-shonen/hono-pino)
+[![npm version][npm-version-src]][npm-version-href]
+[![npm downloads][npm-downloads-src]][npm-downloads-href]
+[![bundle][bundle-src]][bundle-href]
+[![Codecov][codecov-src]][codecov-href]
+[![License][license-src]][license-href]
 
 A pino logger plugin for hono
 
@@ -12,11 +14,11 @@ The design references [pino-http](https://github.com/pinojs/pino-http) and [nest
 
 ```bash
 # npm
-npm install hono-pino
+npm install hono-pino pino
 # pnpm
-pnpm add hono-pino
+pnpm add hono-pino pino
 # bun
-bun add hono-pino
+bun add hono-pino pino
 ```
 
 ## Example
@@ -25,13 +27,15 @@ see [examples](./examples/)
 
 ## Configuration
 
+[full options](./src/types.ts)
+
 ### Zero configuration
 
 ```ts
 import { Hono } from "hono";
 import { logger } from "hono-pino";
 
-const app = Hono();
+const app = new Hono();
 
 app.use(logger());
 ```
@@ -40,3 +44,16 @@ app.use(logger());
 
 todo  
 [interface Options](https://github.com/maou-shonen/hono-pino/blob/main/src/types.ts#L11)
+
+<!-- Refs -->
+
+[npm-version-src]: https://img.shields.io/npm/v/hono-pino
+[npm-version-href]: https://npmjs.com/package/hono-pino
+[npm-downloads-src]: https://img.shields.io/npm/dm/hono-pino
+[npm-downloads-href]: https://npmjs.com/package/hono-pino
+[codecov-src]: https://img.shields.io/codecov/c/gh/maou-shonen/hono-pino/main
+[codecov-href]: https://codecov.io/gh/maou-shonen/hono-pino
+[bundle-src]: https://img.shields.io/bundlephobia/minzip/hono-pino
+[bundle-href]: https://bundlephobia.com/result?p=defu
+[license-src]: https://img.shields.io/github/license/maou-shonen/hono-pino.svg
+[license-href]: https://github.com/maou-shonen/hono-pino/blob/main/LICENSE
