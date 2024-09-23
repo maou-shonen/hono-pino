@@ -15,7 +15,6 @@ export default config(
   },
   core.configs.recommended,
   ...typescriptConfigs.strictTypeChecked,
-  ...typescriptConfigs.stylisticTypeChecked,
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access -- I don't know why typing is broken for unicorn...
   unicornConfigs["flat/recommended"],
   prettierConfig,

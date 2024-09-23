@@ -1,14 +1,42 @@
-import type { PinoLogger } from "./logger";
 import type { Context } from "hono";
 import { pino } from "pino";
+import type { PinoLogger } from "./logger";
 
-declare module "hono" {
-  export interface ContextVariableMap {
-    logger: PinoLogger;
-  }
-}
+export interface Options<ContextKey extends string = "logger"> {
+  /**
+   * custom context key
+   * @description context key for hono, Must be set to literal string.
+   * @default "logger"
+   * @example
+   *
+   * // default
+   * new Hono()
+   *   .use(logger())
+   *   .get('/', (c) => {
+   *     const logger = c.get("logger");
+   *     // or use c.var
+   *     const logger2 = c.var.logger;
+   *   });
+   *
+   * // custom logger
+   * new Hono()
+   *   .use(logger({ contextKey: "myLogger" as const }))
+   *   .get('/', (c) => {
+   *     const logger = c.get("myLogger");
+   *   });
+   *
+   * // multiple logger
+   * new Hono()
+   *   .use(logger({ contextKey: "myLogger1" as const }))
+   *   .use(logger({ contextKey: "myLogger2" as const }))
+   *   .get('/', (c) => {
+   *     const logger1 = c.get("myLogger1");
+   *     const logger2 = c.get("myLogger2");
+   *   })
+   *
+   */
+  contextKey?: ContextKey;
 
-export interface Options {
   /**
    * a pino instance or pino options
    */
@@ -96,3 +124,51 @@ export interface Options {
         responseTime?: boolean;
       };
 }
+
+/**
+ * hono-pino default env for hono
+ * @example
+ * // your middleware
+ * import { createMiddleware } from 'hono/factory'
+ * import type { Env } from "hono-pino"
+ *
+ * const middleware = createMiddleware<Env>(async (c, next) => {
+ *   const logger = c.get("logger")
+ *   await next()
+ * })
+ *
+ * // multi-step app
+ * import { Hono } from "hono"
+ * import { logger, type Env } from "hono-pino"
+ *
+ * const app = new Hono<Env>()
+ * app.use(logger)
+ * app.get('/', (c) => {
+ *   const logger = c.get("logger")
+ * })
+ *
+ * // custom context key
+ * import { Hono } from "hono"
+ * import { logger, type Env } from "hono-pino"
+ *
+ * const app = new Hono<Env<"myLogger">>()
+ * app.use(logger({ contextKey: "myLogger" as const }))
+ * app.get('/', (c) => {
+ *   const logger = c.get("myLogger")
+ * })
+ *
+ * // merge with your env.
+ * import { Hono } from "hono"
+ * import { type Env as HonoPinoEnv } from "hono-pino"
+ *
+ * type Env = {
+ *   foo: "bar"
+ * } & HonoPinoEnv
+ *
+ * const app = new Hono<Env>()
+ */
+export type Env<LoggerKey extends string = "logger"> = {
+  Variables: {
+    [key in LoggerKey]: PinoLogger;
+  };
+};

@@ -4,16 +4,26 @@ import { defu } from "defu";
 import { isPinoLogger } from "./utils";
 import type { Options } from "./types";
 import { PinoLogger } from "./logger";
+import type { LiteralString } from "./utils";
 
 /**
  * Pino logger middleware
  */
-export const logger = (opts?: Options) => {
+export const logger = <ContextKey extends string = "logger">(
+  opts?: Options<LiteralString<ContextKey>>,
+) => {
   const rootLogger = isPinoLogger(opts?.pino) ? opts.pino : pino(opts?.pino);
+  const contextKey = opts?.contextKey ?? ("logger" as ContextKey);
 
-  return createMiddleware(async (c, next) => {
+  type Env = {
+    Variables: {
+      [key in ContextKey]: PinoLogger;
+    };
+  };
+
+  return createMiddleware<Env>(async (c, next) => {
     const logger = new PinoLogger(rootLogger);
-    c.set("logger", logger);
+    c.set(contextKey, logger);
 
     // disable http logger
     if (opts?.http === false) {

@@ -3,6 +3,7 @@ import { Hono } from "hono";
 import { logger } from "./middleware";
 import type { Options } from "./types";
 import { pino } from "pino";
+import { PinoLogger } from "./logger";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -218,5 +219,69 @@ describe("response time", () => {
 
     expect(logs).toHaveLength(1);
     expect(logs[0].responseTime).gte(1000);
+  });
+});
+
+describe("contextKey option", () => {
+  it("default", async () => {
+    const app = new Hono()
+      .use(logger())
+      .get("/", async (c) =>
+        c.text(c.get("logger") instanceof PinoLogger ? "ok" : "fail", 200),
+      );
+
+    const res = await app.request("/");
+    expect(res.status).toBe(200);
+    expect(await res.text()).toBe("ok");
+  });
+
+  it("custom key", async () => {
+    const app = new Hono()
+      .use(logger({ contextKey: "myLogger" as const }))
+      .get("/", async (c) =>
+        c.text(
+          c.get("myLogger") instanceof PinoLogger &&
+            // @ts-ignore
+            c.get("logger") === undefined
+            ? "ok"
+            : "fail",
+          200,
+        ),
+      );
+
+    const res = await app.request("/");
+    expect(res.status).toBe(200);
+    expect(await res.text()).toBe("ok");
+  });
+
+  it("multiple logger", async () => {
+    const app = new Hono()
+      .use(
+        logger({
+          contextKey: "myLogger1" as const,
+          pino: { name: "pinoLogger1" },
+        }),
+      )
+      .use(
+        logger({
+          contextKey: "myLogger2" as const,
+          pino: { name: "pinoLogger2" },
+        }),
+      )
+      .get("/", async (c) =>
+        c.text(
+          c.get("myLogger1").logger.bindings().name === "pinoLogger1" &&
+            c.get("myLogger2").logger.bindings().name === "pinoLogger2" &&
+            // @ts-ignore
+            c.get("logger") === undefined
+            ? "ok"
+            : "fail",
+          200,
+        ),
+      );
+
+    const res = await app.request("/");
+    expect(res.status).toBe(200);
+    expect(await res.text()).toBe("ok");
   });
 });
