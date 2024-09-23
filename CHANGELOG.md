@@ -1,5 +1,12 @@
 # hono-pino
 
+## 0.3.0
+
+### Minor Changes
+
+- ed9c781: Support using custom context key
+- 63e6e36: Change deepmerge to defu
+
 ## 0.2.0
 
 ### Minor Changes
