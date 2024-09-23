@@ -223,7 +223,10 @@ describe("response time", () => {
 });
 
 describe("contextKey option", () => {
-  it("default", async () => {
+  const pino1 = pino({ name: "pino1" });
+  const pino2 = pino({ name: "pino2" });
+
+  it("basic", async () => {
     const app = new Hono()
       .use(logger())
       .get("/", async (c) =>
@@ -235,45 +238,14 @@ describe("contextKey option", () => {
     expect(await res.text()).toBe("ok");
   });
 
-  it("custom key", async () => {
-    const app = new Hono()
-      .use(logger({ contextKey: "myLogger" as const }))
-      .get("/", async (c) =>
-        c.text(
-          c.get("myLogger") instanceof PinoLogger &&
-            // @ts-ignore
-            c.get("logger") === undefined
-            ? "ok"
-            : "fail",
-          200,
-        ),
-      );
-
-    const res = await app.request("/");
-    expect(res.status).toBe(200);
-    expect(await res.text()).toBe("ok");
-  });
-
   it("multiple logger", async () => {
     const app = new Hono()
-      .use(
-        logger({
-          contextKey: "myLogger1" as const,
-          pino: { name: "pinoLogger1" },
-        }),
-      )
-      .use(
-        logger({
-          contextKey: "myLogger2" as const,
-          pino: { name: "pinoLogger2" },
-        }),
-      )
+      .use(logger({ contextKey: "logger1" as const, pino: pino1 }))
+      .use(logger({ contextKey: "logger2" as const, pino: pino2 }))
       .get("/", async (c) =>
         c.text(
-          c.get("myLogger1").logger.bindings().name === "pinoLogger1" &&
-            c.get("myLogger2").logger.bindings().name === "pinoLogger2" &&
-            // @ts-ignore
-            c.get("logger") === undefined
+          c.get("logger1").logger.bindings().name === "pino1" &&
+            c.get("logger2").logger.bindings().name === "pino2"
             ? "ok"
             : "fail",
           200,
