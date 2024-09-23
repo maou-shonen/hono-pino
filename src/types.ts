@@ -137,16 +137,6 @@ export interface Options<ContextKey extends string = "logger"> {
  *   await next()
  * })
  *
- * // multi-step app
- * import { Hono } from "hono"
- * import { logger, type Env } from "hono-pino"
- *
- * const app = new Hono<Env>()
- * app.use(logger)
- * app.get('/', (c) => {
- *   const logger = c.get("logger")
- * })
- *
  * // custom context key
  * import { Hono } from "hono"
  * import { logger, type Env } from "hono-pino"
