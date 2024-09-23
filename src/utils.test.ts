@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getLogger, isPinoLogger } from "./utils";
+import { getLogger, isPino } from "./utils";
 import { pino } from "pino";
 import { PinoLogger } from "./logger";
 import { Hono } from "hono";
@@ -7,16 +7,16 @@ import { logger } from "./middleware";
 
 describe("isPinoLogger", () => {
   it("test pino", () => {
-    expect(isPinoLogger(pino())).toBe(true);
+    expect(isPino(pino())).toBe(true);
   });
 
   it("my PinoLogger", () => {
-    expect(isPinoLogger(new PinoLogger(pino()))).toBe(false);
+    expect(isPino(new PinoLogger(pino()))).toBe(false);
   });
 
   it("built-in types", () => {
     for (const v of [{}, [], 0, "", true, false, null, undefined]) {
-      expect(isPinoLogger(v)).toBe(false);
+      expect(isPino(v)).toBe(false);
     }
   });
 });

@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { PinoLogger } from "./logger";
 import { pino } from "pino";
-import { isPinoLogger } from "./utils";
 
 describe("logger", () => {
   let logs: Record<string, any>[] = [];

@@ -1,7 +1,7 @@
 import { createMiddleware } from "hono/factory";
 import { pino } from "pino";
 import { defu } from "defu";
-import { isPinoLogger } from "./utils";
+import { isPino } from "./utils";
 import type { Options } from "./types";
 import { PinoLogger } from "./logger";
 import type { LiteralString } from "./utils";
@@ -12,7 +12,7 @@ import type { LiteralString } from "./utils";
 export const logger = <ContextKey extends string = "logger">(
   opts?: Options<LiteralString<ContextKey>>,
 ) => {
-  const rootLogger = isPinoLogger(opts?.pino) ? opts.pino : pino(opts?.pino);
+  const rootLogger = isPino(opts?.pino) ? opts.pino : pino(opts?.pino);
   const contextKey = opts?.contextKey ?? ("logger" as ContextKey);
 
   type Env = {
