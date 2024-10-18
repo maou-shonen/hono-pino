@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { Hono } from "hono";
-import { logger } from "./middleware";
+import { pinoLogger } from "./middleware";
 import type { Options } from "./types";
 import { pino } from "pino";
 import { PinoLogger } from "./logger";
@@ -11,7 +11,7 @@ const createMockApp = (logHttpOpts?: Options["http"]) => {
   const logs: Record<string, any>[] = [];
   const app = new Hono()
     .use(
-      logger({
+      pinoLogger({
         pino: pino(
           { level: "trace", base: null, timestamp: false },
           {
@@ -228,7 +228,7 @@ describe("contextKey option", () => {
 
   it("basic", async () => {
     const app = new Hono()
-      .use(logger())
+      .use(pinoLogger())
       .get("/", async (c) =>
         c.text(c.get("logger") instanceof PinoLogger ? "ok" : "fail", 200),
       );
@@ -240,8 +240,8 @@ describe("contextKey option", () => {
 
   it("multiple logger", async () => {
     const app = new Hono()
-      .use(logger({ contextKey: "logger1" as const, pino: pino1 }))
-      .use(logger({ contextKey: "logger2" as const, pino: pino2 }))
+      .use(pinoLogger({ contextKey: "logger1" as const, pino: pino1 }))
+      .use(pinoLogger({ contextKey: "logger2" as const, pino: pino2 }))
       .get("/", async (c) =>
         c.text(
           c.get("logger1").logger.bindings().name === "pino1" &&
