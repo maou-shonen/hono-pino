@@ -9,7 +9,7 @@ import type { LiteralString } from "./utils";
 /**
  * Pino logger middleware
  */
-export const logger = <ContextKey extends string = "logger">(
+export const pinoLogger = <ContextKey extends string = "logger">(
   opts?: Options<LiteralString<ContextKey>>,
 ) => {
   const rootLogger = isPino(opts?.pino) ? opts.pino : pino(opts?.pino);
@@ -78,6 +78,12 @@ export const logger = <ContextKey extends string = "logger">(
     }
   });
 };
+
+/**
+ * Pino logger middleware
+ * @deprecated Renamed to pinoLogger
+ */
+export const logger = pinoLogger;
 
 let defaultReqId = 0n;
 const defaultReqIdGenerator = () => (defaultReqId += 1n);

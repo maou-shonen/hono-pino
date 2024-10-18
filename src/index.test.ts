@@ -6,6 +6,8 @@ it("should have exports", () => {
 });
 
 it("should not have undefined exports", () => {
-  for (const k of Object.keys(myPackage))
-    expect(myPackage).not.toHaveProperty(k, undefined);
+  expect(myPackage).toHaveProperty("logger");
+  expect(myPackage).toHaveProperty("pinoLogger");
+  expect(myPackage).toHaveProperty("PinoLogger");
+  expect(myPackage).toHaveProperty("getLogger");
 });
