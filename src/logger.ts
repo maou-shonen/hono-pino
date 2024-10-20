@@ -30,10 +30,10 @@ export class PinoLogger {
   }
 
   /**
-   * Set bindings to http log context
+   * Clear bindings from http log context
    */
-  setBindings(bindings: pino.Bindings) {
-    this._logger = this.#rootLogger.child(bindings);
+  clearBindings() {
+    this._logger = this.#rootLogger.child({});
   }
 
   /**
