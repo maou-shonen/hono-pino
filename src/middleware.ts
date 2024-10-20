@@ -81,7 +81,7 @@ export const pinoLogger = <ContextKey extends string = "logger">(
 
 /**
  * Pino logger middleware
- * @deprecated Renamed to pinoLogger
+ * @deprecated Renamed to pinoLogger, will be removed in 1.0.0
  */
 export const logger = pinoLogger;
 
