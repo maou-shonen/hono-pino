@@ -24,25 +24,6 @@ bun add hono-pino pino
 ## Usage
 
 ```ts
-const getAuthorizedUser = (_token: string) => {
-  // do something
-  return {
-    id: 1,
-    name: "john",
-  };
-};
-
-const getPosts = () => [
-  {
-    id: 1,
-    title: "My first post",
-  },
-  {
-    id: 2,
-    title: "My second post",
-  },
-];
-
 const app = new Hono()
   .use(
     pinoLogger({
