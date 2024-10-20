@@ -4,24 +4,26 @@ import { pino } from "pino";
 
 describe("logger", () => {
   let logs: Record<string, any>[] = [];
-  const logger = new PinoLogger(
-    pino(
-      {
-        level: "trace",
-        base: null,
-        timestamp: false,
-      },
-      {
-        write: (data) => logs.push(JSON.parse(data)),
-      },
-    ),
-  );
+  let logger: PinoLogger;
 
   beforeEach(() => {
-    logs = []; // reset
+    // reset
+    logs = [];
+    logger = new PinoLogger(
+      pino(
+        {
+          level: "trace",
+          base: null,
+          timestamp: false,
+        },
+        {
+          write: (data) => logs.push(JSON.parse(data)),
+        },
+      ),
+    );
   });
 
-  it("test", () => {
+  it("basic", () => {
     logger.trace("foo1");
     logger.debug("foo2");
     logger.info("foo3");
@@ -43,7 +45,22 @@ describe("logger", () => {
     expect(logs[5].level).toBe(60);
   });
 
-  it("isPinoLogger", () => {
+  it("get bindings", () => {
+    logger.assign({ foo: "bar" });
+    expect(logger.bindings()).toStrictEqual({ foo: "bar" });
+  });
+
+  it("set bindings", () => {
+    logger.setBindings({ foo: "bar" });
+    logger.info("foo");
+    expect(logs[0]).toStrictEqual({
+      msg: "foo",
+      level: 30,
+      foo: "bar",
+    });
+  });
+
+  it("assign", () => {
     logger.assign({ foo: "bar" });
     logger.info("foo");
     expect(logs[0]).toStrictEqual({
@@ -51,24 +68,29 @@ describe("logger", () => {
       level: 30,
       foo: "bar",
     });
+  });
 
-    logger.assign({ foo2: "hello" });
-    logger.info("foo2");
-    expect(logs[1]).toStrictEqual({
-      msg: "foo2",
+  it("assign shallow merge", () => {
+    logger.assign({ a: 1, b: { c: 2, d: 3 } });
+    logger.assign({ b: { c: 4, e: 5 } }, { deep: false });
+    logger.info("foo");
+    expect(logs[0]).toStrictEqual({
+      msg: "foo",
       level: 30,
-      foo: "bar",
-      foo2: "hello",
+      a: 1,
+      b: { c: 4, e: 5 },
     });
+  });
 
-    logger.assign({ foo: "override", foo3: "world" });
-    logger.info("foo3");
-    expect(logs[2]).toStrictEqual({
-      msg: "foo3",
+  it("assign deep merge", () => {
+    logger.assign({ a: 1, b: { c: 2, d: 3 } });
+    logger.assign({ b: { c: 4, e: 5 } }, { deep: true });
+    logger.info("foo");
+    expect(logs[0]).toStrictEqual({
+      msg: "foo",
       level: 30,
-      foo: "override",
-      foo2: "hello",
-      foo3: "world",
+      a: 1,
+      b: { c: 4, d: 3, e: 5 },
     });
   });
 });
