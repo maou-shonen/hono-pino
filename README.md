@@ -8,7 +8,7 @@
 
 A pino logger plugin for hono
 
-The design references [pino-http](https://github.com/pinojs/pino-http) and [nestjs-pino](https://github.com/iamolegga/nestjs-pino).
+This repository is inspired by [pino-http](https://github.com/pinojs/pino-http) and [nestjs-pino](https://github.com/iamolegga/nestjs-pino).
 
 ## Install
 
@@ -21,29 +21,185 @@ pnpm add hono-pino pino
 bun add hono-pino pino
 ```
 
+## Usage
+
+```ts
+const app = new Hono()
+  .use(
+    pinoLogger({
+      pino: {level: 'debug'}
+    }),
+  )
+  .get((c) => {
+    const { logger } = c.var;
+
+    const token = c.req.header("Authorization") ?? "";
+    logger.debug({ token });
+
+    const user = getAuthorizedUser(token);
+    logger.assign({ user });
+
+    const posts = getPosts();
+    logger.assign({ posts });
+
+    return c.text("");
+  });
+
+await app.request("/", {
+  headers: {
+    Authorization: "Bearer token",
+  },
+});
+
+// output (formatted for easier reading)
+{"level":20, "token":"Bearer token"}
+{
+  "level": 30,
+  "msg": "Request completed",
+  "user": {
+    "id": 1,
+    "name": "john"
+  },
+  "posts": [
+    {
+      "id": 1,
+      "title": "My first post"
+    },
+    {
+      "id": 2,
+      "title": "My second post"
+    }
+  ],
+  "req": {
+    "headers": {
+      "authorization": "Bearer token"
+    },
+    "method": "GET",
+    "url": "/"
+  },
+  "reqId": 1,
+  "res": {
+    "headers": {},
+    "status": 200
+  },
+  "responseTime": 2
+}
+```
+
 ## Example
 
 see [examples](./examples/)
 
-## Configuration
+## Middleware Options
 
 [full options](./src/types.ts)
 
-### Zero configuration
-
 ```ts
-import { Hono } from "hono";
-import { logger } from "hono-pino";
+export interface Options {
+  /**
+   * custom context key
+   * @description context key for hono, Must be set to literal string.
+   * @default "logger"
+   */
+  contextKey?: ContextKey;
 
-const app = new Hono();
+  /**
+   * a pino instance or pino options
+   */
+  pino?: pino.Logger | pino.LoggerOptions | pino.DestinationStream;
 
-app.use(logger());
+  /**
+   * http request log options
+   */
+  http?:
+    | false
+    | {
+        /**
+         * custom request id
+         * @description set to false to disable
+         * @default () => n + 1
+         */
+        reqId?: false | (() => string);
+        /**
+         * custom on request bindings
+         * @default
+         * (c) => ({
+         *   req: {
+         *     url: c.req.path,
+         *     method: c.req.method,
+         *     headers: c.req.header(),
+         *   },
+         * })
+         */
+        onReqBindings?: (c: Context) => pino.Bindings;
+        /**
+         * custom on request level
+         * @default (c) => "info"
+         */
+        onReqLevel?: (c: Context) => pino.Level;
+        /**
+         * custom on request message
+         * @description set to false to disable
+         * @default false // disable
+         */
+        onReqMessage?: false | ((c: Context) => string);
+        /**
+         * custom on response bindings
+         * @default
+         * (c) => ({
+         *   res: {
+         *     status: c.res.status,
+         *     headers: c.res.headers,
+         *   },
+         * })
+         */
+        onResBindings?: (c: Context) => pino.Bindings;
+        /**
+         * custom on response level
+         * @default (c) => c.error ? "error" : "info"
+         */
+        onResLevel?: (c: Context) => pino.Level;
+        /**
+         * custom on response message
+         * @description set to false to disable
+         * @default (c) => c.error ? c.error.message : "Request completed"
+         */
+        onResMessage?: false | ((c: Context) => string);
+        /**
+         * adding response time to bindings
+         * @default true
+         */
+        responseTime?: boolean;
+      };
+}
 ```
 
-### Configuration params
+### Logger method
 
-todo  
-[interface Options](https://github.com/maou-shonen/hono-pino/blob/main/src/types.ts#L11)
+```ts
+class PinoLogger {
+  // Same as pino[logger level]
+  trace: pino.LogFn
+  debug: pino.LogFn
+  info: pino.LogFn
+  warn: pino.LogFn
+  error: pino.LogFn
+  fatal: pino.LogFn
+
+  // Get bindings (object)
+  bindings(): pino.Bindings
+  // Reset bindings
+  resetBindings(): void
+  // Assign bindings (default shallow merge)
+  assign(
+    bindings: pino.Bindings
+    opts?: {
+      /** deep merge */
+      deep?: boolean;
+    },
+  ): void
+}
+```
 
 <!-- Refs -->
 
