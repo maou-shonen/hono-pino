@@ -1,5 +1,16 @@
 # hono-pino
 
+## 0.4.0
+
+### Minor Changes
+
+- 79834f9: Enhanced bindings methods
+
+### Patch Changes
+
+- d83fbe8: Changed the middleware name to `pinoLogger`
+- b34ea7a: Change internal `logger` to `_logger`
+
 ## 0.3.0
 
 ### Minor Changes
