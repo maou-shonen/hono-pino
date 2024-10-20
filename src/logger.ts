@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
+import defu from "defu";
 import { pino } from "pino";
 
 export interface PinoLogger {
@@ -22,13 +23,34 @@ export class PinoLogger {
   }
 
   /**
-   * assign bindings to http log context
+   * Get bindings from http log context
    */
-  assign(bindings: pino.Bindings) {
-    this._logger = this.#rootLogger.child({
-      ...this._logger.bindings(),
-      ...bindings,
-    });
+  bindings() {
+    return this._logger.bindings();
+  }
+
+  /**
+   * Set bindings to http log context
+   */
+  setBindings(bindings: pino.Bindings) {
+    this._logger = this.#rootLogger.child(bindings);
+  }
+
+  /**
+   * Assign bindings to http log context (default shallow merge)
+   */
+  assign(
+    bindings: pino.Bindings,
+    opts?: {
+      /** deep merge */
+      deep?: boolean;
+    },
+  ) {
+    const newBindings = opts?.deep
+      ? defu(bindings, this._logger.bindings())
+      : { ...this._logger.bindings(), ...bindings };
+
+    this._logger = this.#rootLogger.child(newBindings);
   }
 }
 
