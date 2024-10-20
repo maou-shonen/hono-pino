@@ -37,12 +37,12 @@ export class PinoLogger {
   }
 
   /**
-   * Assign bindings to http log context (default shallow merge)
+   * Assign bindings to http log context
    */
   assign(
     bindings: pino.Bindings,
     opts?: {
-      /** deep merge */
+      /** deep merge @default false */
       deep?: boolean;
     },
   ) {
