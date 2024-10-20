@@ -50,13 +50,13 @@ describe("logger", () => {
     expect(logger.bindings()).toStrictEqual({ foo: "bar" });
   });
 
-  it("set bindings", () => {
-    logger.setBindings({ foo: "bar" });
+  it("clear bindings", () => {
+    logger.assign({ foo: "bar" });
+    logger.clearBindings();
     logger.info("foo");
     expect(logs[0]).toStrictEqual({
       msg: "foo",
       level: 30,
-      foo: "bar",
     });
   });
 
