@@ -244,8 +244,8 @@ describe("contextKey option", () => {
       .use(pinoLogger({ contextKey: "logger2" as const, pino: pino2 }))
       .get("/", async (c) =>
         c.text(
-          c.get("logger1").logger.bindings().name === "pino1" &&
-            c.get("logger2").logger.bindings().name === "pino2"
+          c.get("logger1")._logger.bindings().name === "pino1" &&
+            c.get("logger2")._logger.bindings().name === "pino2"
             ? "ok"
             : "fail",
           200,

@@ -2,7 +2,7 @@
 import { pino } from "pino";
 
 export interface PinoLogger {
-  logger: pino.Logger;
+  _logger: pino.Logger;
   trace: pino.LogFn;
   debug: pino.LogFn;
   info: pino.LogFn;
@@ -13,19 +13,20 @@ export interface PinoLogger {
 
 export class PinoLogger {
   #rootLogger: pino.Logger;
-  logger: pino.Logger;
+  // Use the _ prefix to indicate that this should not be used
+  _logger: pino.Logger;
 
   constructor(rootLogger: pino.Logger) {
     this.#rootLogger = rootLogger.child({});
-    this.logger = rootLogger;
+    this._logger = rootLogger;
   }
 
   /**
    * assign bindings to http log context
    */
   assign(bindings: pino.Bindings) {
-    this.logger = this.#rootLogger.child({
-      ...this.logger.bindings(),
+    this._logger = this.#rootLogger.child({
+      ...this._logger.bindings(),
       ...bindings,
     });
   }
@@ -34,35 +35,35 @@ export class PinoLogger {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 PinoLogger.prototype.trace = function (this, ...args: [any, ...any]) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  this.logger.trace(...args);
+  this._logger.trace(...args);
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 PinoLogger.prototype.debug = function (this, ...args: [any, ...any[]]) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  this.logger.debug(...args);
+  this._logger.debug(...args);
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 PinoLogger.prototype.info = function (this, ...args: [any, ...any]) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  this.logger.info(...args);
+  this._logger.info(...args);
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 PinoLogger.prototype.warn = function (this, ...args: [any, ...any]) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  this.logger.warn(...args);
+  this._logger.warn(...args);
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 PinoLogger.prototype.error = function (this, ...args: [any, ...any]) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  this.logger.error(...args);
+  this._logger.error(...args);
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 PinoLogger.prototype.fatal = function (this, ...args: [any, ...any]) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  this.logger.fatal(...args);
+  this._logger.fatal(...args);
 };
