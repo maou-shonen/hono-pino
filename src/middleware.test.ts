@@ -4,6 +4,7 @@ import { pinoLogger } from "./middleware";
 import type { Options } from "./types";
 import { pino } from "pino";
 import { PinoLogger } from "./logger";
+import defu from "defu";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -186,6 +187,56 @@ describe("on response", () => {
       ...defaultResLog,
       msg: "foo",
     });
+  });
+
+  it("Override response log message", async () => {
+    const { logs, app } = createMockApp();
+    app.get("/override-message", async (c) => {
+      c.get("logger").setResMessage("foo");
+      return c.text("ok");
+    });
+
+    const res = await app.request("/override-message");
+    expect(res.status).toBe(200);
+    expect(res.text()).resolves.toBe("ok");
+
+    expect(logs).toHaveLength(1);
+    expect(logs[0]).toMatchObject(
+      defu(
+        {
+          req: {
+            url: "/override-message",
+          },
+          msg: "foo",
+        },
+        defaultResLog,
+      ),
+    );
+  });
+
+  it("Override response log level", async () => {
+    const { logs, app } = createMockApp();
+    app.get("/override-level", async (c) => {
+      c.get("logger").setResLevel("debug");
+      return c.text("ok");
+    });
+
+    const res = await app.request("/override-level");
+    expect(res.status).toBe(200);
+    expect(res.text()).resolves.toBe("ok");
+
+    expect(logs).toHaveLength(1);
+    expect(logs[0]).toMatchObject(
+      defu(
+        {
+          req: {
+            url: "/override-level",
+          },
+          level: 20,
+        },
+        defaultResLog,
+      ),
+    );
   });
 });
 

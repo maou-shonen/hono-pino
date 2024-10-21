@@ -93,4 +93,14 @@ describe("logger", () => {
       b: { c: 4, d: 3, e: 5 },
     });
   });
+
+  it("set response message", () => {
+    logger.setResMessage("foo");
+    expect(logger.resMessage).toBe("foo");
+  });
+
+  it("set response level", () => {
+    logger.setResLevel("trace");
+    expect(logger.resLevel).toBe("trace");
+  });
 });

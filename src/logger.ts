@@ -16,6 +16,8 @@ export class PinoLogger {
   #rootLogger: pino.Logger;
   // Use the _ prefix to indicate that this should not be used
   _logger: pino.Logger;
+  resMessage?: string | null;
+  resLevel?: pino.Level | null;
 
   constructor(rootLogger: pino.Logger) {
     this.#rootLogger = rootLogger.child({});
@@ -51,6 +53,20 @@ export class PinoLogger {
       : { ...this._logger.bindings(), ...bindings };
 
     this._logger = this.#rootLogger.child(newBindings);
+  }
+
+  /**
+   * Override response log message
+   */
+  setResMessage(message: string | null) {
+    this.resMessage = message;
+  }
+
+  /**
+   * Override response log level
+   */
+  setResLevel(level: pino.Level | null) {
+    this.resLevel = level;
   }
 }
 
