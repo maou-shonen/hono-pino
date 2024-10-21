@@ -24,10 +24,13 @@ bun add hono-pino pino
 ## Usage
 
 ```ts
+import { Hono } from 'hono'
+import { pinoLogger } from 'hono-pino'
+
 const app = new Hono()
   .use(
     pinoLogger({
-      pino: {level: 'debug'}
+      pino: {level: "debug"}
     }),
   )
   .get((c) => {
@@ -42,6 +45,9 @@ const app = new Hono()
     const posts = getPosts();
     logger.assign({ posts });
 
+
+    logger.setResMessage("Get posts success"); // optional
+
     return c.text("");
   });
 
@@ -55,7 +61,7 @@ await app.request("/", {
 {"level":20, "token":"Bearer token"}
 {
   "level": 30,
-  "msg": "Request completed",
+  "msg": "Get posts success",
   "user": {
     "id": 1,
     "name": "john"

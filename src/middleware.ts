@@ -70,8 +70,12 @@ export const pinoLogger = <ContextKey extends string = "logger">(
       };
       bindings = defu(bindings, onResBindings);
 
-      const level = opts?.http?.onResLevel?.(c) ?? (c.error ? "error" : "info");
+      const level =
+        logger.resLevel ??
+        opts?.http?.onResLevel?.(c) ??
+        (c.error ? "error" : "info");
       const msg =
+        logger.resMessage ??
         opts?.http?.onResMessage?.(c) ??
         (c.error ? c.error.message : "Request completed");
       logger[level](bindings, msg);
