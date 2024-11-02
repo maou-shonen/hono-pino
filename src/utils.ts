@@ -4,7 +4,7 @@ import { pino } from "pino";
 
 /**
  * get logger from context
- * @deprecated Please change to use `c.get("logger")`.
+ * @deprecated Please change to use `c.get("logger")`. will be removed in 1.0.0
  */
 export function getLogger(c: Context): PinoLogger {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return

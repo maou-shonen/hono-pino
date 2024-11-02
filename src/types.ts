@@ -50,7 +50,7 @@ export interface Options<ContextKey extends string = "logger"> {
     | {
         /**
          * custom request id
-         * @deprecated Changed to use referRequestIdKey.
+         * @deprecated Changed to use referRequestIdKey. will be removed in 1.0.0
          *
          * @description set to false to disable
          * @default () => n + 1
