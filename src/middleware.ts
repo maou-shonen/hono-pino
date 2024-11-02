@@ -39,7 +39,11 @@ export const pinoLogger = <ContextKey extends string = "logger">(
       },
     };
 
-    if (opts?.http?.reqId !== false) {
+    const referRequestIdKey = (opts?.http?.referRequestIdKey ??
+      "requestId") as "requestId";
+    if (referRequestIdKey in c.var) {
+      bindings.reqId = c.var[referRequestIdKey];
+    } else if (opts?.http?.reqId !== false) {
       bindings.reqId = opts?.http?.reqId?.() ?? defaultReqIdGenerator();
     }
 

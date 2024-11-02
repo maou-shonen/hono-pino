@@ -50,6 +50,8 @@ export interface Options<ContextKey extends string = "logger"> {
     | {
         /**
          * custom request id
+         * @deprecated Changed to use referRequestIdKey.
+         *
          * @description set to false to disable
          * @default () => n + 1
          *
@@ -58,6 +60,31 @@ export interface Options<ContextKey extends string = "logger"> {
          * () => crypto.randomUUID()
          */
         reqId?: false | (() => string);
+        /**
+         * refer requestId key in context,
+         * @description When the requestId is detected from the context, it will be included in the HTTP logger output.
+         * @default "requestId"
+         *
+         * @example
+         * import { requestId } from 'hono/request-id'
+         *
+         * const app = new Hono()
+         *   .use(requestId())
+         *   .use(logger())
+         *
+         * @example
+         * // custom
+         * const app = new Hono()
+         *   .use(async (c, next) => {
+         *     c.set("yourRequestId", yourGenerate())
+         *   })
+         *   .use(logger({
+         *     http: {
+         *       referRequestIdKey: "yourRequestId",
+         *     }
+         *   }))
+         */
+        referRequestIdKey?: string;
         /**
          * custom on request bindings
          * @default
