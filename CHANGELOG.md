@@ -1,5 +1,14 @@
 # hono-pino
 
+## [0.5.0](https://github.com/maou-shonen/hono-pino/compare/v0.4.0...v0.5.0) (2024-11-02)
+
+
+### Features
+
+* Do not use `slow types` ([#35](https://github.com/maou-shonen/hono-pino/issues/35)) ([9e4edbe](https://github.com/maou-shonen/hono-pino/commit/9e4edbedcdc7535aa1d205fff747fee5a0531c45))
+* Response message can be overridden ([#27](https://github.com/maou-shonen/hono-pino/issues/27)) ([62d89d9](https://github.com/maou-shonen/hono-pino/commit/62d89d98a09e4819c90471b043a5db241bb85337))
+* Use referRequestIdKey instead of the reqId option. ([#33](https://github.com/maou-shonen/hono-pino/issues/33)) ([efc9f07](https://github.com/maou-shonen/hono-pino/commit/efc9f078457244830da8c1b9631de8fa5d0d8a98))
+
 ## 0.4.0
 
 ### Minor Changes
