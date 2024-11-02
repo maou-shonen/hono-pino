@@ -37,6 +37,7 @@ export const pinoLogger = <ContextKey extends string = "logger">(
       },
     };
 
+    // requestId
     const referRequestIdKey = (opts?.http?.referRequestIdKey ??
       "requestId") as "requestId";
     if (referRequestIdKey in c.var) {
