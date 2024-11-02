@@ -15,8 +15,7 @@ export function isPino(value: unknown): value is pino.Logger {
   return (
     typeof value === "object" &&
     value !== null &&
-    "child" in value &&
-    typeof value.child === "function"
+    pino.symbols.messageKeySym in value
   );
 }
 
