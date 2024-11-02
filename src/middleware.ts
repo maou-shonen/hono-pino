@@ -1,4 +1,4 @@
-import { createMiddleware } from "hono/factory";
+import type { MiddlewareHandler } from "hono";
 import { pino } from "pino";
 import { defu } from "defu";
 import { isPino } from "./utils";
@@ -11,17 +11,15 @@ import type { LiteralString } from "./utils";
  */
 export const pinoLogger = <ContextKey extends string = "logger">(
   opts?: Options<LiteralString<ContextKey>>,
-) => {
+): MiddlewareHandler<{
+  Variables: {
+    [key in ContextKey]: PinoLogger;
+  };
+}> => {
   const rootLogger = isPino(opts?.pino) ? opts.pino : pino(opts?.pino);
   const contextKey = opts?.contextKey ?? ("logger" as ContextKey);
 
-  type Env = {
-    Variables: {
-      [key in ContextKey]: PinoLogger;
-    };
-  };
-
-  return createMiddleware<Env>(async (c, next) => {
+  return async (c, next) => {
     const logger = new PinoLogger(rootLogger);
     c.set(contextKey, logger);
 
@@ -84,7 +82,7 @@ export const pinoLogger = <ContextKey extends string = "logger">(
         (c.error ? c.error.message : "Request completed");
       logger[level](bindings, msg);
     }
-  });
+  };
 };
 
 /**
