@@ -3,7 +3,7 @@ import { pino } from "pino";
 import { defu } from "defu";
 import { isPino } from "./utils";
 import type { Options } from "./types";
-import { PinoLogger } from "./logger";
+import { httpCfgSym, PinoLogger } from "./logger";
 import type { LiteralString } from "./utils";
 
 /**
@@ -74,11 +74,11 @@ export const pinoLogger = <ContextKey extends string = "logger">(
       bindings = defu(bindings, onResBindings);
 
       const level =
-        logger.resLevel ??
+        logger[httpCfgSym].resLevel ??
         opts?.http?.onResLevel?.(c) ??
         (c.error ? "error" : "info");
       const msg =
-        logger.resMessage ??
+        logger[httpCfgSym].resMessage ??
         opts?.http?.onResMessage?.(c) ??
         (c.error ? c.error.message : "Request completed");
       logger[level](bindings, msg);

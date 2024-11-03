@@ -3,7 +3,6 @@ import defu from "defu";
 import { pino } from "pino";
 
 export interface PinoLogger {
-  _logger: pino.Logger;
   trace: pino.LogFn;
   debug: pino.LogFn;
   info: pino.LogFn;
@@ -13,17 +12,38 @@ export interface PinoLogger {
 }
 
 /**
+ * http logger config symbol
+ */
+export const httpCfgSym = Symbol();
+
+/**
  * hono-pino logger
  */
 export class PinoLogger {
-  #rootLogger: pino.Logger;
-  // Use the _ prefix to indicate that this should not be used
+  /**
+   * Internal pino logger instance
+   *
+   * If you want to interact with the internal pino logger,
+   * you can use it (not recommended)
+   */
+  _rootLogger: pino.Logger;
+
+  /**
+   * Internal child pino logger instance, recreated after each update bindings.
+   *
+   * If you want to interact with the internal pino logger,
+   * you can use it (not recommended)
+   */
   _logger: pino.Logger;
-  resMessage?: string | null;
-  resLevel?: pino.Level | null;
+
+  [httpCfgSym]: {
+    resMessage?: string | null;
+    resLevel?: pino.Level | null;
+  } = {};
 
   constructor(rootLogger: pino.Logger) {
-    this.#rootLogger = rootLogger.child({});
+    // Use a child logger to prevent unintended behavior from changes to the provided logger
+    this._rootLogger = rootLogger.child({});
     this._logger = rootLogger;
   }
 
@@ -38,7 +58,7 @@ export class PinoLogger {
    * Clear bindings from http log context
    */
   clearBindings(): this {
-    this._logger = this.#rootLogger.child({});
+    this._logger = this._rootLogger.child({});
     return this;
   }
 
@@ -56,7 +76,7 @@ export class PinoLogger {
       ? defu(bindings, this._logger.bindings())
       : { ...this._logger.bindings(), ...bindings };
 
-    this._logger = this.#rootLogger.child(newBindings);
+    this._logger = this._rootLogger.child(newBindings);
     return this;
   }
 
@@ -64,7 +84,7 @@ export class PinoLogger {
    * Override response log message
    */
   setResMessage(message: string | null): this {
-    this.resMessage = message;
+    this[httpCfgSym].resMessage = message;
     return this;
   }
 
@@ -72,7 +92,7 @@ export class PinoLogger {
    * Override response log level
    */
   setResLevel(level: pino.Level | null): this {
-    this.resLevel = level;
+    this[httpCfgSym].resLevel = level;
     return this;
   }
 }
