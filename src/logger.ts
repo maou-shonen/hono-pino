@@ -2,12 +2,69 @@
 import defu from "defu";
 import { pino } from "pino";
 
+/**
+ * hono-pino logger
+ */
 export interface PinoLogger {
+  /**
+   * Log at `'trace'` level the given msg. If the first argument is an object, all its properties will be included in the JSON line.
+   * If more args follows `msg`, these will be used to format `msg` using `util.format`.
+   *
+   * @typeParam T: the interface of the object being serialized. Default is object.
+   * @param obj: object to be serialized
+   * @param msg: the log message to write
+   * @param ...args: format string values when `msg` is a format string
+   */
   trace: pino.LogFn;
+  /**
+   * Log at `'debug'` level the given msg. If the first argument is an object, all its properties will be included in the JSON line.
+   * If more args follows `msg`, these will be used to format `msg` using `util.format`.
+   *
+   * @typeParam T: the interface of the object being serialized. Default is object.
+   * @param obj: object to be serialized
+   * @param msg: the log message to write
+   * @param ...args: format string values when `msg` is a format string
+   */
   debug: pino.LogFn;
+  /**
+   * Log at `'info'` level the given msg. If the first argument is an object, all its properties will be included in the JSON line.
+   * If more args follows `msg`, these will be used to format `msg` using `util.format`.
+   *
+   * @typeParam T: the interface of the object being serialized. Default is object.
+   * @param obj: object to be serialized
+   * @param msg: the log message to write
+   * @param ...args: format string values when `msg` is a format string
+   */
   info: pino.LogFn;
+  /**
+   * Log at `'warn'` level the given msg. If the first argument is an object, all its properties will be included in the JSON line.
+   * If more args follows `msg`, these will be used to format `msg` using `util.format`.
+   *
+   * @typeParam T: the interface of the object being serialized. Default is object.
+   * @param obj: object to be serialized
+   * @param msg: the log message to write
+   * @param ...args: format string values when `msg` is a format string
+   */
   warn: pino.LogFn;
+  /**
+   * Log at `'error'` level the given msg. If the first argument is an object, all its properties will be included in the JSON line.
+   * If more args follows `msg`, these will be used to format `msg` using `util.format`.
+   *
+   * @typeParam T: the interface of the object being serialized. Default is object.
+   * @param obj: object to be serialized
+   * @param msg: the log message to write
+   * @param ...args: format string values when `msg` is a format string
+   */
   error: pino.LogFn;
+  /**
+   * Log at `'fatal'` level the given msg. If the first argument is an object, all its properties will be included in the JSON line.
+   * If more args follows `msg`, these will be used to format `msg` using `util.format`.
+   *
+   * @typeParam T: the interface of the object being serialized. Default is object.
+   * @param obj: object to be serialized
+   * @param msg: the log message to write
+   * @param ...args: format string values when `msg` is a format string
+   */
   fatal: pino.LogFn;
 }
 
