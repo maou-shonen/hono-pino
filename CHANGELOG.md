@@ -1,5 +1,12 @@
 # hono-pino
 
+## [0.5.1](https://github.com/maou-shonen/hono-pino/compare/v0.5.0...v0.5.1) (2024-11-03)
+
+
+### Bug Fixes
+
+* Fix incorrect structured logging by default ([#39](https://github.com/maou-shonen/hono-pino/issues/39)) ([7c77de8](https://github.com/maou-shonen/hono-pino/commit/7c77de805f89089be2573f8b11f6e2ff32d75ee0))
+
 ## [0.5.0](https://github.com/maou-shonen/hono-pino/compare/v0.4.0...v0.5.0) (2024-11-02)
 
 
