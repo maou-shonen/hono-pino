@@ -104,6 +104,16 @@ describe("middleware", () => {
       expect(logs[0]).toMatchObject(defaultResLog);
     });
 
+    it("can be JSON serialize", async () => {
+      const { app } = createMockApp();
+
+      const res = await app.request("/");
+      expect(res.status).toBe(200);
+      expect(await res.text()).toBe("ok");
+      expect(logs).toHaveLength(1);
+      expect(() => JSON.stringify(logs[0])).not.toThrow();
+    });
+
     it("with requestId middleware", async () => {
       const app = new Hono()
         .use(

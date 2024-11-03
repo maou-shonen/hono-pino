@@ -92,5 +92,5 @@ export const pinoLogger = <ContextKey extends string = "logger">(
  */
 export const logger = pinoLogger;
 
-let defaultReqId = 0n;
-const defaultReqIdGenerator = () => (defaultReqId += 1n);
+let defaultReqId = 0;
+const defaultReqIdGenerator = () => (defaultReqId += 1);
