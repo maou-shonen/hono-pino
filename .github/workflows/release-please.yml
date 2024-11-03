@@ -6,6 +6,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  id-token: write
 
 name: release-please
 
@@ -39,4 +40,6 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        if: ${{ steps.release.outputs.release_created }}
+      - run: npx jsr publish
         if: ${{ steps.release.outputs.release_created }}
