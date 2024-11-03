@@ -12,6 +12,9 @@ export interface PinoLogger {
   fatal: pino.LogFn;
 }
 
+/**
+ * hono-pino logger
+ */
 export class PinoLogger {
   #rootLogger: pino.Logger;
   // Use the _ prefix to indicate that this should not be used
@@ -27,15 +30,16 @@ export class PinoLogger {
   /**
    * Get bindings from http log context
    */
-  bindings() {
+  bindings(): pino.Bindings {
     return this._logger.bindings();
   }
 
   /**
    * Clear bindings from http log context
    */
-  clearBindings() {
+  clearBindings(): this {
     this._logger = this.#rootLogger.child({});
+    return this;
   }
 
   /**
@@ -47,26 +51,29 @@ export class PinoLogger {
       /** deep merge @default false */
       deep?: boolean;
     },
-  ) {
+  ): this {
     const newBindings = opts?.deep
       ? defu(bindings, this._logger.bindings())
       : { ...this._logger.bindings(), ...bindings };
 
     this._logger = this.#rootLogger.child(newBindings);
+    return this;
   }
 
   /**
    * Override response log message
    */
-  setResMessage(message: string | null) {
+  setResMessage(message: string | null): this {
     this.resMessage = message;
+    return this;
   }
 
   /**
    * Override response log level
    */
-  setResLevel(level: pino.Level | null) {
+  setResLevel(level: pino.Level | null): this {
     this.resLevel = level;
+    return this;
   }
 }
 
