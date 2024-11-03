@@ -7,7 +7,7 @@ import { httpCfgSym, PinoLogger } from "./logger";
 import type { LiteralString } from "./utils";
 
 /**
- * Pino logger middleware
+ * hono-pino middleware
  */
 export const pinoLogger = <ContextKey extends string = "logger">(
   opts?: Options<LiteralString<ContextKey>>,

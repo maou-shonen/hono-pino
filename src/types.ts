@@ -2,6 +2,9 @@ import type { Context } from "hono";
 import { pino } from "pino";
 import type { PinoLogger } from "./logger";
 
+/**
+ * pinoLogger options
+ */
 export interface Options<ContextKey extends string = "logger"> {
   /**
    * custom context key
@@ -57,13 +60,13 @@ export interface Options<ContextKey extends string = "logger"> {
    *
    * @description set to false to disable
    */
-  http?: false | HttpOptions;
+  http?: false | HttpLoggerOptions;
 }
 
 /**
  * http request log options
  */
-export type HttpOptions = {
+export type HttpLoggerOptions = {
   /**
    * custom request id
    * @deprecated Changed to use referRequestIdKey. will be removed in 1.0.0
@@ -239,7 +242,7 @@ export type HttpOptions = {
 };
 
 /**
- * hono-pino default env for hono
+ * hono-pino default env for hono context
  *
  * @example
  *

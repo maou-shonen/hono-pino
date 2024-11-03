@@ -3,7 +3,7 @@ import defu from "defu";
 import { pino } from "pino";
 
 /**
- * hono-pino logger
+ * hono-pino logger instance
  */
 export interface PinoLogger {
   /**
