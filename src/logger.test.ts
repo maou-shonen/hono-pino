@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { PinoLogger } from "./logger";
+import { httpCfgSym, PinoLogger } from "./logger";
 import { pino } from "pino";
 
 describe("logger", () => {
@@ -96,11 +96,11 @@ describe("logger", () => {
 
   it("set response message", () => {
     logger.setResMessage("foo");
-    expect(logger.resMessage).toBe("foo");
+    expect(logger[httpCfgSym].resMessage).toBe("foo");
   });
 
   it("set response level", () => {
     logger.setResLevel("trace");
-    expect(logger.resLevel).toBe("trace");
+    expect(logger[httpCfgSym].resLevel).toBe("trace");
   });
 });
