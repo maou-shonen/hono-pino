@@ -1,25 +1,29 @@
 import { Hono } from "hono";
-import { logger } from "../src";
+import { pinoLogger } from "../src";
 
 const app = new Hono()
-  .use(logger())
+  .use(pinoLogger())
 
   .get("/", async (c) => {
-    c.var.logger.debug("debug log");
+    const { logger } = c.var;
 
-    c.var.logger.assign({
+    logger.trace;
+
+    logger.debug("debug log");
+
+    logger.assign({
       foo: "bar",
     });
 
-    c.var.logger.info("info log");
+    logger.info("info log");
 
-    c.var.logger.assign({
+    logger.assign({
       data: [1, 2, 3],
     });
 
-    c.var.logger.warn("warn log");
+    logger.warn("warn log");
 
-    c.var.logger.assign({
+    logger.assign({
       foo: "baz",
       data: [4], // replace
     });
