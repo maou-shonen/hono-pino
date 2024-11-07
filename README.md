@@ -8,11 +8,11 @@
 [![Codecov][codecov-src]][codecov-href]
 [![License][license-src]][license-href]
 
-A pino logger plugin for hono
+A [pino](https://github.com/pinojs/pino) logger plugin for [hono](https://github.com/honojs/hono)
 
 This repository is inspired by [pino-http](https://github.com/pinojs/pino-http) and [nestjs-pino](https://github.com/iamolegga/nestjs-pino).
 
-## Install
+## Installation
 
 ```bash
 # npm
@@ -98,89 +98,10 @@ await app.request("/", {
 
 see [examples](./examples/)
 
-## Middleware Options
+## Options & Types
 
-[full options](./src/types.ts)
-
-```ts
-export interface Options {
-  /**
-   * custom context key
-   * @description context key for hono, Must be set to literal string.
-   * @default "logger"
-   */
-  contextKey?: ContextKey;
-
-  /**
-   * a pino instance or pino options
-   */
-  pino?: pino.Logger | pino.LoggerOptions | pino.DestinationStream;
-
-  /**
-   * http request log options
-   */
-  http?:
-    | false
-    | {
-        /**
-         * custom request id
-         * @description set to false to disable
-         * @default () => n + 1
-         */
-        reqId?: false | (() => string);
-        /**
-         * custom on request bindings
-         * @default
-         * (c) => ({
-         *   req: {
-         *     url: c.req.path,
-         *     method: c.req.method,
-         *     headers: c.req.header(),
-         *   },
-         * })
-         */
-        onReqBindings?: (c: Context) => pino.Bindings;
-        /**
-         * custom on request level
-         * @default (c) => "info"
-         */
-        onReqLevel?: (c: Context) => pino.Level;
-        /**
-         * custom on request message
-         * @description set to false to disable
-         * @default false // disable
-         */
-        onReqMessage?: false | ((c: Context) => string);
-        /**
-         * custom on response bindings
-         * @default
-         * (c) => ({
-         *   res: {
-         *     status: c.res.status,
-         *     headers: c.res.headers,
-         *   },
-         * })
-         */
-        onResBindings?: (c: Context) => pino.Bindings;
-        /**
-         * custom on response level
-         * @default (c) => c.error ? "error" : "info"
-         */
-        onResLevel?: (c: Context) => pino.Level;
-        /**
-         * custom on response message
-         * @description set to false to disable
-         * @default (c) => c.error ? c.error.message : "Request completed"
-         */
-        onResMessage?: false | ((c: Context) => string);
-        /**
-         * adding response time to bindings
-         * @default true
-         */
-        responseTime?: boolean;
-      };
-}
-```
+[View the full options in JSR](https://jsr.io/@maou-shonen/hono-pino/doc)  
+[View the full options in github](./src/types.ts)
 
 ### Logger method
 
