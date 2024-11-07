@@ -48,6 +48,7 @@
     "lint": "eslint --quiet .",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:edge": "vitest run --environment edge-runtime",
     "coverage": "vitest run --coverage"
   },
   "peerDependencies": {
@@ -58,6 +59,7 @@
     "defu": "^6.1.4"
   },
   "devDependencies": {
+    "@edge-runtime/vm": "^4.0.4",
     "@eslint/js": "^9.5.0",
     "@types/node": "^20.14.2",
     "@vitest/coverage-v8": "^2.1.3",

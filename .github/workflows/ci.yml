@@ -30,9 +30,56 @@ jobs:
       - run: pnpm run typecheck
       - run: pnpm run lint
 
-  coverage:
+  unit-test-node:
     needs:
       - lint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+    steps:
+      - uses: actions/checkout@v4
+      - run: corepack enable
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: pnpm
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm run test
+
+  unit-test-edge:
+    needs:
+      - lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: corepack enable
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm run test:edge
+
+  jsr-dry-run:
+    needs:
+      - lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: corepack enable
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install
+      - run: pnpm exec jsr publish --dry-run
+
+  coverage:
+    needs:
+      - unit-test-node
+      - jsr-dry-run
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -49,34 +96,3 @@ jobs:
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-
-  unit-test:
-    needs:
-      - coverage
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x, 22.x]
-    steps:
-      - uses: actions/checkout@v4
-      - run: corepack enable
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: pnpm
-      - run: pnpm install --no-frozen-lockfile
-
-      - run: pnpm run test
-
-  jsr-dry-run:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: corepack enable
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-      - run: pnpm install
-      - run: pnpm exec jsr publish --dry-run
