@@ -65,6 +65,7 @@
     "eslint-config-prettier": "^9.1.0",
     "hono": "^4.4.6",
     "husky": "^9.0.11",
+    "jsr": "^0.13.2",
     "lint-staged": "^15.2.7",
     "pino": "^9.4.0",
     "prettier": "^3.3.2",
