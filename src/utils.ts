@@ -18,7 +18,9 @@ export function isPino(value: unknown): value is pino.Logger {
     // issue: https://github.com/pinojs/pino/issues/2079
     // pino.symbols.messageKeySym in value
     "info" in value &&
-    typeof value.info === "function"
+    typeof value.info === "function" &&
+    "child" in value &&
+    typeof value.child === "function"
   );
 }
 
