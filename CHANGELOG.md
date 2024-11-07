@@ -1,5 +1,19 @@
 # hono-pino
 
+## [0.6.0](https://github.com/maou-shonen/hono-pino/compare/v0.5.1...v0.6.0) (2024-11-07)
+
+
+### Features
+
+* Do not use slow types ([#41](https://github.com/maou-shonen/hono-pino/issues/41)) ([77a2dbe](https://github.com/maou-shonen/hono-pino/commit/77a2dbe42520afc482a8f52602b2e62484c2b6a4))
+* export type HttpLoggerOptions ([#51](https://github.com/maou-shonen/hono-pino/issues/51)) ([18ad33c](https://github.com/maou-shonen/hono-pino/commit/18ad33cedcb756d0d4a0472f5b816f30bb83288f))
+* Publish to JSR ([#44](https://github.com/maou-shonen/hono-pino/issues/44)) ([9d392a6](https://github.com/maou-shonen/hono-pino/commit/9d392a615b39743c44624bf112096278835ac815))
+
+
+### Bug Fixes
+
+* pino.symbols is undefined in cloudflare workers ([#49](https://github.com/maou-shonen/hono-pino/issues/49)) ([61c6ab4](https://github.com/maou-shonen/hono-pino/commit/61c6ab4a80ff00db50e6936033e8a17409885f69))
+
 ## [0.5.1](https://github.com/maou-shonen/hono-pino/compare/v0.5.0...v0.5.1) (2024-11-03)
 
 
