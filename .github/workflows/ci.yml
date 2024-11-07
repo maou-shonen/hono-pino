@@ -79,4 +79,4 @@ jobs:
           node-version: 20
           cache: pnpm
       - run: pnpm install
-      - run: bunx jsr publish --dry-run
+      - run: pnpm exec jsr publish --dry-run
