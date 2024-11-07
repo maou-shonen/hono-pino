@@ -2,7 +2,7 @@ import type { MiddlewareHandler } from "hono";
 import { pino } from "pino";
 import { defu } from "defu";
 import { isPino } from "./utils";
-import type { Options } from "./types";
+import type { Env, Options } from "./types";
 import { httpCfgSym, PinoLogger } from "./logger";
 import type { LiteralString } from "./utils";
 
@@ -11,11 +11,7 @@ import type { LiteralString } from "./utils";
  */
 export const pinoLogger = <ContextKey extends string = "logger">(
   opts?: Options<LiteralString<ContextKey>>,
-): MiddlewareHandler<{
-  Variables: {
-    [key in ContextKey]: PinoLogger;
-  };
-}> => {
+): MiddlewareHandler<Env<ContextKey>> => {
   const rootLogger = isPino(opts?.pino) ? opts.pino : pino(opts?.pino);
   const contextKey = opts?.contextKey ?? ("logger" as ContextKey);
 
