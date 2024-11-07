@@ -71,7 +71,7 @@ export interface PinoLogger {
 /**
  * http logger config symbol
  */
-export const httpCfgSym = Symbol();
+export const httpCfgSym = Symbol("httpCfgSym");
 
 /**
  * hono-pino logger
