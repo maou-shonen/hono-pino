@@ -291,6 +291,9 @@ export type HttpLoggerOptions = {
  * ```
  */
 export type Env<LoggerKey extends string = "logger"> = {
+  Bindings: {
+    LOG_LEVEL?: string;
+  };
   Variables: {
     [key in LoggerKey]: PinoLogger;
   };

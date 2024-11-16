@@ -12,10 +12,13 @@ import type { LiteralString } from "./utils";
 export const pinoLogger = <ContextKey extends string = "logger">(
   opts?: Options<LiteralString<ContextKey>>,
 ): MiddlewareHandler<Env<ContextKey>> => {
-  const rootLogger = isPino(opts?.pino) ? opts.pino : pino(opts?.pino);
-  const contextKey = opts?.contextKey ?? ("logger" as ContextKey);
-
   return async (c, next) => {
+    const rootLogger = isPino(opts?.pino) ? opts.pino : pino(opts?.pino);
+    const contextKey = opts?.contextKey ?? ("logger" as ContextKey);
+
+    // use LOG_LEVEL environemnt variable if set
+    rootLogger.level = c.env.LOG_LEVEL ?? rootLogger.level;
+
     const logger = new PinoLogger(rootLogger);
     c.set(contextKey, logger);
 
