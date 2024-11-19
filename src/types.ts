@@ -60,7 +60,7 @@ export interface Options<ContextKey extends string = "logger"> {
    * ```ts
    * {
    *   pino: (c) => ({
-   *     level: c.env.LOG_LEVEL ?? process.env.LOG_LEVEL ?? "info",
+   *     level: env(c).LOG_LEVEL ?? "info",
    *   })
    * }
    * ```

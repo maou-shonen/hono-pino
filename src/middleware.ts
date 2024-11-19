@@ -5,6 +5,7 @@ import { isPino } from "./utils";
 import type { Env, Options } from "./types";
 import { httpCfgSym, PinoLogger } from "./logger";
 import type { LiteralString } from "./utils";
+import { env } from "hono/adapter";
 
 /**
  * hono-pino middleware
@@ -117,14 +118,15 @@ const parseDynamicRootLogger = (
   c: Context,
 ): [pino.Logger | undefined, pino.ChildLoggerOptions | undefined] => {
   // default
-  if (opt === undefined)
+  if (opt === undefined) {
+    const { LOG_LEVEL } = env<{ LOG_LEVEL?: string }>(c);
     return [
       undefined,
       {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
-        level: c.env?.LOG_LEVEL ?? process.env.LOG_LEVEL ?? "info",
+        level: LOG_LEVEL ?? "info",
       },
     ];
+  }
 
   if (typeof opt !== "function") return [undefined, undefined];
   const v = opt(c);
