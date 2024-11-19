@@ -52,8 +52,81 @@ export interface Options<ContextKey extends string = "logger"> {
 
   /**
    * a pino instance or pino options
+   *
+   * @example
+   *
+   * ### default
+   *
+   * ```ts
+   * {
+   *   pino: (c) => ({
+   *     level: c.env.LOG_LEVEL ?? process.env.LOG_LEVEL ?? "info",
+   *   })
+   * }
+   * ```
+   *
+   * @example
+   *
+   * ### a pino logger instance
+   *
+   * ```ts
+   * {
+   *   pino: pino({ level: "info" })
+   * }
+   * ```
+   *
+   * @example
+   *
+   * ### a pino options
+   *
+   * ```ts
+   * {
+   *   pino: { level: "info" }
+   * }
+   * ```
+   *
+   * @example
+   *
+   * ### a pino destination
+   *
+   * ```ts
+   * {
+   *   pino: pino.destination("path/to/log.json")
+   * }
+   * ```
+   *
+   * @example
+   *
+   * ### dynamic pino logger instance
+   *
+   * this method creates a complete pino logger for each request,
+   * which results in relatively lower performance,
+   * if possible, recommended to use `dynamic pino child options`.
+   *
+   * ```ts
+   * {
+   *   pino: (c) => pino({ level: c.env.LOG_LEVEL })
+   * }
+   * ```
+   *
+   * @example
+   *
+   * ### dynamic pino child options
+   *
+   * ```ts
+   * {
+   *   pino: (c) => ({
+   *     level: c.env.LOG_LEVEL
+   *   } satisfies pino.ChildLoggerOptions)
+   * }
+   * ```
    */
-  pino?: pino.Logger | pino.LoggerOptions | pino.DestinationStream;
+  pino?:
+    | pino.Logger
+    | pino.LoggerOptions
+    | pino.DestinationStream
+    | ((c: Context) => pino.Logger)
+    | ((c: Context) => pino.ChildLoggerOptions);
 
   /**
    * http request log options

@@ -98,9 +98,9 @@ export class PinoLogger {
     resLevel?: pino.Level | null;
   } = {};
 
-  constructor(rootLogger: pino.Logger) {
+  constructor(rootLogger: pino.Logger, childOptions?: pino.ChildLoggerOptions) {
     // Use a child logger to prevent unintended behavior from changes to the provided logger
-    this._rootLogger = rootLogger.child({});
+    this._rootLogger = rootLogger.child({}, childOptions);
     this._logger = rootLogger;
   }
 
