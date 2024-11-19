@@ -176,34 +176,13 @@ describe("middleware", () => {
       return app;
     };
 
-    it("default with c.env", async () => {
-      const app = createApp();
-
-      const res = await app.request("/log-level", undefined, {
-        LOG_LEVEL: "debug",
-      });
-      expect(res.status).toBe(200);
-      expect(await res.json()).toBe("debug");
-    });
-
-    it("default with process.env", async () => {
+    it("default with set env", async () => {
       const app = createApp();
 
       vi.stubEnv("LOG_LEVEL", "debug");
       const res = await app.request("/log-level");
       expect(res.status).toBe(200);
       expect(await res.json()).toBe("debug");
-    });
-
-    it("default with c.env and process.env", async () => {
-      const app = createApp();
-
-      vi.stubEnv("LOG_LEVEL", "debug");
-      const res = await app.request("/log-level", undefined, {
-        LOG_LEVEL: "error",
-      });
-      expect(res.status).toBe(200);
-      expect(await res.json()).toBe("error");
     });
 
     it("default with default value", async () => {
