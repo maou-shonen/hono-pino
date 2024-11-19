@@ -1,5 +1,4 @@
 import js from "@eslint/js";
-import prettierConfig from "eslint-config-prettier";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
@@ -10,20 +9,7 @@ export default tseslint.config(
     ignores: ["dist", "examples", "coverage", "node_modules", "**/*.test.ts"],
   },
   js.configs.recommended,
-  ...tseslint.configs.strictTypeChecked,
-  prettierConfig,
-  {
-    languageOptions: {
-      parserOptions: {
-        project: true,
-        tsconfigRootDir: import.meta.dirname,
-      },
-    },
-  },
-  {
-    files: ["**/*.js"],
-    extends: [tseslint.configs.disableTypeChecked],
-  },
+  ...tseslint.configs.recommended,
   {
     rules: {
       "unicorn/prevent-abbreviations": "off",
