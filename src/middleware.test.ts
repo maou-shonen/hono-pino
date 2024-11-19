@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import { Hono } from "hono";
 import { pinoLogger } from "./middleware";
 import type { Options } from "./types";
@@ -19,6 +19,7 @@ describe("middleware", () => {
   );
 
   beforeEach(() => {
+    vi.unstubAllEnvs();
     logs = [];
   });
 
@@ -158,6 +159,107 @@ describe("middleware", () => {
       expect(logs).toHaveLength(1);
       expect(logs[0].reqId).toBe("reqId");
       expect(logs[0]).toMatchObject(defaultResLog);
+    });
+  });
+
+  describe("pino option", () => {
+    const createApp = (opts?: Options) => {
+      const app = new Hono().use(pinoLogger(opts));
+      app.get("/hello", async (c) => {
+        c.var.logger.info("hello");
+        return c.text("ok");
+      });
+      app.get("/bindings", async (c) => c.json(c.var.logger.bindings()));
+      app.get("/log-level", async (c) =>
+        c.json(c.var.logger._rootLogger.level),
+      );
+      return app;
+    };
+
+    it("default with c.env", async () => {
+      const app = createApp();
+
+      const res = await app.request("/log-level", undefined, {
+        LOG_LEVEL: "debug",
+      });
+      expect(res.status).toBe(200);
+      expect(await res.json()).toBe("debug");
+    });
+
+    it("default with process.env", async () => {
+      const app = createApp();
+
+      vi.stubEnv("LOG_LEVEL", "debug");
+      const res = await app.request("/log-level");
+      expect(res.status).toBe(200);
+      expect(await res.json()).toBe("debug");
+    });
+
+    it("default with c.env and process.env", async () => {
+      const app = createApp();
+
+      vi.stubEnv("LOG_LEVEL", "debug");
+      const res = await app.request("/log-level", undefined, {
+        LOG_LEVEL: "error",
+      });
+      expect(res.status).toBe(200);
+      expect(await res.json()).toBe("error");
+    });
+
+    it("default with default value", async () => {
+      const app = createApp();
+
+      const res = await app.request("/log-level");
+      expect(res.status).toBe(200);
+      expect(await res.json()).toBe("info");
+    });
+
+    it("a pino logger", async () => {
+      const app = createApp({
+        pino: pino({
+          name: "pino",
+        }),
+      });
+
+      const res = await app.request("/bindings");
+      expect(res.status).toBe(200);
+      expect(await res.json()).toStrictEqual({ name: "pino" });
+    });
+
+    it("a pino options", async () => {
+      const app = createApp({
+        pino: {
+          name: "pino",
+        },
+      });
+
+      const res = await app.request("/bindings");
+      expect(res.status).toBe(200);
+      expect(await res.json()).toStrictEqual({ name: "pino" });
+    });
+
+    it("dynamic pino logger", async () => {
+      const app = createApp({
+        pino: (c) => pino({ level: c.env.LOG_LEVEL }),
+      });
+
+      const res = await app.request("/log-level", undefined, {
+        LOG_LEVEL: "debug",
+      });
+      expect(res.status).toBe(200);
+      expect(await res.json()).toBe("debug");
+    });
+
+    it("dynamic pino child options", async () => {
+      const app = createApp({
+        pino: (c) => ({ level: c.env.LOG_LEVEL }),
+      });
+
+      const res = await app.request("/log-level", undefined, {
+        LOG_LEVEL: "debug",
+      });
+      expect(res.status).toBe(200);
+      expect(await res.json()).toBe("debug");
     });
   });
 
