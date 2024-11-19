@@ -1,26 +1,28 @@
-import core from "@eslint/js";
+import js from "@eslint/js";
 import prettierConfig from "eslint-config-prettier";
-import { config, configs as typescriptConfigs } from "typescript-eslint";
+import tseslint from "typescript-eslint";
 
-export default config(
+export default tseslint.config(
   {
-    ignores: [
-      "dist",
-      "examples",
-      "eslint.config.js",
-      "**/*.test.ts",
-      "coverage",
-    ],
+    files: ["*.ts"],
   },
-  core.configs.recommended,
-  ...typescriptConfigs.strictTypeChecked,
+  {
+    ignores: ["dist", "examples", "coverage", "node_modules", "**/*.test.ts"],
+  },
+  js.configs.recommended,
+  ...tseslint.configs.strictTypeChecked,
   prettierConfig,
   {
     languageOptions: {
       parserOptions: {
         project: true,
+        tsconfigRootDir: import.meta.dirname,
       },
     },
+  },
+  {
+    files: ["**/*.js"],
+    extends: [tseslint.configs.disableTypeChecked],
   },
   {
     rules: {
