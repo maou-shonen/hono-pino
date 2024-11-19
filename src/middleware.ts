@@ -1,10 +1,11 @@
-import type { MiddlewareHandler } from "hono";
+import type { Context, MiddlewareHandler } from "hono";
 import { pino } from "pino";
 import { defu } from "defu";
 import { isPino } from "./utils";
 import type { Env, Options } from "./types";
 import { httpCfgSym, PinoLogger } from "./logger";
 import type { LiteralString } from "./utils";
+import { env } from "hono/adapter";
 
 /**
  * hono-pino middleware
@@ -12,11 +13,17 @@ import type { LiteralString } from "./utils";
 export const pinoLogger = <ContextKey extends string = "logger">(
   opts?: Options<LiteralString<ContextKey>>,
 ): MiddlewareHandler<Env<ContextKey>> => {
-  const rootLogger = isPino(opts?.pino) ? opts.pino : pino(opts?.pino);
   const contextKey = opts?.contextKey ?? ("logger" as ContextKey);
+  let rootLogger = createStaticRootLogger(opts?.pino);
 
   return async (c, next) => {
-    const logger = new PinoLogger(rootLogger);
+    const [dynamicRootLogger, loggerChildOptions] = parseDynamicRootLogger(
+      opts?.pino,
+      c,
+    );
+    // set rootLogger to 1.static, 2.dynamic 3.default
+    rootLogger ??= dynamicRootLogger ?? getDefaultRootLogger();
+    const logger = new PinoLogger(rootLogger, loggerChildOptions);
     c.set(contextKey, logger);
 
     // disable http logger
@@ -90,3 +97,45 @@ export const logger = pinoLogger;
 
 let defaultReqId = 0;
 const defaultReqIdGenerator = () => (defaultReqId += 1);
+
+/**
+ * create static rootLogger,
+ * in dynamic rootLogger mode, is null
+ */
+const createStaticRootLogger = (opt: Options["pino"]): pino.Logger | null => {
+  if (typeof opt === "function") return null;
+  if (isPino(opt)) return opt;
+  return pino(opt);
+};
+
+/**
+ * parse dynamic rootLogger
+ *
+ * @returns [dynamicRootLogger, loggerChildOptions]
+ */
+const parseDynamicRootLogger = (
+  opt: Options["pino"],
+  c: Context,
+): [pino.Logger | undefined, pino.ChildLoggerOptions | undefined] => {
+  // default
+  if (opt === undefined) {
+    const { LOG_LEVEL } = env<{ LOG_LEVEL?: string }>(c);
+    return [
+      undefined,
+      {
+        level: LOG_LEVEL ?? "info",
+      },
+    ];
+  }
+
+  if (typeof opt !== "function") return [undefined, undefined];
+  const v = opt(c);
+  if (isPino(v)) return [v, undefined];
+  return [undefined, v];
+};
+
+/**
+ * get default rootLogger (lazy initialization)
+ */
+const getDefaultRootLogger = (): pino.Logger => (_defaultRootLogger ??= pino());
+let _defaultRootLogger: pino.Logger | undefined = undefined;
