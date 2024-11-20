@@ -12,6 +12,17 @@ A [pino](https://github.com/pinojs/pino) logger plugin for [hono](https://github
 
 This repository is inspired by [pino-http](https://github.com/pinojs/pino-http) and [nestjs-pino](https://github.com/iamolegga/nestjs-pino).
 
+## Runtime Support
+
+> [!IMPORTANT]
+> This package uses pino, the pino is designed for Node.js and support browser environment,  
+> for edge environments (e.g. Cloudflare Workers), some pino advanced features maybe not working,  
+> if fixing these issues is feasible, I will make an effort to implement it, but I cannot guarantee this.
+
+known issues:
+
+- `transports`: Alternative -> browser.write
+
 ## Installation
 
 ```bash
