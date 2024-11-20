@@ -1,5 +1,12 @@
 # hono-pino
 
+## [0.7.0](https://github.com/maou-shonen/hono-pino/compare/v0.6.0...v0.7.0) (2024-11-19)
+
+
+### Features
+
+* add dynamic pino options ([#59](https://github.com/maou-shonen/hono-pino/issues/59)) ([31aec6f](https://github.com/maou-shonen/hono-pino/commit/31aec6fc8094fb5b45ad6337805467a061f9e471))
+
 ## [0.6.0](https://github.com/maou-shonen/hono-pino/compare/v0.5.1...v0.6.0) (2024-11-07)
 
 
