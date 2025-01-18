@@ -1,7 +1,7 @@
 import type { Context, MiddlewareHandler } from "hono";
 import { pino } from "pino";
 import { defu } from "defu";
-import { isPino } from "./utils";
+import { getMinimalMessage, isPino } from "./utils";
 import type { Env, Options } from "./types";
 import { httpCfgSym, PinoLogger } from "./logger";
 import type { LiteralString } from "./utils";
@@ -74,8 +74,8 @@ export const pinoLogger = <ContextKey extends string = "logger">(
           headers: c.res.headers,
         },
       };
-      bindings = defu(bindings, onResBindings);
 
+      bindings = defu(bindings, onResBindings);
       const level =
         logger[httpCfgSym].resLevel ??
         opts?.http?.onResLevel?.(c) ??
@@ -84,7 +84,18 @@ export const pinoLogger = <ContextKey extends string = "logger">(
         logger[httpCfgSym].resMessage ??
         opts?.http?.onResMessage?.(c) ??
         (c.error ? c.error.message : "Request completed");
-      logger[level](bindings, msg);
+      if (opts?.http?.minimalMessage) {
+        if (typeof opts?.http?.minimalMessage === "function") {
+          // @ts-expect-error bindings shape is too broad
+          const inlineMessage = opts?.http?.minimalMessage(bindings, c);
+          logger[level](inlineMessage, msg);
+          return;
+        }
+        const inlineMessage = getMinimalMessage(bindings);
+        logger[level](inlineMessage, msg);
+      } else {
+        logger[level](bindings, msg);
+      }
     }
   };
 };

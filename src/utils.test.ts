@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getLogger, isPino } from "./utils";
+import { ANSI, getLogger, isPino, statusColors } from "./utils";
 import { pino } from "pino";
 import { PinoLogger } from "./logger";
 import { Hono } from "hono";
@@ -32,4 +32,11 @@ it("getLogger", async () => {
   const res = await app.request("/");
   expect(res.status).toBe(200);
   expect(res.text()).resolves.toBe("ok");
+});
+
+it("statusColors", () => {
+  expect(statusColors(200)).toBe(ANSI.FgGreen);
+  expect(statusColors(300)).toBe(ANSI.FgPurple);
+  expect(statusColors(400)).toBe(ANSI.FgRed);
+  expect(statusColors(500)).toBe(ANSI.FgYellow);
 });

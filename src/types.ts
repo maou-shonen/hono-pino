@@ -2,6 +2,20 @@ import type { Context } from "hono";
 import { pino } from "pino";
 import type { PinoLogger } from "./logger";
 
+export type FinalBindings = {
+  res?: {
+    status: number;
+    headers: Headers;
+  };
+  req?: {
+    url: string;
+    method: string;
+    headers: Headers;
+  };
+  reqId: string;
+  responseTime: number;
+};
+
 /**
  * pinoLogger options
  */
@@ -312,6 +326,39 @@ export type HttpLoggerOptions = {
    * @default true
    */
   responseTime?: boolean;
+
+  /**
+   * If set to true, it will return a minimal message inlined.
+   * If set to false, it will output detailed log information like:
+   * @example
+   * ```json
+   * {
+   *   "res": {
+   *     "status": 200,
+   *     "headers": {
+   *       "x-request-id": "a62ddc20-11e6-4bbe-8361-34610021b130",
+   *       "content-type": "application/json"
+   *     }
+   *   },
+   *   "req": {
+   *     "url": "/api/v1/inventory",
+   *     "method": "GET",
+   *     "headers": {
+   *     }
+   *   },
+   *   "reqId": "a62ddc20-11e6-4bbe-8361-34610021b130",
+   *   "responseTime": 20
+   * }
+   * ```
+   * Alternatively, a function can be passed that takes in bindings and returns either a string or a modified bindings object.
+   */
+  minimalMessage?:
+    | false
+    | true
+    | (<T extends Env = Env>(
+        bindings: FinalBindings,
+        c: Context<T, string, object>,
+      ) => string | pino.Bindings);
 };
 
 /**
