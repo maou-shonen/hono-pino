@@ -447,4 +447,48 @@ describe("middleware", () => {
       expect(await res.text()).toBe("ok");
     });
   });
+
+  describe("minimal message", () => {
+    it("not enabled", async () => {
+      const { logs } = await mockRequest({
+        // minimalMessage: true,
+      });
+      const firstlog = logs[0];
+      expect(firstlog).toHaveProperty("msg");
+      expect(firstlog).toHaveProperty("req");
+      expect(firstlog).toHaveProperty("res");
+      expect(firstlog).toHaveProperty("reqId");
+      expect(firstlog).toHaveProperty("responseTime");
+    });
+    it("enabled", async () => {
+      const { logs } = await mockRequest({
+        minimalMessage: true,
+      });
+      const firstlog = logs[0];
+      expect(firstlog).toHaveProperty("msg");
+      expect(firstlog).not.toHaveProperty("req");
+      expect(firstlog).not.toHaveProperty("res");
+      expect(firstlog).not.toHaveProperty("reqId");
+      expect(firstlog).not.toHaveProperty("responseTime");
+    });
+    it("enabled with callback", async () => {
+      const { logs } = await mockRequest({
+        minimalMessage: (b, c) => {
+          return {
+            ...b,
+            fun: "fun message : " + c.res.status,
+          };
+        },
+      });
+      const firstlog = logs[0];
+      console.log(firstlog);
+      expect(firstlog).toHaveProperty("msg");
+      expect(firstlog).toHaveProperty("req");
+      expect(firstlog).toHaveProperty("res");
+      expect(firstlog).toHaveProperty("reqId");
+      expect(firstlog).toHaveProperty("responseTime");
+      expect(firstlog).toHaveProperty("fun");
+      expect(firstlog.fun).toContain("fun message");
+    });
+  });
 });
