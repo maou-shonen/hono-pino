@@ -1,13 +1,13 @@
 {
-  "name": "hono-pino",
+  "name": "@tigawanna/hono-pino",
   "version": "0.7.0",
   "description": "A pino logger plugin for hono",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/maou-shonen/hono-pino.git"
+    "url": "git+https://github.com/tigawanna/hono-pino.git"
   },
   "license": "MIT",
-  "author": "maou-shonen",
+  "author": "tigawanna",
   "type": "module",
   "exports": {
     ".": {
@@ -32,9 +32,9 @@
     "pino",
     "logger"
   ],
-  "homepage": "https://github.com/maou-shonen/hono-pino#readme",
+  "homepage": "https://github.com/tigawanna/hono-pino#readme",
   "bugs": {
-    "url": "https://github.com/maou-shonen/hono-pino/issues"
+    "url": "https://github.com/tigawanna/hono-pino/issues"
   },
   "packageManager": "pnpm@9.4.0",
   "engines": {
@@ -49,7 +49,11 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:edge": "vitest run --environment edge-runtime",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "ci:version": "changeset version",
+    "ci:release": "changeset publish",
+    "release": "changeset publish --no-git-checks",
+    "check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm"
   },
   "peerDependencies": {
     "hono": ">=4.0.0",
@@ -63,6 +67,7 @@
     "@eslint/js": "^9.5.0",
     "@types/node": "^20.14.2",
     "@vitest/coverage-v8": "^2.1.3",
+    "changesets": "^1.0.2",
     "eslint": "^8.57.0",
     "hono": "^4.4.6",
     "husky": "^9.0.11",
@@ -74,5 +79,8 @@
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.13.0",
     "vitest": "^2.1.3"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

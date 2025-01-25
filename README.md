@@ -2,8 +2,10 @@
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
-[![JSR][jsr-version-src]][jsr-version-href]
-[![JSR][jsr-score-src]][jsr-score-href]
+
+<!-- [![JSR][jsr-version-src]][jsr-version-href]
+[![JSR][jsr-score-src]][jsr-score-href] -->
+
 [![bundle][bundle-src]][bundle-href]
 [![Codecov][codecov-src]][codecov-href]
 [![License][license-src]][license-href]
@@ -13,6 +15,75 @@ A [pino](https://github.com/pinojs/pino) logger plugin for [hono](https://github
 This repository is inspired by [pino-http](https://github.com/pinojs/pino-http) and [nestjs-pino](https://github.com/iamolegga/nestjs-pino).
 
 ## Runtime Support
+
+> [!IMPORTANT]
+> This is fork of the original [hono-pino](https://github.com/maou-shonen/hono-pino) project that adds minimal output message option for cleaner logs
+
+ex: with minimal enabled
+
+```ts
+return logger({
+  pino: pino(
+    {
+      level: envVariables.LOG_LEVEL || "info",
+    },
+    envVariables.NODE_ENV === "production"
+      ? undefined
+      : pretty({
+          colorize: true,
+        }),
+  ),
+  http: {
+    reqId: () => crypto.randomUUID(),
+    minimalMessage: true,
+  },
+});
+```
+
+```sh
+[10:37:26.771] INFO (223659): ✅  /api/v1/inventory GET  200 OK  application/json 29ms
+
+```
+
+With custom bindings
+
+```ts
+return logger({
+  pino: pino(
+    {
+      level: envVariables.LOG_LEVEL || "info",
+    },
+    envVariables.NODE_ENV === "production"
+      ? undefined
+      : pretty({
+          colorize: true,
+        }),
+  ),
+  http: {
+    reqId: () => crypto.randomUUID(),
+    minimalMessage: (b, c) => {
+      return {
+        extra: "i want to log this too",
+        ...b,
+      };
+    },
+  },
+});
+```
+
+```sh
+[10:38:23.093] INFO (225266): Request completed
+    extra: "i want to log this too"
+    res: {
+      "status": 200,
+      "headers": {}
+    }
+    req: {
+      "url": "/api/v1/inventory",
+      "method": "GET",
+      "headers": {
+
+```
 
 > [!IMPORTANT]
 > This package uses pino, the pino is designed for Node.js and support browser environment,  
@@ -27,18 +98,18 @@ known issues:
 
 ```bash
 # npm
-npm install hono-pino pino
+npm install @tigawanna/hono-pino pino
 # pnpm
-pnpm add hono-pino pino
+pnpm add @tigawanna/hono-pino pino
 # bun
-bun add hono-pino pino
+bun add @tigawanna/hono-pino pino
 ```
 
 ## Usage
 
 ```ts
 import { Hono } from 'hono'
-import { pinoLogger } from 'hono-pino'
+import { pinoLogger } from '@tigawanna/hono-pino'
 
 const app = new Hono()
   .use(
@@ -111,7 +182,7 @@ see [examples](./examples/)
 
 ## Options & Types
 
-[View the full options in JSR](https://jsr.io/@maou-shonen/hono-pino/doc)  
+[View the full options in JSR](https://jsr.io/@maou-shonen/@tigawanna/hono-pino/doc)  
 [View the full options in github](./src/types.ts)
 
 ### Logger method
@@ -143,17 +214,17 @@ class PinoLogger {
 
 <!-- Refs -->
 
-[npm-version-src]: https://img.shields.io/npm/v/hono-pino
-[npm-version-href]: https://npmjs.com/package/hono-pino
-[npm-downloads-src]: https://img.shields.io/npm/dm/hono-pino
-[npm-downloads-href]: https://npmjs.com/package/hono-pino
-[jsr-version-src]: https://jsr.io/badges/@maou-shonen/hono-pino
-[jsr-version-href]: https://jsr.io/@maou-shonen/hono-pino
-[codecov-src]: https://img.shields.io/codecov/c/gh/maou-shonen/hono-pino/main
-[jsr-score-src]: https://jsr.io/badges/@maou-shonen/hono-pino/score
-[jsr-score-href]: https://jsr.io/@maou-shonen/hono-pino/score
-[codecov-href]: https://codecov.io/gh/maou-shonen/hono-pino
-[bundle-src]: https://img.shields.io/bundlephobia/minzip/hono-pino
-[bundle-href]: https://bundlephobia.com/result?p=hono-pino
-[license-src]: https://img.shields.io/github/license/maou-shonen/hono-pino.svg
-[license-href]: https://github.com/maou-shonen/hono-pino/blob/main/LICENSE
+[npm-version-src]: https://img.shields.io/npm/v/@tigawanna/hono-pino
+[npm-version-href]: https://npmjs.com/package/@tigawanna/hono-pino
+[npm-downloads-src]: https://img.shields.io/npm/dm/@tigawanna/hono-pino
+[npm-downloads-href]: https://npmjs.com/package/@tigawanna/hono-pino
+[jsr-version-src]: https://jsr.io/badges/@maou-shonen/@tigawanna/hono-pino
+[jsr-version-href]: https://jsr.io/@maou-shonen/@tigawanna/hono-pino
+[codecov-src]: https://img.shields.io/codecov/c/gh/maou-shonen/@tigawanna/hono-pino/main
+[jsr-score-src]: https://jsr.io/badges/@maou-shonen/@tigawanna/hono-pino/score
+[jsr-score-href]: https://jsr.io/@maou-shonen/@tigawanna/hono-pino/score
+[codecov-href]: https://codecov.io/gh/maou-shonen/@tigawanna/hono-pino
+[bundle-src]: https://img.shields.io/bundlephobia/minzip/@tigawanna/hono-pino
+[bundle-href]: https://bundlephobia.com/result?p=@tigawanna/hono-pino
+[license-src]: https://img.shields.io/github/license/maou-shonen/@tigawanna/hono-pino.svg
+[license-href]: https://github.com/maou-shonen/@tigawanna/hono-pino/blob/main/LICENSE
