@@ -40,8 +40,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       # https://github.com/nodejs/corepack/issues/627
-      - run: npm -g --force corepack@latest
-      - run: corepack enable
+      - run: npm -g --force corepack@latest && corepack enable
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
