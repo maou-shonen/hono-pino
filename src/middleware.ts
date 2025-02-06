@@ -24,7 +24,9 @@ export const pinoLogger = <ContextKey extends string = "logger">(
     // set rootLogger to 1.static, 2.dynamic 3.default
     rootLogger ??= dynamicRootLogger ?? getDefaultRootLogger();
     const logger = new PinoLogger(rootLogger, loggerChildOptions);
-    c.set(contextKey, logger);
+    //! typescript incorrectly infers the `ContextKey` type to be "requestId"
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    c.set(contextKey as any, logger);
 
     // disable http logger
     if (opts?.http === false) {

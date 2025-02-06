@@ -1,6 +1,7 @@
 import type { Context } from "hono";
 import { pino } from "pino";
 import type { PinoLogger } from "./logger";
+import { IsAny } from "hono/utils/types";
 
 /**
  * pinoLogger options
@@ -363,8 +364,13 @@ export type HttpLoggerOptions = {
  * const app = new Hono<Env & HonoPinoEnv>()
  * ```
  */
-export type Env<LoggerKey extends string = "logger"> = {
-  Variables: {
-    [key in LoggerKey]: PinoLogger;
-  };
-};
+export type Env<LoggerKey extends string = "logger"> =
+  IsAny<LoggerKey> extends true
+    ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      any
+    : {
+        // Bindings: never;
+        Variables: {
+          [key in LoggerKey]: PinoLogger;
+        };
+      };
