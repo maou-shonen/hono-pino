@@ -1,5 +1,12 @@
 # hono-pino
 
+## [0.7.1](https://github.com/maou-shonen/hono-pino/compare/v0.7.0...v0.7.1) (2025-02-07)
+
+
+### Bug Fixes
+
+* can set middleware ENV to any now ([#72](https://github.com/maou-shonen/hono-pino/issues/72)) ([05ad924](https://github.com/maou-shonen/hono-pino/commit/05ad9243c85c9b01e77e97ac3799494a9b83e0ef))
+
 ## [0.7.0](https://github.com/maou-shonen/hono-pino/compare/v0.6.0...v0.7.0) (2024-11-19)
 
 
