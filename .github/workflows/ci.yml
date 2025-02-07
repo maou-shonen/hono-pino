@@ -7,12 +7,14 @@ on:
     paths:
       - .github/**
       - src/**
+      - tests/**
   pull_request:
     branches:
       - main
     paths:
       - .github/**
       - src/**
+      - tests/**
 
 jobs:
   lint:
