@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: 20
           cache: pnpm
-      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm install
 
       - run: pnpm run typecheck
       - run: pnpm run lint
@@ -48,6 +48,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
+      - run: pnpm install
       - run: pnpm run test
 
   unit-test-edge:
@@ -63,6 +64,7 @@ jobs:
         with:
           node-version: 20
           cache: pnpm
+      - run: pnpm install
       - run: pnpm run test:edge
 
   jsr-dry-run:
@@ -78,6 +80,7 @@ jobs:
         with:
           node-version: 20
           cache: pnpm
+      - run: pnpm install
       - run: pnpm exec jsr publish --dry-run
 
   coverage:
@@ -94,6 +97,7 @@ jobs:
         with:
           node-version: 20
           cache: pnpm
+      - run: pnpm install
 
       - run: pnpm run coverage
       - name: Upload coverage reports to Codecov
