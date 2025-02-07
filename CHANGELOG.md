@@ -1,5 +1,12 @@
 # hono-pino
 
+## [0.7.2](https://github.com/maou-shonen/hono-pino/compare/v0.7.1...v0.7.2) (2025-02-07)
+
+
+### Bug Fixes
+
+* fix build error ([#74](https://github.com/maou-shonen/hono-pino/issues/74)) ([b9596ca](https://github.com/maou-shonen/hono-pino/commit/b9596cadeb3b9d877d69e23e3df58b839a85b65e))
+
 ## [0.7.1](https://github.com/maou-shonen/hono-pino/compare/v0.7.0...v0.7.1) (2025-02-07)
 
 
