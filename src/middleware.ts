@@ -53,7 +53,7 @@ export const pinoLogger = <ContextKey extends string = "logger">(
     // on request
     if (opts?.http?.onReqMessage) {
       const level = opts.http.onReqLevel?.(c) ?? "info";
-      const msg = opts.http.onReqMessage(c);
+      const msg = await opts.http.onReqMessage(c);
       logger[level](bindings, msg);
     }
 
@@ -83,7 +83,9 @@ export const pinoLogger = <ContextKey extends string = "logger">(
         (c.error ? "error" : "info");
       const msg =
         logger[httpCfgSym].resMessage ??
-        opts?.http?.onResMessage?.(c) ??
+        (opts?.http?.onResMessage
+          ? await opts?.http?.onResMessage(c)
+          : undefined) ??
         (c.error ? c.error.message : "Request completed");
       logger[level](bindings, msg);
     }
