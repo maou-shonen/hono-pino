@@ -1,5 +1,17 @@
 # hono-pino
 
+## [0.8.0](https://github.com/maou-shonen/hono-pino/compare/v0.7.2...v0.8.0) (2025-03-14)
+
+
+### Features
+
+* support async functions for request and response messages ([#77](https://github.com/maou-shonen/hono-pino/issues/77)) ([9381cfd](https://github.com/maou-shonen/hono-pino/commit/9381cfd3f9367ee5acddf8979aa2cb3996f57c0c))
+
+
+### Bug Fixes
+
+* fix changelog ([#79](https://github.com/maou-shonen/hono-pino/issues/79)) ([02b8df7](https://github.com/maou-shonen/hono-pino/commit/02b8df758db4d5ea846b945c7c85142c95573f3a))
+
 ## [0.7.2](https://github.com/maou-shonen/hono-pino/compare/v0.7.1...v0.7.2) (2025-02-07)
 
 ### Bug Fixes
