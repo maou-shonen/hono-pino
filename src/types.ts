@@ -237,8 +237,19 @@ export type HttpLoggerOptions = {
    * ```ts
    * (c) => "Request received"
    * ```
+   * 
+   * @example
+   * 
+   * ### async function to access request body
+   * 
+   * ```ts
+   * async (c) => {
+   *   const body = await c.req.raw.clone().text();
+   *   return `Request received with body: ${body}`;
+   * }
+   * ```
    */
-  onReqMessage?: false | ((c: Context) => string);
+  onReqMessage?: false | ((c: Context) => string | Promise<string>);
   /**
    * custom onResponse bindings
    *
@@ -305,8 +316,19 @@ export type HttpLoggerOptions = {
    * ```ts
    * false
    * ```
+   * 
+   * @example
+   * 
+   * ### async function
+   * 
+   * ```ts
+   * async (c) => {
+   *   // Perform async operations
+   *   return "Request completed with async processing";
+   * }
+   * ```
    */
-  onResMessage?: false | ((c: Context) => string);
+  onResMessage?: false | ((c: Context) => string | Promise<string>);
   /**
    * adding response time to bindings
    *

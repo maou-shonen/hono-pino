@@ -285,6 +285,22 @@ describe("middleware", () => {
       expect(logs[0]).toMatchObject(defaultReqLog);
       expect(logs[1]).toMatchObject(defaultResLog);
     });
+
+    it("async message function", async () => {
+      const { logs } = await mockRequest({
+        onReqMessage: async (c) => {
+          await sleep(10); // Simulate async operation
+          return "Async request received";
+        },
+      });
+
+      expect(logs).toHaveLength(2);
+      expect(logs[0]).toMatchObject({
+        ...defaultReqLog,
+        msg: "Async request received",
+      });
+      expect(logs[1]).toMatchObject(defaultResLog);
+    });
   });
 
   describe("on response", () => {
@@ -325,6 +341,21 @@ describe("middleware", () => {
       expect(logs[0]).toMatchObject({
         ...defaultResLog,
         msg: "foo",
+      });
+    });
+
+    it("async message function", async () => {
+      const { logs } = await mockRequest({
+        onResMessage: async (c) => {
+          await sleep(10); // Simulate async operation
+          return "Async response completed";
+        },
+      });
+
+      expect(logs).toHaveLength(1);
+      expect(logs[0]).toMatchObject({
+        ...defaultResLog,
+        msg: "Async response completed",
       });
     });
 
