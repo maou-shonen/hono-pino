@@ -1,7 +1,7 @@
 import type { Context, Env as HonoEnv } from "hono";
-import { pino } from "pino";
+import type { IsAny } from "hono/utils/types";
+import type { pino } from "pino";
 import type { PinoLogger } from "./logger";
-import { IsAny } from "hono/utils/types";
 
 /**
  * pinoLogger options
@@ -237,11 +237,11 @@ export type HttpLoggerOptions = {
    * ```ts
    * (c) => "Request received"
    * ```
-   * 
+   *
    * @example
-   * 
+   *
    * ### async function to access request body
-   * 
+   *
    * ```ts
    * async (c) => {
    *   const body = await c.req.raw.clone().text();
@@ -316,11 +316,11 @@ export type HttpLoggerOptions = {
    * ```ts
    * false
    * ```
-   * 
+   *
    * @example
-   * 
+   *
    * ### async function
-   * 
+   *
    * ```ts
    * async (c) => {
    *   // Perform async operations

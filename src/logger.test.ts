@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeEach } from "vitest";
-import { httpCfgSym, PinoLogger } from "./logger";
 import { pino } from "pino";
+import { beforeEach, describe, expect, it } from "vitest";
+import { httpCfgSym, PinoLogger } from "./logger";
 
 describe("logger", () => {
   let logs: Record<string, any>[] = [];

@@ -1,4 +1,4 @@
-export { pinoLogger, logger } from "./middleware";
-export { PinoLogger, httpCfgSym } from "./logger";
+export { httpCfgSym, PinoLogger } from "./logger";
+export { logger, pinoLogger } from "./middleware";
+export type { Env, HttpLoggerOptions, Options } from "./types";
 export { getLogger } from "./utils";
-export type { Options, Env, HttpLoggerOptions } from "./types";

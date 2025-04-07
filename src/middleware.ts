@@ -1,11 +1,11 @@
-import type { Context, MiddlewareHandler } from "hono";
-import { pino } from "pino";
 import { defu } from "defu";
-import { isPino } from "./utils";
-import type { Env, Options } from "./types";
-import { httpCfgSym, PinoLogger } from "./logger";
-import type { LiteralString } from "./utils";
+import type { Context, MiddlewareHandler } from "hono";
 import { env } from "hono/adapter";
+import { pino } from "pino";
+import { httpCfgSym, PinoLogger } from "./logger";
+import type { Env, Options } from "./types";
+import type { LiteralString } from "./utils";
+import { isPino } from "./utils";
 
 /**
  * hono-pino middleware

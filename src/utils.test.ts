@@ -1,9 +1,9 @@
-import { describe, it, expect } from "vitest";
-import { getLogger, isPino } from "./utils";
-import { pino } from "pino";
-import { PinoLogger } from "./logger";
 import { Hono } from "hono";
+import { pino } from "pino";
+import { describe, expect, it } from "vitest";
+import { PinoLogger } from "./logger";
 import { logger } from "./middleware";
+import { getLogger, isPino } from "./utils";
 
 describe("isPinoLogger", () => {
   it("test pino", () => {
