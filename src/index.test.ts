@@ -1,4 +1,4 @@
-import { it, expect } from "vitest";
+import { expect, it } from "vitest";
 import * as myPackage from "./index";
 
 it("should have exports", () => {

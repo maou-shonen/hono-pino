@@ -1,15 +1,16 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
+import defu from "defu";
 import { Hono } from "hono";
+import { requestId } from "hono/request-id";
+import { pino } from "pino";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { PinoLogger } from "./logger";
 import { pinoLogger } from "./middleware";
 import type { Options } from "./types";
-import { pino } from "pino";
-import { PinoLogger } from "./logger";
-import defu from "defu";
-import { requestId } from "hono/request-id";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe("middleware", () => {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   let logs: Record<string, any>[];
   const pinoInstance = pino(
     { level: "trace", base: null, timestamp: false },

@@ -1,6 +1,6 @@
 import type { Context } from "hono";
-import { PinoLogger } from "./logger";
-import { pino } from "pino";
+import type { pino } from "pino";
+import type { PinoLogger } from "./logger";
 
 /**
  * get logger from context

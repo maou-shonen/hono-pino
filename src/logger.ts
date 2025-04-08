@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
-import defu from "defu";
+import { defu } from "defu";
 import { pino } from "pino";
 
 /**
@@ -76,6 +76,7 @@ export const httpCfgSym = Symbol("httpCfgSym");
 /**
  * hono-pino logger
  */
+// biome-ignore lint/suspicious/noUnsafeDeclarationMerging: <explanation>
 export class PinoLogger {
   /**
    * Internal pino logger instance
@@ -154,38 +155,32 @@ export class PinoLogger {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-PinoLogger.prototype.trace = function (this, ...args: [any, ...any]) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+PinoLogger.prototype.trace = function (this, ...args: [any, ...any[]]) {
   this._logger.trace(...args);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 PinoLogger.prototype.debug = function (this, ...args: [any, ...any[]]) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   this._logger.debug(...args);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-PinoLogger.prototype.info = function (this, ...args: [any, ...any]) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+PinoLogger.prototype.info = function (this, ...args: [any, ...any[]]) {
   this._logger.info(...args);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-PinoLogger.prototype.warn = function (this, ...args: [any, ...any]) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+PinoLogger.prototype.warn = function (this, ...args: [any, ...any[]]) {
   this._logger.warn(...args);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-PinoLogger.prototype.error = function (this, ...args: [any, ...any]) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+PinoLogger.prototype.error = function (this, ...args: [any, ...any[]]) {
   this._logger.error(...args);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-PinoLogger.prototype.fatal = function (this, ...args: [any, ...any]) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+PinoLogger.prototype.fatal = function (this, ...args: [any, ...any[]]) {
   this._logger.fatal(...args);
 };
