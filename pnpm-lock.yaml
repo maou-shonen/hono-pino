@@ -11,31 +11,28 @@ importers:
       defu:
         specifier: ^6.1.4
         version: 6.1.4
+      hono:
+        specifier: '>=4.0.0'
+        version: 4.6.20
+      pino:
+        specifier: '>=7.1.0'
+        version: 9.6.0
     devDependencies:
       '@biomejs/biome':
         specifier: 2.0.0-beta.1
         version: 2.0.0-beta.1
-      '@edge-runtime/vm':
-        specifier: ^4.0.4
-        version: 4.0.4
       '@types/node':
         specifier: ^20.14.2
         version: 20.14.10
       '@vitest/coverage-v8':
         specifier: ^2.1.3
         version: 2.1.3(vitest@2.1.9(@edge-runtime/vm@4.0.4)(@types/node@20.14.10))
-      hono:
-        specifier: ^4.6.20
-        version: 4.6.20
       husky:
         specifier: ^9.0.11
         version: 9.0.11
       jsr:
         specifier: ^0.13.2
         version: 0.13.2
-      pino:
-        specifier: ^9.4.0
-        version: 9.6.0
       tsup:
         specifier: ^8.1.0
         version: 8.3.5(postcss@8.5.1)(typescript@5.7.3)(yaml@2.4.5)
@@ -1271,11 +1268,13 @@ snapshots:
   '@biomejs/cli-win32-x64@2.0.0-beta.1':
     optional: true
 
-  '@edge-runtime/primitives@5.1.1': {}
+  '@edge-runtime/primitives@5.1.1':
+    optional: true
 
   '@edge-runtime/vm@4.0.4':
     dependencies:
       '@edge-runtime/primitives': 5.1.1
+    optional: true
 
   '@esbuild/aix-ppc64@0.21.5':
     optional: true
