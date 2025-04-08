@@ -31,5 +31,5 @@ it("getLogger", async () => {
   });
   const res = await app.request("/");
   expect(res.status).toBe(200);
-  expect(res.text()).resolves.toBe("ok");
+  expect(await res.text()).toBe("ok");
 });
