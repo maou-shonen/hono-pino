@@ -67,6 +67,7 @@
     "husky": "^9.0.11",
     "jsr": "^0.13.2",
     "pino": "^9.4.0",
+    "pino-abstract-transport": "^2.0.0",
     "tsup": "^8.1.0",
     "typescript": "^5.7.3",
     "vitest": "^2.1.3"
