@@ -98,8 +98,11 @@ export const pinoLogger = <ContextKey extends string = "logger">(
  */
 export const logger = pinoLogger;
 
-let defaultReqId = 0;
-const defaultReqIdGenerator = () => (defaultReqId += 1);
+let _defaultReqId = 0;
+const defaultReqIdGenerator = () => {
+  _defaultReqId += 1;
+  return _defaultReqId;
+};
 
 /**
  * create static rootLogger,
@@ -140,5 +143,8 @@ const parseDynamicRootLogger = (
 /**
  * get default rootLogger (lazy initialization)
  */
-const getDefaultRootLogger = (): pino.Logger => (_defaultRootLogger ??= pino());
+const getDefaultRootLogger = (): pino.Logger => {
+  _defaultRootLogger ??= pino();
+  return _defaultRootLogger;
+};
 let _defaultRootLogger: pino.Logger | undefined = undefined;

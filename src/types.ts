@@ -389,7 +389,7 @@ export type HttpLoggerOptions = {
 export type Env<LoggerKey extends string = "logger"> =
   IsAny<LoggerKey> extends true
     ? // if LoggerKey is any then return any
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       any
     : // if LoggerKey like HonoEnv then return HonoEnv
       LoggerKey extends HonoEnv

@@ -10,6 +10,7 @@ import type { Options } from "./types";
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe("middleware", () => {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   let logs: Record<string, any>[];
   const pinoInstance = pino(
     { level: "trace", base: null, timestamp: false },
