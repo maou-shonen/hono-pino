@@ -45,7 +45,7 @@ describe("middleware", () => {
 
     const res = await app.request("/");
     expect(res.status).toBe(200);
-    expect(res.text()).resolves.toBe("ok");
+    expect(await res.text()).toBe("ok");
 
     return {
       logs,
@@ -369,7 +369,7 @@ describe("middleware", () => {
 
       const res = await app.request("/override-message");
       expect(res.status).toBe(200);
-      expect(res.text()).resolves.toBe("ok");
+      expect(await res.text()).toBe("ok");
 
       expect(logs).toHaveLength(1);
       expect(logs[0]).toMatchObject(
@@ -394,7 +394,7 @@ describe("middleware", () => {
 
       const res = await app.request("/override-level");
       expect(res.status).toBe(200);
-      expect(res.text()).resolves.toBe("ok");
+      expect(await res.text()).toBe("ok");
 
       expect(logs).toHaveLength(1);
       expect(logs[0]).toMatchObject(
@@ -437,7 +437,7 @@ describe("middleware", () => {
 
       const res = await app.request("/long-time");
       expect(res.status).toBe(200);
-      expect(res.text()).resolves.toBe("ok");
+      expect(await res.text()).toBe("ok");
 
       expect(logs).toHaveLength(1);
       expect(logs[0].responseTime).gte(1000);
