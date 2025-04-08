@@ -43,9 +43,9 @@
   "scripts": {
     "prepare": "husky",
     "build": "tsup-node",
-    "format": "prettier --write .",
+    "format": "biome format --write",
     "typecheck": "tsc",
-    "lint": "eslint --quiet .",
+    "lint": "biome check",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:edge": "vitest run --environment edge-runtime",
