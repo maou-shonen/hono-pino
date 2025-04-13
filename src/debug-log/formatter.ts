@@ -1,6 +1,5 @@
+import type { BindingsFormatter, TimeFormatter } from "./types";
 import { isUnixTime } from "./utils";
-
-export type TimeFormatter = (time: number | string | undefined) => string;
 
 export const defaultTimeFormatter: TimeFormatter = (time) => {
   if (!time) {
@@ -17,10 +16,9 @@ export const defaultTimeFormatter: TimeFormatter = (time) => {
   }
 
   const date = new Date(time);
-  return `${date.toISOString().slice(11, 19)}.${date.getMilliseconds()}`; // HH:mm:ss.SSS
+  const ms = date.getMilliseconds().toString().padEnd(3, "0");
+  return `${date.toISOString().slice(11, 19)}.${ms}`; // HH:mm:ss.SSS
 };
-
-export type BindingsFormatter = (bindings: Record<string, unknown>) => string;
 
 export const defaultBindingsFormat: BindingsFormatter = (bindings) => {
   return Object.entries(bindings).reduce((acc, [key, value]) => {
