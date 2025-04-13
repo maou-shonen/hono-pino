@@ -8,5 +8,9 @@
     "noEmit": true,
     "skipLibCheck": true
   },
+  "include": [
+    "src/**/*",
+    "examples/**/*",
+  ],
   "exclude": ["node_modules", "dist"]
 }
