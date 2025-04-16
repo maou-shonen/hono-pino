@@ -93,6 +93,9 @@ export class PinoLogger {
    * you can use it (not recommended)
    */
   _logger: pino.Logger;
+  // in cloudflare worker, pino logger bindings maybe not available
+  // use custom internal bindings
+  #bindings: pino.Bindings = {};
 
   [httpCfgSym]: {
     resMessage?: string | null;
@@ -103,20 +106,22 @@ export class PinoLogger {
     // Use a child logger to prevent unintended behavior from changes to the provided logger
     this._rootLogger = rootLogger.child({}, childOptions);
     this._logger = rootLogger;
+    this.#bindings = this._logger.bindings();
   }
 
   /**
    * Get bindings from http log context
    */
   bindings(): pino.Bindings {
-    return this._logger.bindings();
+    return this.#bindings;
   }
 
   /**
    * Clear bindings from http log context
    */
   clearBindings(): this {
-    this._logger = this._rootLogger.child({});
+    this.#bindings = {};
+    this._logger = this._rootLogger.child(this.#bindings);
     return this;
   }
 
@@ -130,11 +135,11 @@ export class PinoLogger {
       deep?: boolean;
     },
   ): this {
-    const newBindings = opts?.deep
-      ? defu(bindings, this._logger.bindings())
-      : { ...this._logger.bindings(), ...bindings };
+    this.#bindings = opts?.deep
+      ? defu(bindings, this.#bindings)
+      : { ...this.#bindings, ...bindings };
 
-    this._logger = this._rootLogger.child(newBindings);
+    this._logger = this._rootLogger.child(this.#bindings);
     return this;
   }
 
