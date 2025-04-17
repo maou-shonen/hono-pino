@@ -56,7 +56,7 @@ describe("defaultBindingsFormat", () => {
       key2: 123,
     };
     expect(defaultBindingsFormat(bindings)).toBe(
-      '\n  & key1: "value1"\n  & key2: 123',
+      '\n    key1: "value1"\n    key2: 123',
     );
   });
 
@@ -69,11 +69,11 @@ describe("defaultBindingsFormat", () => {
       array: [1, 2, 3],
     };
     expect(defaultBindingsFormat(bindings)).toBe(
-      '\n  & string: "text"' +
-        "\n  & number: 42" +
-        "\n  & boolean: true" +
-        '\n  & object: {"nested":"value"}' +
-        "\n  & array: [1,2,3]",
+      '\n    string: "text"' +
+        "\n    number: 42" +
+        "\n    boolean: true" +
+        '\n    object: {"nested":"value"}' +
+        "\n    array: [1,2,3]",
     );
   });
 });

@@ -22,6 +22,6 @@ export const defaultTimeFormatter: TimeFormatter = (time) => {
 
 export const defaultBindingsFormat: BindingsFormatter = (bindings) => {
   return Object.entries(bindings).reduce((acc, [key, value]) => {
-    return `${acc}\n  & ${key}: ${JSON.stringify(value)}`;
+    return `${acc}\n    ${key}: ${JSON.stringify(value)}`;
   }, "");
 };

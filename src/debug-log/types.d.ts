@@ -48,6 +48,10 @@ export interface DebugLogOptions {
    */
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   printer?: (...data: any[]) => void;
+  /**
+   * internal handler
+   */
+  _handler?: (obj: unknown) => void;
 }
 
 export type TimeFormatter = (time: number | string | undefined) => string;

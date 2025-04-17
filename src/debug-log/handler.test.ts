@@ -7,7 +7,6 @@ describe("createHandler", () => {
   // Mock console.log to capture output
   let logs: string[] = [];
   
-
   beforeEach(() => {
     logs = [];
     // Mock color functions to return predictable output for testing
@@ -50,9 +49,8 @@ describe("createHandler", () => {
 
     expect(logs).toHaveLength(2);
     expect(logs[0]).toContain("[12:34:56]");
-    expect(logs[0]).toContain("COLOR:INFO  ");
+    expect(logs[0]).toContain("COLOR:INFO");
     expect(logs[0]).toContain("Test message");
     expect(logs[1]).toContain("bindings: mocked");
   });
-
 });
