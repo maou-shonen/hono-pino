@@ -14,9 +14,6 @@ importers:
       hono:
         specifier: '>=4.0.0'
         version: 4.6.20
-      pino:
-        specifier: '>=7.1.0'
-        version: 9.6.0
     devDependencies:
       '@biomejs/biome':
         specifier: 2.0.0-beta.1
@@ -33,6 +30,12 @@ importers:
       jsr:
         specifier: ^0.13.2
         version: 0.13.2
+      pino:
+        specifier: ^9.4.0
+        version: 9.6.0
+      pino-abstract-transport:
+        specifier: ^2.0.0
+        version: 2.0.0
       tsup:
         specifier: ^8.1.0
         version: 8.3.5(postcss@8.5.1)(typescript@5.7.3)(yaml@2.4.5)
