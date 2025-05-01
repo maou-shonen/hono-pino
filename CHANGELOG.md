@@ -1,5 +1,17 @@
 # hono-pino
 
+## [0.9.0](https://github.com/maou-shonen/hono-pino/compare/v0.8.0...v0.9.0) (2025-05-01)
+
+
+### Features
+
+* add debug-log pino transport ([#84](https://github.com/maou-shonen/hono-pino/issues/84)) ([6027df8](https://github.com/maou-shonen/hono-pino/commit/6027df837fd73d62c94063dca496e2164ead8e30))
+
+
+### Bug Fixes
+
+* Fix the potential issue with the assign method not working in Cloudflare Workers ([#87](https://github.com/maou-shonen/hono-pino/issues/87)) ([b947326](https://github.com/maou-shonen/hono-pino/commit/b947326792bb2562705e32a57629782f1cf81616))
+
 ## [0.8.0](https://github.com/maou-shonen/hono-pino/compare/v0.7.2...v0.8.0) (2025-03-14)
 
 
