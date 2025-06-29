@@ -31,7 +31,7 @@ const app = new Hono()
     return c.text("hello world");
   })
 
-  .get("/error", async (c) => {
+  .get("/error", async (_c) => {
     throw new Error("a test error");
   });
 

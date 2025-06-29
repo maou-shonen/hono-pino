@@ -42,7 +42,7 @@ export function createHandler(opts?: DebugLogOptions): (obj: unknown) => void {
     } = obj ?? {};
 
     const timeStr = timeFormatter(time);
-    let levelLabel = (levelLabelMap[level] ?? "")
+    const levelLabel = (levelLabelMap[level] ?? "")
       .toUpperCase()
       .padEnd(levelMaxLength);
 

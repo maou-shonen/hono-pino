@@ -140,6 +140,7 @@ const parseDynamicRootLogger = (
   return [undefined, v];
 };
 
+let _defaultRootLogger: pino.Logger | undefined;
 /**
  * get default rootLogger (lazy initialization)
  */
@@ -147,4 +148,3 @@ const getDefaultRootLogger = (): pino.Logger => {
   _defaultRootLogger ??= pino();
   return _defaultRootLogger;
 };
-let _defaultRootLogger: pino.Logger | undefined = undefined;

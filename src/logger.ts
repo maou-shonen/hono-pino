@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 import { defu } from "defu";
-import { pino } from "pino";
+import type { pino } from "pino";
 
 /**
  * hono-pino logger instance
@@ -76,7 +75,7 @@ export const httpCfgSym = Symbol("httpCfgSym");
 /**
  * hono-pino logger
  */
-// biome-ignore lint/suspicious/noUnsafeDeclarationMerging: <explanation>
+// biome-ignore lint/suspicious/noUnsafeDeclarationMerging: override pino logger methods
 export class PinoLogger {
   /**
    * Internal pino logger instance

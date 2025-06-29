@@ -1,5 +1,3 @@
-import { createWriteStream } from "node:fs";
-import { Writable } from "node:stream";
 import build from "pino-abstract-transport";
 import { createHandler } from "./handler";
 import type { DebugLogOptions } from "./types";
