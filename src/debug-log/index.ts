@@ -2,6 +2,8 @@ import build from "pino-abstract-transport";
 import { createHandler } from "./handler";
 import type { DebugLogOptions } from "./types";
 
+export type * from "./types";
+
 /**
  * hono-pino/debug-log transport
  */
