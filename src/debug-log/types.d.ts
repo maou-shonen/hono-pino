@@ -64,7 +64,6 @@ export interface DebugLogOptions {
    * Function to print the final log output. Defaults to console.log.
    * @default console.log
    */
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   printer?: (...data: any[]) => void;
 
   /**
@@ -86,5 +85,5 @@ export type TimeFormatter = (time: number | string | undefined) => string;
  */
 export type BindingsFormatter = (
   bindings: Record<string, unknown>,
-  opts?: { colorEnabled?: boolean }
+  opts?: { colorEnabled?: boolean },
 ) => string;

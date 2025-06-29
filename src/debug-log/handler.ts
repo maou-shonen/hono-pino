@@ -1,8 +1,8 @@
+import { getColorEnabled } from "hono/utils/color";
 import { pino } from "pino";
 import { defaultBindingsFormat, defaultTimeFormatter } from "./formatter";
 import type { DebugLogOptions } from "./types";
 import { ANSI, addLogLevelColor, addStatusColor } from "./utils";
-import { getColorEnabled } from "hono/utils/color";
 
 /**
  * Create a debug-log handler for pretty-printing pino logs in development.
@@ -15,7 +15,7 @@ export function createHandler(opts?: DebugLogOptions): (obj: unknown) => void {
   const levelLabelMap = opts?.levelLabelMap ?? pino.levels.labels;
   const levelMaxLength = Object.values(levelLabelMap).reduce(
     (max, label) => Math.max(max, label.length),
-    0
+    0,
   );
 
   // Format strings for normal and HTTP logs. {bindings} will be replaced with formatted context.
@@ -29,7 +29,6 @@ export function createHandler(opts?: DebugLogOptions): (obj: unknown) => void {
   const bindingsFormatter = opts?.bindingsFormatter ?? defaultBindingsFormat;
   const printer = opts?.printer ?? console.log;
 
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const handler = (obj: any) => {
     const {
       level,
@@ -79,7 +78,7 @@ export function createHandler(opts?: DebugLogOptions): (obj: unknown) => void {
     // Replace placeholders in format string with actual values
     const output = Object.entries(textMap).reduce(
       (acc, [key, value]) => acc.replace(`{${key}}`, value),
-      logFormat
+      logFormat,
     );
 
     printer(output);

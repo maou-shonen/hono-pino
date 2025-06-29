@@ -160,32 +160,26 @@ export class PinoLogger {
   }
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 PinoLogger.prototype.trace = function (this, ...args: [any, ...any[]]) {
   this._logger.trace(...args);
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 PinoLogger.prototype.debug = function (this, ...args: [any, ...any[]]) {
   this._logger.debug(...args);
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 PinoLogger.prototype.info = function (this, ...args: [any, ...any[]]) {
   this._logger.info(...args);
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 PinoLogger.prototype.warn = function (this, ...args: [any, ...any[]]) {
   this._logger.warn(...args);
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 PinoLogger.prototype.error = function (this, ...args: [any, ...any[]]) {
   this._logger.error(...args);
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 PinoLogger.prototype.fatal = function (this, ...args: [any, ...any[]]) {
   this._logger.fatal(...args);
 };
