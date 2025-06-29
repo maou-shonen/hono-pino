@@ -1,4 +1,3 @@
-
 # Hono + Pino
 
 [![npm version][npm-version-src]][npm-version-href]
@@ -130,6 +129,79 @@ await app.request("/", {
 ## Example
 
 See [examples](./examples/)
+
+## hono-pino/debug-log Transport
+
+`hono-pino/debug-log` is a lightweight [pino](https://github.com/pinojs/pino) transport designed for development and debugging. It makes logs more readable, similar to `pino-pretty`, but with a focus on simplicity and customization.
+
+### Options
+
+- `colorEnabled`: Enable or disable color output (`true` | `false` | `undefined` for auto)
+- `messageKey`: The key for the log message (default: `msg`)
+- `requestKey`: The key for the request object (default: `req`)
+- `responseKey`: The key for the response object (default: `res`)
+- `levelLabelMap`: Map of log level numbers to their string labels
+- `normalLogFormat`: Format string for normal logs (default: `[{time}] {levelLabel} - {msg}`)
+- `httpLogFormat`: Format string for HTTP logs (default: `[{time}] {reqId} {req.method} {req.url} {res.status} ({responseTime}ms) - {msg} {bindings}`)
+- `timeFormatter`: Function to format the time value (default: `defaultTimeFormatter`)
+- `bindingsFormatter`: Function to format the context (bindings) (default: `defaultBindingsFormat`)
+- `levelFormatter`: Function to format the log level label (default: `defaultLevelFormatter`)
+- `printer`: Function to print the final log output (default: `console.log`)
+
+See all options in [src/debug-log/types.d.ts](./src/debug-log/types.d.ts)
+
+### Basic Usage (Node.js)
+
+```ts
+import { pino } from "pino";
+import { Hono } from "hono";
+import { pinoLogger } from "hono-pino";
+import type { DebugLogOptions } from "hono-pino/debug-log";
+
+const options: DebugLogOptions = {
+  // options...
+};
+
+const app = new Hono().use(
+  pinoLogger({
+    pino: pino({
+      base: null,
+      level: "trace",
+      transport: {
+        target: "hono-pino/debug-log",
+        options,
+      },
+      timestamp: pino.stdTimeFunctions.unixTime, // hh:mm:ss
+      // or
+      // timestamp: pino.stdTimeFunctions.epochTime, // hh:mm:ss.sss
+    }),
+  })
+);
+```
+
+### Basic Usage (Browser)
+
+```ts
+import { pino } from "pino";
+import { Hono } from "hono";
+import { pinoLogger } from "hono-pino";
+import { createHandler as debugLog } from "hono-pino/debug-log";
+
+const app = new Hono().use(
+  pinoLogger({
+    pino: pino({
+      level: "trace",
+      browser: {
+        write: debugLog({
+          ...options
+        }),
+      },
+    }),
+  })
+);
+```
+
+---
 
 ## Options & Types
 
