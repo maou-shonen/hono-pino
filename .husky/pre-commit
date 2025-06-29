@@ -1,2 +1,2 @@
-npx tsc
-npx biome check
+pnpm run lint
+pnpm run typecheck
