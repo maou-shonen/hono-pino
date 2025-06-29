@@ -105,7 +105,7 @@ export class PinoLogger {
     // Use a child logger to prevent unintended behavior from changes to the provided logger
     this._rootLogger = rootLogger.child({}, childOptions);
     this._logger = rootLogger;
-    this.#bindings = this._logger.bindings();
+    this.#bindings = rootLogger.bindings?.(); //! in cloudflare worker, pino logger bindings maybe not available
   }
 
   /**
