@@ -202,7 +202,7 @@ describe("middleware", () => {
 
       const res = await app.request("/bindings");
       expect(res.status).toBe(200);
-      expect(await res.json()).toStrictEqual({ name: "pino" });
+      expect(await res.json()).toMatchObject({ name: "pino" });
     });
 
     it("a pino options", async () => {
@@ -214,7 +214,7 @@ describe("middleware", () => {
 
       const res = await app.request("/bindings");
       expect(res.status).toBe(200);
-      expect(await res.json()).toStrictEqual({ name: "pino" });
+      expect(await res.json()).toMatchObject({ name: "pino" });
     });
 
     it("dynamic pino logger", async () => {
@@ -300,6 +300,19 @@ describe("middleware", () => {
         msg: "Async request received",
       });
       expect(logs[1]).toMatchObject(defaultResLog);
+    });
+
+    it("onReqBindings should be available in the logger", async () => {
+      const { app } = createMockApp({
+        onReqBindings: _ => ({ foo: "bar" }),
+      });
+      app.get("/bindings", async (c) => c.json(c.var.logger.bindings()));
+
+      const res = await app.request("/bindings");
+      expect(res.status).toBe(200);
+      expect(await res.json()).toMatchObject({
+        foo: "bar",
+      });
     });
   });
 
