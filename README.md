@@ -1,3 +1,4 @@
+
 # Hono + Pino
 
 [![npm version][npm-version-src]][npm-version-href]
@@ -8,18 +9,39 @@
 [![Codecov][codecov-src]][codecov-href]
 [![License][license-src]][license-href]
 
-A [pino](https://github.com/pinojs/pino) logger plugin for [hono](https://github.com/honojs/hono)
+A [pino](https://github.com/pinojs/pino) logger plugin for [hono](https://github.com/honojs/hono).
+
+---
+
+## Features
+
+- Fast, minimal overhead logging for Hono
+- Full [pino](https://github.com/pinojs/pino) compatibility
+- Works in Node.js and browser
+- Custom transports, including a built-in pretty/debug transport
+- TypeScript support
+
+---
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Example](#example)
+- [Options & Types](#options--types)
+- [Contributing](#contributing)
+- [License](#license)
 
 This repository is inspired by [pino-http](https://github.com/pinojs/pino-http) and [nestjs-pino](https://github.com/iamolegga/nestjs-pino).
 
 ## Runtime Support
 
 > [!IMPORTANT]
-> This package uses pino, the pino is designed for Node.js and support browser environment,  
-> for edge environments (e.g. Cloudflare Workers), some pino advanced features maybe not working,  
-> if fixing these issues is feasible, I will make an effort to implement it, but I cannot guarantee this.
+> This package uses pino. Pino is designed for Node.js and supports browser environments.  
+> For edge environments (e.g. Cloudflare Workers), some advanced pino features may not work.  
+> If fixing these issues is feasible, I will make an effort to implement it, but I cannot guarantee this.
 
-known issues:
+Known issues:
 
 - `transports`: Alternative -> browser.write
 
@@ -107,14 +129,14 @@ await app.request("/", {
 
 ## Example
 
-see [examples](./examples/)
+See [examples](./examples/)
 
 ## Options & Types
 
-[View the full options in JSR](https://jsr.io/@maou-shonen/hono-pino/doc)  
-[View the full options in github](./src/types.ts)
+View the full options on
+[GitHub](./src/types.ts) or [JSR](https://jsr.io/@maou-shonen/hono-pino/doc)
 
-### Logger method
+### Logger Methods
 
 ```ts
 class PinoLogger {
@@ -140,6 +162,22 @@ class PinoLogger {
   ): void
 }
 ```
+
+---
+
+## Contributing
+
+Contributions, issues and feature requests are welcome! Feel free to check [issues page](https://github.com/maou-shonen/hono-pino/issues) or submit a pull request.
+
+## License
+
+This project is [MIT](./LICENSE) licensed.
+
+---
+
+## API Documentation
+
+See the full API docs at [jsr.io/@maou-shonen/hono-pino](https://jsr.io/@maou-shonen/hono-pino/doc)
 
 <!-- Refs -->
 
