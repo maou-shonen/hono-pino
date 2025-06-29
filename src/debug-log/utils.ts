@@ -5,6 +5,7 @@ export const ANSI = {
   Reset: "\x1b[0m",
   Bright: "\x1b[1m",
 
+  FgWhite: "\x1b[37m",
   FgRed: "\x1b[31m",
   FgGreen: "\x1b[32m",
   FgYellow: "\x1b[33m",
@@ -18,37 +19,6 @@ export const ANSI = {
 export function isUnixTime(time: number): boolean {
   const UnixTimeMax = 4102444800; // 2100-01-01T00:00:00Z
   return time <= UnixTimeMax;
-}
-
-export function addLogLevelColor(
-  text: string,
-  level: number,
-  opts?: { colorEnabled?: boolean },
-): string {
-  const colorEnabled = opts?.colorEnabled ?? getColorEnabled();
-
-  if (colorEnabled) {
-    if (level === 10) {
-      return `${ANSI.FgGray}${text}${ANSI.Reset}`;
-    }
-    if (level === 20) {
-      return `${ANSI.FgCyan}${text}${ANSI.Reset}`;
-    }
-    if (level === 30) {
-      return `${ANSI.FgGreen}${text}${ANSI.Reset}`;
-    }
-    if (level === 40) {
-      return `${ANSI.FgYellow}${text}${ANSI.Reset}`;
-    }
-    if (level === 50) {
-      return `${ANSI.FgRed}${text}${ANSI.Reset}`;
-    }
-    if (level === 60) {
-      return `${ANSI.FgMagenta}${text}${ANSI.Reset}`;
-    }
-  }
-
-  return text;
 }
 
 export function addStatusColor(

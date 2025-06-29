@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 import { defu } from "defu";
-import { pino } from "pino";
+import type { pino } from "pino";
 
 /**
  * hono-pino logger instance
@@ -76,7 +75,7 @@ export const httpCfgSym = Symbol("httpCfgSym");
 /**
  * hono-pino logger
  */
-// biome-ignore lint/suspicious/noUnsafeDeclarationMerging: <explanation>
+// biome-ignore lint/suspicious/noUnsafeDeclarationMerging: override pino logger methods
 export class PinoLogger {
   /**
    * Internal pino logger instance
@@ -106,7 +105,7 @@ export class PinoLogger {
     // Use a child logger to prevent unintended behavior from changes to the provided logger
     this._rootLogger = rootLogger.child({}, childOptions);
     this._logger = rootLogger;
-    this.#bindings = this._logger.bindings();
+    this.#bindings = rootLogger.bindings?.(); //! in cloudflare worker, pino logger bindings maybe not available
   }
 
   /**
@@ -160,32 +159,26 @@ export class PinoLogger {
   }
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 PinoLogger.prototype.trace = function (this, ...args: [any, ...any[]]) {
   this._logger.trace(...args);
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 PinoLogger.prototype.debug = function (this, ...args: [any, ...any[]]) {
   this._logger.debug(...args);
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 PinoLogger.prototype.info = function (this, ...args: [any, ...any[]]) {
   this._logger.info(...args);
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 PinoLogger.prototype.warn = function (this, ...args: [any, ...any[]]) {
   this._logger.warn(...args);
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 PinoLogger.prototype.error = function (this, ...args: [any, ...any[]]) {
   this._logger.error(...args);
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 PinoLogger.prototype.fatal = function (this, ...args: [any, ...any[]]) {
   this._logger.fatal(...args);
 };

@@ -1,9 +1,18 @@
+import { getColorEnabled } from "hono/utils/color";
 import { pino } from "pino";
-import { defaultBindingsFormat, defaultTimeFormatter } from "./formatter";
-import type { DebugLogOptions } from "./types";
-import { ANSI, addLogLevelColor, addStatusColor } from "./utils";
+import {
+  defaultBindingsFormat,
+  defaultLevelFormatter,
+  defaultTimeFormatter,
+} from "./formatter";
+import type { DebugLogOptions, LevelFormatter } from "./types";
+import { ANSI, addStatusColor } from "./utils";
 
+/**
+ * Create a debug-log handler for pretty-printing pino logs in development.
+ */
 export function createHandler(opts?: DebugLogOptions): (obj: unknown) => void {
+  const colorEnabled = opts?.colorEnabled ?? getColorEnabled();
   const messageKey = opts?.messageKey ?? "msg";
   const requestKey = opts?.requestKey ?? "req";
   const responseKey = opts?.responseKey ?? "res";
@@ -13,17 +22,19 @@ export function createHandler(opts?: DebugLogOptions): (obj: unknown) => void {
     0,
   );
 
+  // Format strings for normal and HTTP logs. {bindings} will be replaced with formatted context.
   const normalLogFormat =
     opts?.normalLogFormat ?? "[{time}] {levelLabel} - {msg}";
   const httpLogFormat =
     opts?.httpLogFormat ??
-    "[{time}] {reqId} {req.method} {req.url} {res.status} - {msg} ({responseTime}ms)";
+    "[{time}] {reqId} {req.method} {req.url} {res.status} ({responseTime}ms) - {msg} {bindings}";
 
   const timeFormatter = opts?.timeFormatter ?? defaultTimeFormatter;
   const bindingsFormatter = opts?.bindingsFormatter ?? defaultBindingsFormat;
+  const levelFormatter: LevelFormatter =
+    opts?.levelFormatter ?? defaultLevelFormatter;
   const printer = opts?.printer ?? console.log;
 
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const handler = (obj: any) => {
     const {
       level,
@@ -40,30 +51,41 @@ export function createHandler(opts?: DebugLogOptions): (obj: unknown) => void {
     const levelLabel = (levelLabelMap[level] ?? "")
       .toUpperCase()
       .padEnd(levelMaxLength);
-    const levelLabelWithColor = addLogLevelColor(levelLabel, level);
-    const status = addStatusColor(res?.status?.toString(), res?.status);
 
+    const status = addStatusColor(res?.status?.toString(), res?.status, {
+      colorEnabled,
+    });
+
+    // textMap is used for template replacement in logFormat.
+    // 'bindings' is the formatted context (excluding standard log fields).
     const textMap = {
       time: timeStr,
       level,
-      levelLabel: levelLabelWithColor,
+      levelLabel: levelFormatter(levelLabel, level, {
+        colorEnabled,
+      }),
       msg,
-      reqId: `${ANSI.BgGray}${reqId}${ANSI.Reset}`,
+      reqId: colorEnabled ? `${ANSI.BgGray}${reqId}${ANSI.Reset}` : reqId,
       responseTime,
       "req.method": req?.method,
       "req.url": req?.url,
       "res.status": status,
+      // Format and colorize context/bindings if present
+      bindings: bindingsFormatter(rest, {
+        colorEnabled: colorEnabled,
+      }),
     };
 
     const isHttpLog = !!res;
     const logFormat = isHttpLog ? httpLogFormat : normalLogFormat;
 
+    // Replace placeholders in format string with actual values
     const output = Object.entries(textMap).reduce(
       (acc, [key, value]) => acc.replace(`{${key}}`, value),
       logFormat,
     );
-    const bindingsStr = bindingsFormatter(rest);
-    printer(output, bindingsStr);
+
+    printer(output);
   };
 
   return handler;

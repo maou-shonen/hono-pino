@@ -6,22 +6,11 @@ import * as utils from "./utils";
 describe("createHandler", () => {
   // Mock console.log to capture output
   let logs: string[] = [];
-  
+
   beforeEach(() => {
     logs = [];
-    // Mock color functions to return predictable output for testing
-    vi.spyOn(utils, "addLogLevelColor").mockImplementation(
-      (text) => `COLOR:${text}`,
-    );
-    vi.spyOn(utils, "addStatusColor").mockImplementation(
-      (text) => `STATUS:${text}`,
-    );
     vi.spyOn(formatter, "defaultTimeFormatter").mockImplementation((time) =>
-      typeof time === "number" ? "12:34:56" : String(time),
-    );
-    vi.spyOn(formatter, "defaultBindingsFormat").mockImplementation(
-      (bindings) =>
-        Object.entries(bindings).length ? "\n  & bindings: mocked" : "",
+      typeof time === "number" ? "12:34:56" : String(time)
     );
   });
 
@@ -37,20 +26,27 @@ describe("createHandler", () => {
   it("should handle normal logs with default options", () => {
     const handler = createHandler({
       printer: (...log) => logs.push(...log),
+      colorEnabled: false,
     });
-    const logObj = {
+
+    const logObjWithBindings = {
       level: 30, // info level
       time: 1617123456789,
       msg: "Test message",
-      additionalField: "value",
+      res: { status: 200 },
+      req: { method: "GET", url: "/" },
+      reqId: "reqId",
+      responseTime: 1,
+      customNumber: 1,
+      customString: "value",
+      customBoolean: true,
+      customNull: null,
+      customElements: [{ a: 1 }],
     };
-
-    handler(logObj);
-
-    expect(logs).toHaveLength(2);
-    expect(logs[0]).toContain("[12:34:56]");
-    expect(logs[0]).toContain("COLOR:INFO");
-    expect(logs[0]).toContain("Test message");
-    expect(logs[1]).toContain("bindings: mocked");
+    handler(logObjWithBindings);
+    expect(logs).toHaveLength(1);
+    expect(logs[0]).toBe(
+      '[12:34:56] reqId GET / 200 (1ms) - Test message {"customNumber":1,"customString":"value","customBoolean":true,"customNull":null,"customElements":[{"a":1}]}'
+    );
   });
 });
