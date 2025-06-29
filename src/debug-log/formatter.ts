@@ -1,5 +1,5 @@
 import type { BindingsFormatter, TimeFormatter } from "./types";
-import { isUnixTime } from "./utils";
+import { ANSI, isUnixTime } from "./utils";
 
 export const defaultTimeFormatter: TimeFormatter = (time) => {
   if (!time) {
@@ -20,8 +20,10 @@ export const defaultTimeFormatter: TimeFormatter = (time) => {
   return `${date.toISOString().slice(11, 19)}.${ms}`; // HH:mm:ss.SSS
 };
 
-export const defaultBindingsFormat: BindingsFormatter = (bindings) => {
-  return Object.entries(bindings).reduce((acc, [key, value]) => {
-    return `${acc}\n    ${key}: ${JSON.stringify(value)}`;
-  }, "");
+export const defaultBindingsFormat: BindingsFormatter = (bindings, opts) => {
+  const bindingsStr = JSON.stringify(bindings);
+  if (opts?.colorEnabled) {
+    return `${ANSI.FgGray}${bindingsStr}${ANSI.Reset}`;
+  }
+  return bindingsStr;
 };

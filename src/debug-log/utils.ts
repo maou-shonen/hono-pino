@@ -5,6 +5,7 @@ export const ANSI = {
   Reset: "\x1b[0m",
   Bright: "\x1b[1m",
 
+  FgWhite: "\x1b[37m",
   FgRed: "\x1b[31m",
   FgGreen: "\x1b[32m",
   FgYellow: "\x1b[33m",
