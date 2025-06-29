@@ -1,3 +1,33 @@
+import { defaultLevelFormatter } from "./formatter";
+describe("defaultLevelFormatter", () => {
+  it("should return colored label for each level when colorEnabled is true", () => {
+    const levels = [10, 20, 30, 40, 50, 60];
+    const labels = ["TRACE", "DEBUG", "INFO", "WARN", "ERROR", "FATAL"];
+    const colors = [
+      "\x1b[90m", // gray
+      "\x1b[36m", // cyan
+      "\x1b[32m", // green
+      "\x1b[33m", // yellow
+      "\x1b[31m", // red
+      "\x1b[35m", // magenta
+    ];
+    levels.forEach((level, i) => {
+      const result = defaultLevelFormatter(labels[i], level, {
+        colorEnabled: true,
+      });
+      expect(result).toBe(`${colors[i]}${labels[i]}\x1b[0m`);
+    });
+  });
+
+  it("should return plain label for each level when colorEnabled is false", () => {
+    const levels = [10, 20, 30, 40, 50, 60];
+    const labels = ["TRACE", "DEBUG", "INFO", "WARN", "ERROR", "FATAL"];
+    levels.forEach((level, i) => {
+      const result = defaultLevelFormatter(labels[i], level, { colorEnabled: false });
+      expect(result).toBe(labels[i]);
+    });
+  });
+});
 import { describe, expect, it } from "vitest";
 import { defaultTimeFormatter, defaultBindingsFormat } from "./formatter";
 import { isUnixTime } from "./utils";
@@ -46,6 +76,27 @@ describe("defaultTimeFormatter", () => {
 });
 
 describe("defaultBindingsFormat", () => {
+  it("should format bindings with colorEnabled = true", () => {
+    const bindings = { foo: 1 };
+    const result = defaultBindingsFormat(bindings, { colorEnabled: true });
+    expect(result).toBe("\x1b[90m{" + '\"foo\":1' + "}\x1b[0m");
+  });
+
+  it("should format bindings with colorEnabled = false", () => {
+    const bindings = { foo: 1 };
+    const result = defaultBindingsFormat(bindings, { colorEnabled: false });
+    expect(result).toBe('{"foo":1}');
+  });
+
+  it("should format bindings with colorEnabled = undefined (default)", () => {
+    const bindings = { foo: 1 };
+    // Accept either colored or plain output depending on environment, so just check type
+    const result = defaultBindingsFormat(bindings, {});
+    expect([
+      '{"foo":1}',
+      "\x1b[90m{\"foo\":1}\x1b[0m"
+    ]).toContain(result);
+  });
   it("should format empty bindings correctly", () => {
     // Accept either empty string or '{}' (with or without color)
     const result = defaultBindingsFormat({});

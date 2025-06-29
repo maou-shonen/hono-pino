@@ -21,37 +21,6 @@ export function isUnixTime(time: number): boolean {
   return time <= UnixTimeMax;
 }
 
-export function addLogLevelColor(
-  text: string,
-  level: number,
-  opts?: { colorEnabled?: boolean },
-): string {
-  const colorEnabled = opts?.colorEnabled ?? getColorEnabled();
-
-  if (colorEnabled) {
-    if (level === 10) {
-      return `${ANSI.FgGray}${text}${ANSI.Reset}`;
-    }
-    if (level === 20) {
-      return `${ANSI.FgCyan}${text}${ANSI.Reset}`;
-    }
-    if (level === 30) {
-      return `${ANSI.FgGreen}${text}${ANSI.Reset}`;
-    }
-    if (level === 40) {
-      return `${ANSI.FgYellow}${text}${ANSI.Reset}`;
-    }
-    if (level === 50) {
-      return `${ANSI.FgRed}${text}${ANSI.Reset}`;
-    }
-    if (level === 60) {
-      return `${ANSI.FgMagenta}${text}${ANSI.Reset}`;
-    }
-  }
-
-  return text;
-}
-
 export function addStatusColor(
   text: string,
   status: number,

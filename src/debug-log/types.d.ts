@@ -3,6 +3,11 @@
  */
 export interface DebugLogOptions {
   /**
+   * Function to format the log level label (for color or custom style).
+   * @default defaultLevelFormatter
+   */
+  levelFormatter?: LevelFormatter;
+  /**
    * Enable or disable color output for log levels, status, and context.
    * - true: always use color
    * - false: never use color
@@ -71,6 +76,21 @@ export interface DebugLogOptions {
    */
   _handler?: (obj: unknown) => void;
 }
+
+/**
+ * Formats the log level label for output (with or without color).
+ * @param label The string label for the log level (e.g., 'INFO')
+ * @param level The numeric log level
+ * @param colorEnabled Whether to use color
+ * @returns Formatted string for the log level
+ */
+export type LevelFormatter = (
+  label: string,
+  level: number,
+  opts?: {
+    colorEnabled?: boolean;
+  },
+) => string;
 
 /**
  * Formats a time value (number, string, or undefined) for log output.

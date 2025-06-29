@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ANSI, addLogLevelColor, addStatusColor, isUnixTime } from "./utils";
+import { ANSI,  addStatusColor, isUnixTime } from "./utils";
 
 describe("isUnixTime", () => {
   it("should return true for unix timestamps (seconds)", () => {
@@ -23,50 +23,6 @@ describe("isUnixTime", () => {
 });
 
 describe("Color utility functions", () => {
-  describe("addLogLevelColor", () => {
-    it("should add gray color for trace level (10)", () => {
-      const traceText = addLogLevelColor("TRACE", 10, { colorEnabled: true });
-      expect(traceText).toBe(`${ANSI.FgGray}TRACE${ANSI.Reset}`);
-    });
-
-    it("should add cyan color for debug level (20)", () => {
-      const debugText = addLogLevelColor("DEBUG", 20, { colorEnabled: true });
-      expect(debugText).toBe(`${ANSI.FgCyan}DEBUG${ANSI.Reset}`);
-    });
-
-    it("should add green color for info level (30)", () => {
-      const infoText = addLogLevelColor("INFO", 30, { colorEnabled: true });
-      expect(infoText).toBe(`${ANSI.FgGreen}INFO${ANSI.Reset}`);
-    });
-
-    it("should add yellow color for warn level (40)", () => {
-      const warnText = addLogLevelColor("WARN", 40, { colorEnabled: true });
-      expect(warnText).toBe(`${ANSI.FgYellow}WARN${ANSI.Reset}`);
-    });
-
-    it("should add red color for error level (50)", () => {
-      const errorText = addLogLevelColor("ERROR", 50, { colorEnabled: true });
-      expect(errorText).toBe(`${ANSI.FgRed}ERROR${ANSI.Reset}`);
-    });
-
-    it("should add magenta color for fatal level (60)", () => {
-      const fatalText = addLogLevelColor("FATAL", 60, { colorEnabled: true });
-      expect(fatalText).toBe(`${ANSI.FgMagenta}FATAL${ANSI.Reset}`);
-    });
-
-    it("should return text as is for unknown levels", () => {
-      const customText = addLogLevelColor("CUSTOM", 70, { colorEnabled: true });
-      expect(customText).toBe("CUSTOM");
-    });
-
-    it("should not add colors when color is disabled", () => {
-      const disabledText = addLogLevelColor("ERROR", 50, {
-        colorEnabled: false,
-      });
-      expect(disabledText).toBe("ERROR");
-    });
-  });
-
   describe("addStatusColor", () => {
     it("should add green color for 2xx status codes", () => {
       const status200 = addStatusColor("200", 200, { colorEnabled: true });

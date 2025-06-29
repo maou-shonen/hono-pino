@@ -1,8 +1,12 @@
 import { getColorEnabled } from "hono/utils/color";
 import { pino } from "pino";
-import { defaultBindingsFormat, defaultTimeFormatter } from "./formatter";
-import type { DebugLogOptions } from "./types";
-import { ANSI, addLogLevelColor, addStatusColor } from "./utils";
+import {
+  defaultBindingsFormat,
+  defaultLevelFormatter,
+  defaultTimeFormatter,
+} from "./formatter";
+import type { DebugLogOptions, LevelFormatter } from "./types";
+import { ANSI, addStatusColor } from "./utils";
 
 /**
  * Create a debug-log handler for pretty-printing pino logs in development.
@@ -27,6 +31,8 @@ export function createHandler(opts?: DebugLogOptions): (obj: unknown) => void {
 
   const timeFormatter = opts?.timeFormatter ?? defaultTimeFormatter;
   const bindingsFormatter = opts?.bindingsFormatter ?? defaultBindingsFormat;
+  const levelFormatter: LevelFormatter =
+    opts?.levelFormatter ?? defaultLevelFormatter;
   const printer = opts?.printer ?? console.log;
 
   const handler = (obj: any) => {
@@ -55,11 +61,9 @@ export function createHandler(opts?: DebugLogOptions): (obj: unknown) => void {
     const textMap = {
       time: timeStr,
       level,
-      levelLabel: colorEnabled
-        ? addLogLevelColor(levelLabel, level, {
-            colorEnabled,
-          })
-        : levelLabel,
+      levelLabel: levelFormatter(levelLabel, level, {
+        colorEnabled,
+      }),
       msg,
       reqId: colorEnabled ? `${ANSI.BgGray}${reqId}${ANSI.Reset}` : reqId,
       responseTime,
