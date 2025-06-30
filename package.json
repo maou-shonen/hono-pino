@@ -73,6 +73,7 @@
     "@biomejs/biome": "2.0.6",
     "@types/node": "^20.14.2",
     "@vitest/coverage-v8": "^3.1.1",
+    "hono": "^4.8.3",
     "husky": "^9.0.11",
     "jsr": "^0.13.2",
     "pino": "^9.4.0",
