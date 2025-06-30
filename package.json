@@ -19,6 +19,16 @@
         "types": "./dist/index.d.cts",
         "default": "./dist/index.cjs"
       }
+    },
+    "./debug-log": {
+      "import": {
+        "types": "./dist/debug-log/index.d.ts",
+        "default": "./dist/debug-log/index.js"
+      },
+      "require": {
+        "types": "./dist/debug-log/index.d.cts",
+        "default": "./dist/debug-log/index.cjs"
+      }
     }
   },
   "module": "./dist/index.js",
