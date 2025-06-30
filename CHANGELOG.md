@@ -1,5 +1,12 @@
 # hono-pino
 
+## [0.9.1](https://github.com/maou-shonen/hono-pino/compare/v0.9.0...v0.9.1) (2025-06-30)
+
+
+### Bug Fixes
+
+* package missing export debug-log ([#99](https://github.com/maou-shonen/hono-pino/issues/99)) ([afcb5ab](https://github.com/maou-shonen/hono-pino/commit/afcb5ab4d929bac726ce491f0643916c1ab70056))
+
 ## [0.9.0](https://github.com/maou-shonen/hono-pino/compare/v0.8.0...v0.9.0) (2025-06-30)
 
 
