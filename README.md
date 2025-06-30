@@ -134,6 +134,8 @@ See [examples](./examples/)
 
 `hono-pino/debug-log` is a lightweight [pino](https://github.com/pinojs/pino) transport designed for development and debugging. It makes logs more readable, similar to `pino-pretty`, but with a focus on simplicity and customization.
 
+![debug-log-example](./.github/assets/debug-log-example.png)
+
 ### Options
 
 - `colorEnabled`: Enable or disable color output (`true` | `false` | `undefined` for auto)
