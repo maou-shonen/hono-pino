@@ -1,5 +1,19 @@
 # hono-pino
 
+## [0.9.0](https://github.com/maou-shonen/hono-pino/compare/v0.8.0...v0.9.0) (2025-06-30)
+
+
+### Features
+
+* add debug-log pino transport ([#84](https://github.com/maou-shonen/hono-pino/issues/84)) ([6027df8](https://github.com/maou-shonen/hono-pino/commit/6027df837fd73d62c94063dca496e2164ead8e30))
+* enhance debug-log formatting with color options and improved bi… ([#95](https://github.com/maou-shonen/hono-pino/issues/95)) ([2a3f207](https://github.com/maou-shonen/hono-pino/commit/2a3f20777291ded8c519a4dad7992d5f105195a7))
+
+
+### Bug Fixes
+
+* `onReqBindings` not setting logger bindings until response ([#93](https://github.com/maou-shonen/hono-pino/issues/93)) ([8e81c31](https://github.com/maou-shonen/hono-pino/commit/8e81c31c6af8eeb40c7dcbb9d09cfb5cac005cf9))
+* Fix the potential issue with the assign method not working in Cloudflare Workers ([#87](https://github.com/maou-shonen/hono-pino/issues/87)) ([b947326](https://github.com/maou-shonen/hono-pino/commit/b947326792bb2562705e32a57629782f1cf81616))
+
 ## [0.8.0](https://github.com/maou-shonen/hono-pino/compare/v0.7.2...v0.8.0) (2025-03-14)
 
 
