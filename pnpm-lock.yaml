@@ -22,8 +22,8 @@ importers:
         specifier: ^3.1.1
         version: 3.1.1(vitest@3.1.1(@edge-runtime/vm@4.0.4)(@types/node@20.14.10)(yaml@2.4.5))
       hono:
-        specifier: ^4.8.3
-        version: 4.8.3
+        specifier: ^4.8.4
+        version: 4.8.4
       husky:
         specifier: ^9.0.11
         version: 9.0.11
@@ -751,8 +751,8 @@ packages:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
     engines: {node: '>=8'}
 
-  hono@4.8.3:
-    resolution: {integrity: sha512-jYZ6ZtfWjzBdh8H/0CIFfCBHaFL75k+KMzaM177hrWWm2TWL39YMYaJgB74uK/niRc866NMlH9B8uCvIo284WQ==}
+  hono@4.8.4:
+    resolution: {integrity: sha512-KOIBp1+iUs0HrKztM4EHiB2UtzZDTBihDtOF5K6+WaJjCPeaW4Q92R8j63jOhvJI5+tZSMuKD9REVEXXY9illg==}
     engines: {node: '>=16.9.0'}
 
   html-escaper@2.0.2:
@@ -1727,7 +1727,7 @@ snapshots:
 
   has-flag@4.0.0: {}
 
-  hono@4.8.3: {}
+  hono@4.8.4: {}
 
   html-escaper@2.0.2: {}
 
