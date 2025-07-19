@@ -130,6 +130,16 @@ export interface Options<ContextKey extends string = "logger"> {
     | ((c: Context) => pino.ChildLoggerOptions);
 
   /**
+   * Specify whether to treat as Node/Bun runtime.
+   * - true: Always treat as Node/Bun (do not use getRuntimeKey)
+   * - false: Always treat as non-Node/Bun
+   * - "auto": Auto-detect (default, will call getRuntimeKey)
+   *
+   * @default "auto"
+   */
+  nodeRuntime?: boolean | "auto";
+
+  /**
    * http request log options
    *
    * @description set to false to disable
