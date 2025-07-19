@@ -1,5 +1,5 @@
 {
-  "name": "sandbox-cloudflare-worker",
+  "name": "cloudflare-worker-vite-example",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,8 +9,8 @@
     "cf-typegen": "wrangler types --env-interface CloudflareBindings",
     "test": "vitest"
   },
-  "dependencies": {
-    "hono": "^4.8.5"
+  "peerDependencies": {
+    "hono": "^4.0.0"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.9.6",
