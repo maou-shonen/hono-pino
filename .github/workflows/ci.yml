@@ -63,7 +63,7 @@ jobs:
 
   e2e-test:
     needs:
-      - unit-test-node
+      - unit-test
       - jsr-dry-run
     runs-on: ubuntu-latest
     steps:
@@ -80,8 +80,7 @@ jobs:
 
   coverage:
     needs:
-      - unit-test-node
-      - jsr-dry-run
+      - e2e-test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
