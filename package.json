@@ -54,7 +54,7 @@
     "prepare": "husky",
     "dev": "tsup --watch",
     "build": "tsup-node",
-    "check": "biome check",
+    "ci": "biome ci",
     "format": "biome format --write",
     "typecheck": "tsc",
     "lint": "biome lint",
