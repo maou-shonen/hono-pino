@@ -57,7 +57,7 @@
     "check": "biome check",
     "format": "biome format --write",
     "typecheck": "tsc",
-    "lint": "biome check",
+    "lint": "biome lint",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "vitest run --config e2e/vitest.config.ts",
