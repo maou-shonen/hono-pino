@@ -54,12 +54,13 @@
     "prepare": "husky",
     "dev": "tsup --watch",
     "build": "tsup-node",
+    "check": "biome check",
     "format": "biome format --write",
     "typecheck": "tsc",
     "lint": "biome check",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:edge": "vitest run --environment edge-runtime",
+    "test:e2e": "vitest run --config e2e/vitest.config.ts",
     "coverage": "vitest run --coverage"
   },
   "peerDependencies": {
