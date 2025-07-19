@@ -1,11 +1,15 @@
 import { defu } from "defu";
 import type { Context, MiddlewareHandler } from "hono";
-import { env } from "hono/adapter";
+import { env, getRuntimeKey } from "hono/adapter";
 import { pino } from "pino";
 import { httpCfgSym, PinoLogger } from "./logger";
 import type { Env, Options } from "./types";
 import type { LiteralString } from "./utils";
-import { isPino } from "./utils";
+import {
+  createConsoleDestinationStream,
+  isPino,
+  isPinoTransport,
+} from "./utils";
 
 /**
  * hono-pino middleware
@@ -14,7 +18,11 @@ export const pinoLogger = <ContextKey extends string = "logger">(
   opts?: Options<LiteralString<ContextKey>>,
 ): MiddlewareHandler<Env<ContextKey>> => {
   const contextKey = opts?.contextKey ?? ("logger" as ContextKey);
-  let rootLogger = createStaticRootLogger(opts?.pino);
+  const nodeRuntime =
+    opts?.nodeRuntime === "auto" || opts?.nodeRuntime === undefined
+      ? ["node", "bun"].includes(getRuntimeKey())
+      : opts?.nodeRuntime;
+  let rootLogger = createStaticRootLogger(opts?.pino, nodeRuntime);
 
   return async (c, next) => {
     const [dynamicRootLogger, loggerChildOptions] = parseDynamicRootLogger(
@@ -110,10 +118,15 @@ const defaultReqIdGenerator = () => {
  * create static rootLogger,
  * in dynamic rootLogger mode, is null
  */
-const createStaticRootLogger = (opt: Options["pino"]): pino.Logger | null => {
-  if (typeof opt === "function") return null;
+export const createStaticRootLogger = (
+  opt: Options["pino"],
+  nodeRuntime: boolean,
+): pino.Logger | null => {
+  if (typeof opt === "function") return null; // for dynamic rootLogger
   if (isPino(opt)) return opt;
-  return pino(opt);
+  if (nodeRuntime) return pino(opt);
+  if (isPinoTransport(opt)) return pino(opt);
+  return pino(opt ?? {}, createConsoleDestinationStream());
 };
 
 /**

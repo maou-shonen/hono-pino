@@ -32,3 +32,25 @@ export type LiteralString<T> = T extends string
     ? never
     : T
   : never;
+
+export function isPinoTransport(
+  value: unknown,
+): value is pino.DestinationStream {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    "write" in value &&
+    typeof value.write === "function"
+  );
+}
+
+/**
+ * Create a console destination stream
+ */
+export function createConsoleDestinationStream(): pino.DestinationStream {
+  return {
+    write(msg: string) {
+      console.log(msg);
+    },
+  };
+}
