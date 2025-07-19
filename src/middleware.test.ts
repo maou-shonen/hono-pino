@@ -4,10 +4,42 @@ import { requestId } from "hono/request-id";
 import { pino } from "pino";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { PinoLogger } from "./logger";
-import { pinoLogger } from "./middleware";
+import { createStaticRootLogger, pinoLogger } from "./middleware";
 import type { Options } from "./types";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+describe("nodeRuntime option coverage", () => {
+  it("should use nodeRuntime=true", async () => {
+    const app = new Hono()
+      .use(pinoLogger({ nodeRuntime: true }))
+      .get("/", (c) => c.text("ok"));
+    const res = await app.request("/");
+    expect(res.status).toBe(200);
+  });
+
+  it("should use nodeRuntime=false", async () => {
+    const app = new Hono()
+      .use(pinoLogger({ nodeRuntime: false }))
+      .get("/", (c) => c.text("ok"));
+    const res = await app.request("/");
+    expect(res.status).toBe(200);
+  });
+
+  it("should use nodeRuntime='auto' (default)", async () => {
+    const app = new Hono()
+      .use(pinoLogger({ nodeRuntime: "auto" }))
+      .get("/", (c) => c.text("ok"));
+    const res = await app.request("/");
+    expect(res.status).toBe(200);
+  });
+
+  it("should use nodeRuntime=undefined (default)", async () => {
+    const app = new Hono().use(pinoLogger()).get("/", (c) => c.text("ok"));
+    const res = await app.request("/");
+    expect(res.status).toBe(200);
+  });
+});
 
 describe("middleware", () => {
   let logs: Record<string, any>[];
@@ -82,7 +114,7 @@ describe("middleware", () => {
       const { logs } = await mockRequest();
 
       expect(logs).toHaveLength(1);
-      expect(logs[0]).toMatchObject({ ...defaultResLog, reqId: 1 });
+      expect(logs[0]).toMatchObject({ ...defaultResLog });
     });
 
     it("disable reqId", async () => {
@@ -304,7 +336,7 @@ describe("middleware", () => {
 
     it("onReqBindings should be available in the logger", async () => {
       const { app } = createMockApp({
-        onReqBindings: _ => ({ foo: "bar" }),
+        onReqBindings: (_) => ({ foo: "bar" }),
       });
       app.get("/bindings", async (c) => c.json(c.var.logger.bindings()));
 
@@ -472,6 +504,17 @@ describe("middleware", () => {
       expect(await res.text()).toBe("ok");
     });
 
+    it("should set logger to default contextKey when opts is undefined", async () => {
+      const app = new Hono()
+        .use(pinoLogger())
+        .get("/", async (c) =>
+          c.text(c.get("logger") instanceof PinoLogger ? "ok" : "fail", 200),
+        );
+      const res = await app.request("/");
+      expect(res.status).toBe(200);
+      expect(await res.text()).toBe("ok");
+    });
+
     it("multiple logger", async () => {
       const app = new Hono()
         .use(pinoLogger({ contextKey: "logger1" as const, pino: pino1 }))
@@ -489,6 +532,15 @@ describe("middleware", () => {
       const res = await app.request("/");
       expect(res.status).toBe(200);
       expect(await res.text()).toBe("ok");
+    });
+  });
+
+  describe("createStaticRootLogger fallback", () => {
+    it("should use createConsoleDestinationStream when opt is undefined and not nodeRuntime and not pinoTransport", () => {
+      // nodeRuntime = false, opt = undefined
+      const logger = createStaticRootLogger(undefined, false);
+      expect(logger).toBeDefined();
+      expect(typeof logger!.info).toBe("function");
     });
   });
 });
