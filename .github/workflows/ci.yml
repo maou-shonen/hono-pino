@@ -22,7 +22,7 @@ jobs:
           cache: pnpm
       - run: pnpm install
 
-      - run: pnpm run lint
+      - run: pnpm run ci
       - run: pnpm run typecheck
 
   unit-test:

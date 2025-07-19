@@ -27,9 +27,9 @@ describe("examples e2e", () => {
 
       const cleanup = () => {
         if (!proc.killed) {
-          proc.kill('SIGTERM');
+          proc.kill("SIGTERM");
           // Force kill after timeout
-          setTimeout(() => proc.kill('SIGKILL'), 5000);
+          setTimeout(() => proc.kill("SIGKILL"), 5000);
         }
       };
 
@@ -48,7 +48,9 @@ describe("examples e2e", () => {
       for (let i = 0; i < 30 && !ready; i++) await sleep(500);
       if (!ready) {
         cleanup();
-        throw new Error(`Server not ready: ${target.name}\nOutput:\n${output.join('')}`);
+        throw new Error(
+          `Server not ready: ${target.name}\nOutput:\n${output.join("")}`,
+        );
       }
 
       try {
