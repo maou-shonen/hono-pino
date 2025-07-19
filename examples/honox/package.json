@@ -1,5 +1,5 @@
 {
-  "name": "basic",
+  "name": "honox-example",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -8,8 +8,10 @@
     "deploy": "pnpm run build && wrangler deploy"
   },
   "private": true,
+  "peerDependencies": {
+    "hono": "^4.0.0"
+  },
   "dependencies": {
-    "hono": "^4.8.4",
     "honox": "^0.1.43"
   },
   "devDependencies": {

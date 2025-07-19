@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ANSI,  addStatusColor, isUnixTime } from "./utils";
+import { ANSI, addStatusColor, isUnixTime } from "./utils";
 
 describe("isUnixTime", () => {
   it("should return true for unix timestamps (seconds)", () => {

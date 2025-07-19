@@ -4,15 +4,9 @@ on:
   push:
     branches:
       - main
-    paths:
-      - .github/**
-      - src/**
   pull_request:
     branches:
       - main
-    paths:
-      - .github/**
-      - src/**
 
 jobs:
   lint:
@@ -24,20 +18,20 @@ jobs:
           run_install: false
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: lts/*
           cache: pnpm
       - run: pnpm install
 
       - run: pnpm run lint
       - run: pnpm run typecheck
 
-  unit-test-node:
+  unit-test:
     needs:
       - lint
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 22.x, 24.x]
+        node-version: [20.x, 22.x, 24.x]
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -51,22 +45,6 @@ jobs:
       - run: pnpm install
       - run: pnpm run test
 
-  unit-test-edge:
-    needs:
-      - lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          run_install: false
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-      - run: pnpm install
-      - run: pnpm run test:edge
-
   jsr-dry-run:
     needs:
       - lint
@@ -78,14 +56,14 @@ jobs:
           run_install: false
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: lts/*
           cache: pnpm
       - run: pnpm install
       - run: pnpm exec jsr publish --dry-run
 
-  coverage:
+  e2e-test:
     needs:
-      - unit-test-node
+      - unit-test
       - jsr-dry-run
     runs-on: ubuntu-latest
     steps:
@@ -95,7 +73,23 @@ jobs:
           run_install: false
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: lts/*
+          cache: pnpm
+      - run: pnpm install
+      - run: pnpm run test:e2e
+
+  coverage:
+    needs:
+      - e2e-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
           cache: pnpm
       - run: pnpm install
 

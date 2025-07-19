@@ -10,7 +10,7 @@ describe("createHandler", () => {
   beforeEach(() => {
     logs = [];
     vi.spyOn(formatter, "defaultTimeFormatter").mockImplementation((time) =>
-      typeof time === "number" ? "12:34:56" : String(time)
+      typeof time === "number" ? "12:34:56" : String(time),
     );
   });
 
@@ -46,7 +46,7 @@ describe("createHandler", () => {
     handler(logObjWithBindings);
     expect(logs).toHaveLength(1);
     expect(logs[0]).toBe(
-      '[12:34:56] reqId GET / 200 (1ms) - Test message {"customNumber":1,"customString":"value","customBoolean":true,"customNull":null,"customElements":[{"a":1}]}'
+      '[12:34:56] reqId GET / 200 (1ms) - Test message {"customNumber":1,"customString":"value","customBoolean":true,"customNull":null,"customElements":[{"a":1}]}',
     );
   });
 });

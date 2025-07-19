@@ -1,6 +1,5 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "sandbox-honox",
   "main": "./dist/index.js",
   "compatibility_date": "2025-07-10",
   "compatibility_flags": [
