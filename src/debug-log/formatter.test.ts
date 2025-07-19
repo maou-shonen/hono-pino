@@ -1,4 +1,5 @@
 import { defaultLevelFormatter } from "./formatter";
+
 describe("defaultLevelFormatter", () => {
   it("should return colored label for each level when colorEnabled is true", () => {
     const levels = [10, 20, 30, 40, 50, 60];
@@ -23,13 +24,16 @@ describe("defaultLevelFormatter", () => {
     const levels = [10, 20, 30, 40, 50, 60];
     const labels = ["TRACE", "DEBUG", "INFO", "WARN", "ERROR", "FATAL"];
     levels.forEach((level, i) => {
-      const result = defaultLevelFormatter(labels[i], level, { colorEnabled: false });
+      const result = defaultLevelFormatter(labels[i], level, {
+        colorEnabled: false,
+      });
       expect(result).toBe(labels[i]);
     });
   });
 });
+
 import { describe, expect, it } from "vitest";
-import { defaultTimeFormatter, defaultBindingsFormat } from "./formatter";
+import { defaultBindingsFormat, defaultTimeFormatter } from "./formatter";
 import { isUnixTime } from "./utils";
 
 describe("defaultTimeFormatter", () => {
@@ -92,10 +96,7 @@ describe("defaultBindingsFormat", () => {
     const bindings = { foo: 1 };
     // Accept either colored or plain output depending on environment, so just check type
     const result = defaultBindingsFormat(bindings, {});
-    expect([
-      '{"foo":1}',
-      "\x1b[90m{\"foo\":1}\x1b[0m"
-    ]).toContain(result);
+    expect(['{"foo":1}', '\x1b[90m{"foo":1}\x1b[0m']).toContain(result);
   });
   it("should format empty bindings correctly", () => {
     // Accept either empty string or '{}' (with or without color)

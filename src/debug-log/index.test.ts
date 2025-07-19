@@ -1,7 +1,7 @@
-import { describe, expect, it, vi } from "vitest";
-import debugLogTransport from "./";
 import { Transform } from "node:stream";
 import { pino } from "pino";
+import { describe, expect, it, vi } from "vitest";
+import debugLogTransport from "./";
 
 describe("debug-log transport", () => {
   it("should create a transport function", async () => {
@@ -11,12 +11,12 @@ describe("debug-log transport", () => {
 
   it("should create a transport function", async () => {
     const handler = vi.fn((v) => v);
-    const transport = await debugLogTransport({_handler: handler} );
+    const transport = await debugLogTransport({ _handler: handler });
     const logger = pino(
       {
         base: null,
       },
-      transport
+      transport,
     );
 
     logger.info("hi");
