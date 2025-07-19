@@ -1,0 +1,9 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "sandbox-cloudflare-worker",
+  "compatibility_date": "2024-09-23",
+  "main": "./src/index.ts",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+}
