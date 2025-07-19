@@ -22,28 +22,44 @@ describe("examples e2e", () => {
   for (const target of targets) {
     it(target.name, async () => {
       const proc = spawn(target.cmd, { shell: true });
+      const output: string[] = [];
       let ready = false;
+
+      const cleanup = () => {
+        if (!proc.killed) {
+          proc.kill('SIGTERM');
+          // Force kill after timeout
+          setTimeout(() => proc.kill('SIGKILL'), 5000);
+        }
+      };
+
       proc.stdout.on("data", (d) => {
-        if (target.ready.test(d.toString())) ready = true;
+        const text = d.toString();
+        output.push(text);
+        if (target.ready.test(text)) ready = true;
       });
       proc.stderr.on("data", (d) => {
-        if (target.ready.test(d.toString())) ready = true;
+        const text = d.toString();
+        output.push(text);
+        if (target.ready.test(text)) ready = true;
       });
 
       // wait for the server to be ready
       for (let i = 0; i < 30 && !ready; i++) await sleep(500);
       if (!ready) {
-        proc.kill();
-        throw new Error("Server not ready: " + target.name);
+        cleanup();
+        throw new Error(`Server not ready: ${target.name}\nOutput:\n${output.join('')}`);
       }
 
-      // test the server
-      const res = await fetch(target.url);
-      const text = await res.text();
-      expect(res.status).toBe(200);
-      expect(/hello/i.test(text)).toBe(true);
-
-      proc.kill();
+      try {
+        // test the server
+        const res = await fetch(target.url);
+        const text = await res.text();
+        expect(res.status).toBe(200);
+        expect(/hello/i.test(text)).toBe(true);
+      } finally {
+        cleanup();
+      }
     }, 25000);
   }
 });
