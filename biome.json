@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "vcs": {
     "enabled": false,
     "clientKind": "git",
@@ -8,10 +8,9 @@
   "files": {
     "ignoreUnknown": true,
     "includes": [
-      "src/**/*.ts",
-      "examples/**/*.ts",
-      "sandbox-honox/**/*.ts",
-      "!**/*.test.ts"
+      "**/*",
+      "!dist",
+      "!coverage"
     ]
   },
   "formatter": {
@@ -20,6 +19,10 @@
   },
   "linter": {
     "enabled": true,
+    "includes": [
+      "**/*",
+      "!**/*.test.ts"
+    ],
     "rules": {
       "recommended": true,
       "suspicious": {
@@ -34,6 +37,10 @@
   },
   "assist": {
     "enabled": true,
-    "actions": { "source": { "organizeImports": "on" } }
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
   }
 }
