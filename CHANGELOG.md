@@ -1,5 +1,12 @@
 # hono-pino
 
+## [0.10.0](https://github.com/maou-shonen/hono-pino/compare/v0.9.1...v0.10.0) (2025-07-19)
+
+
+### Features
+
+* Add nodeRuntime option to enhance non-Node.js compatibility ([#105](https://github.com/maou-shonen/hono-pino/issues/105)) ([1cce661](https://github.com/maou-shonen/hono-pino/commit/1cce6616ca1c48ce3f6e918abbaaff2d99e756ba))
+
 ## [0.9.1](https://github.com/maou-shonen/hono-pino/compare/v0.9.0...v0.9.1) (2025-06-30)
 
 
