@@ -104,6 +104,39 @@ describe("middleware", () => {
   };
 
   describe("http logger", async () => {
+    it("should not duplicate `req` key in raw log output", async () => {
+      // Capture raw log lines
+      let raw: string[] = [];
+      const pinoRaw = pino(
+        { level: "info", base: null, timestamp: false },
+        {
+          write: (data) => raw.push(data),
+        },
+      );
+
+      const app = new Hono()
+        .use(
+          pinoLogger({
+            pino: pinoRaw,
+            http: {
+              // ensure we log a response message to emit one line
+              onResMessage: () => "Request completed",
+            },
+          }),
+        )
+        .get("/", async (c) => c.text("ok"));
+
+      const res = await app.request("/");
+      expect(res.status).toBe(200);
+      expect(await res.text()).toBe("ok");
+
+      // Exactly one log emitted
+      expect(raw.length).toBe(1);
+      const line = raw[0];
+      // Count occurrences of "req": in the raw string (not JSON-parsed)
+      const countReq = (line.match(/\"req\":/g) || []).length;
+      expect(countReq).toBe(1);
+    });
     it("full disable", async () => {
       const { logs } = await mockRequest(false);
 
