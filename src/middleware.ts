@@ -41,15 +41,18 @@ export const pinoLogger = <ContextKey extends string = "logger">(
       return;
     }
 
-    let bindings = opts?.http?.onReqBindings?.(c) ?? {
-      req: {
-        url: c.req.path,
-        method: c.req.method,
-        headers: c.req.header(),
+    logger.assign(
+      opts?.http?.onReqBindings?.(c) ?? {
+        req: {
+          url: c.req.path,
+          method: c.req.method,
+          headers: c.req.header(),
+        },
       },
-    };
+    );
 
-    logger.assign(bindings);
+    // Create new set of bindings so `req` is not duplicated in logs
+    let bindings = opts?.http?.onReqBindings?.(c) ?? {};
 
     // requestId
     const referRequestIdKey = (opts?.http?.referRequestIdKey ??
