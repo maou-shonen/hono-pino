@@ -1,7 +1,7 @@
 import { defu } from "defu";
 import type { Context, MiddlewareHandler } from "hono";
 import { env, getRuntimeKey } from "hono/adapter";
-import { pino } from "pino";
+import pino from "pino";
 import { httpCfgSym, PinoLogger } from "./logger";
 import type { Env, Options } from "./types";
 import type { LiteralString } from "./utils";

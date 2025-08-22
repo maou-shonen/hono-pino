@@ -1,6 +1,6 @@
 import type { Context, Env as HonoEnv } from "hono";
 import type { IsAny } from "hono/utils/types";
-import type { pino } from "pino";
+import type pino from "pino";
 import type { PinoLogger } from "./logger";
 
 /**

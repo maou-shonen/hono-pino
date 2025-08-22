@@ -1,5 +1,5 @@
 import { getColorEnabled } from "hono/utils/color";
-import { pino } from "pino";
+import pino from "pino";
 import {
   defaultBindingsFormat,
   defaultLevelFormatter,
