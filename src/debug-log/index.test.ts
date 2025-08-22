@@ -1,5 +1,5 @@
 import { Transform } from "node:stream";
-import { pino } from "pino";
+import pino from "pino";
 import { describe, expect, it, vi } from "vitest";
 import debugLogTransport from "./";
 

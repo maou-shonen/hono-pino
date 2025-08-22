@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { pino } from "pino";
+import pino from "pino";
 import { describe, expect, it, vi } from "vitest";
 import { PinoLogger } from "./logger";
 import { logger } from "./middleware";

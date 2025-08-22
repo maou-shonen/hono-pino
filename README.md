@@ -155,7 +155,7 @@ See all options in [src/debug-log/types.d.ts](./src/debug-log/types.d.ts)
 ### Basic Usage (Node.js)
 
 ```ts
-import { pino } from "pino";
+import pino from "pino";
 import { Hono } from "hono";
 import { pinoLogger } from "hono-pino";
 import type { DebugLogOptions } from "hono-pino/debug-log";
@@ -184,7 +184,7 @@ const app = new Hono().use(
 ### Basic Usage (Browser)
 
 ```ts
-import { pino } from "pino";
+import pino from "pino";
 import { Hono } from "hono";
 import { pinoLogger } from "hono-pino";
 import { createHandler as debugLog } from "hono-pino/debug-log";
