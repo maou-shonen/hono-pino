@@ -1,7 +1,7 @@
 import defu from "defu";
 import { Hono } from "hono";
 import { requestId } from "hono/request-id";
-import { pino } from "pino";
+import pino from "pino";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { PinoLogger } from "./logger";
 import { createStaticRootLogger, pinoLogger } from "./middleware";

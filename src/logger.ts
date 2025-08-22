@@ -1,5 +1,5 @@
 import { defu } from "defu";
-import type { pino } from "pino";
+import type pino from "pino";
 
 /**
  * hono-pino logger instance

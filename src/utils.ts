@@ -1,5 +1,5 @@
 import type { Context } from "hono";
-import type { pino } from "pino";
+import type pino from "pino";
 import type { PinoLogger } from "./logger";
 
 /**
