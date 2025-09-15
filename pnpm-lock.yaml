@@ -23,7 +23,7 @@ importers:
         version: 3.2.4(vitest@3.2.4(@edge-runtime/vm@4.0.4)(@types/node@20.19.9)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.4.5))
       hono:
         specifier: ^4.8.5
-        version: 4.8.5
+        version: 4.9.6
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -69,20 +69,20 @@ importers:
     dependencies:
       hono:
         specifier: ^4.0.0
-        version: 4.8.5
+        version: 4.9.6
       honox:
         specifier: ^0.1.43
-        version: 0.1.43(hono@4.8.5)(miniflare@4.20250712.0)(wrangler@4.25.0(@cloudflare/workers-types@4.20250719.0))
+        version: 0.1.43(hono@4.9.6)(miniflare@4.20250712.0)(wrangler@4.25.0(@cloudflare/workers-types@4.20250719.0))
     devDependencies:
       '@cloudflare/workers-types':
         specifier: ^4.20250214.0
         version: 4.20250719.0
       '@hono/vite-build':
         specifier: ^1.3.0
-        version: 1.6.2(hono@4.8.5)
+        version: 1.6.2(hono@4.9.6)
       '@hono/vite-dev-server':
         specifier: ^0.18.2
-        version: 0.18.3(hono@4.8.5)(miniflare@4.20250712.0)(wrangler@4.25.0(@cloudflare/workers-types@4.20250719.0))
+        version: 0.18.3(hono@4.9.6)(miniflare@4.20250712.0)(wrangler@4.25.0(@cloudflare/workers-types@4.20250719.0))
       '@tailwindcss/vite':
         specifier: ^4.0.9
         version: 4.1.11(vite@6.3.5(@types/node@20.19.9)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.4.5))
@@ -1639,6 +1639,10 @@ packages:
     resolution: {integrity: sha512-Up2cQbtNz1s111qpnnECdTGqSIUIhZJMLikdKkshebQSEBcoUKq6XJayLGqSZWidiH0zfHRCJqFu062Mz5UuRA==}
     engines: {node: '>=16.9.0'}
 
+  hono@4.9.6:
+    resolution: {integrity: sha512-doVjXhSFvYZ7y0dNokjwwSahcrAfdz+/BCLvAMa/vHLzjj8+CFyV5xteThGUsKdkaasgN+gF2mUxao+SGLpUeA==}
+    engines: {node: '>=16.9.0'}
+
   honox@0.1.43:
     resolution: {integrity: sha512-PNlDHOPMrStgVwD4SOO/ihcA2iK3UaNluIWahxJkjY0dgvOc1hm8BBM06XpMNF2zVkOrtYk1xS3cCxCJZQIwpw==}
     engines: {node: '>=18.14.1'}
@@ -2864,27 +2868,27 @@ snapshots:
   '@esbuild/win32-x64@0.25.7':
     optional: true
 
-  '@hono/node-server@1.17.0(hono@4.8.5)':
+  '@hono/node-server@1.17.0(hono@4.9.6)':
     dependencies:
-      hono: 4.8.5
+      hono: 4.9.6
 
-  '@hono/vite-build@1.6.2(hono@4.8.5)':
+  '@hono/vite-build@1.6.2(hono@4.9.6)':
     dependencies:
-      hono: 4.8.5
+      hono: 4.9.6
 
-  '@hono/vite-dev-server@0.18.3(hono@4.8.5)(miniflare@4.20250712.0)(wrangler@4.25.0(@cloudflare/workers-types@4.20250719.0))':
+  '@hono/vite-dev-server@0.18.3(hono@4.9.6)(miniflare@4.20250712.0)(wrangler@4.25.0(@cloudflare/workers-types@4.20250719.0))':
     dependencies:
-      '@hono/node-server': 1.17.0(hono@4.8.5)
-      hono: 4.8.5
+      '@hono/node-server': 1.17.0(hono@4.9.6)
+      hono: 4.9.6
       minimatch: 9.0.5
     optionalDependencies:
       miniflare: 4.20250712.0
       wrangler: 4.25.0(@cloudflare/workers-types@4.20250719.0)
 
-  '@hono/vite-dev-server@0.19.1(hono@4.8.5)(miniflare@4.20250712.0)(wrangler@4.25.0(@cloudflare/workers-types@4.20250719.0))':
+  '@hono/vite-dev-server@0.19.1(hono@4.9.6)(miniflare@4.20250712.0)(wrangler@4.25.0(@cloudflare/workers-types@4.20250719.0))':
     dependencies:
-      '@hono/node-server': 1.17.0(hono@4.8.5)
-      hono: 4.8.5
+      '@hono/node-server': 1.17.0(hono@4.9.6)
+      hono: 4.9.6
       minimatch: 9.0.5
     optionalDependencies:
       miniflare: 4.20250712.0
@@ -3742,14 +3746,16 @@ snapshots:
 
   hono@4.8.5: {}
 
-  honox@0.1.43(hono@4.8.5)(miniflare@4.20250712.0)(wrangler@4.25.0(@cloudflare/workers-types@4.20250719.0)):
+  hono@4.9.6: {}
+
+  honox@0.1.43(hono@4.9.6)(miniflare@4.20250712.0)(wrangler@4.25.0(@cloudflare/workers-types@4.20250719.0)):
     dependencies:
       '@babel/generator': 7.25.6
       '@babel/parser': 7.25.6
       '@babel/traverse': 7.25.6
       '@babel/types': 7.25.6
-      '@hono/vite-dev-server': 0.19.1(hono@4.8.5)(miniflare@4.20250712.0)(wrangler@4.25.0(@cloudflare/workers-types@4.20250719.0))
-      hono: 4.8.5
+      '@hono/vite-dev-server': 0.19.1(hono@4.9.6)(miniflare@4.20250712.0)(wrangler@4.25.0(@cloudflare/workers-types@4.20250719.0))
+      hono: 4.9.6
       jsonc-parser: 3.3.1
       precinct: 12.1.2
     optionalDependencies:
