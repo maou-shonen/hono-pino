@@ -41,18 +41,22 @@ export const pinoLogger = <ContextKey extends string = "logger">(
       return;
     }
 
-    logger.assign(
-      opts?.http?.onReqBindings?.(c) ?? {
-        req: {
-          url: c.req.path,
-          method: c.req.method,
-          headers: c.req.header(),
-        },
+    // Get request bindings (call onReqBindings only once)
+    const reqBindings = opts?.http?.onReqBindings?.(c) ?? {
+      req: {
+        url: c.req.path,
+        method: c.req.method,
+        headers: c.req.header(),
       },
-    );
+    };
 
-    // Create new set of bindings so `req` is not duplicated in logs
-    let bindings = opts?.http?.onReqBindings?.(c) ?? {};
+    // Assign all reqBindings to logger (including req and custom fields)
+    // These fields will automatically appear in all subsequent logs
+    logger.assign(reqBindings);
+
+    // Initialize bindings for dynamic fields (reqId, responseTime, etc.)
+    // No need to include reqBindings fields, as they are already in the logger
+    let bindings: Record<string, unknown> = {};
 
     // requestId
     const referRequestIdKey = (opts?.http?.referRequestIdKey ??

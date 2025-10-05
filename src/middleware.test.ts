@@ -137,6 +137,52 @@ describe("middleware", () => {
       const countReq = (line.match(/\"req\":/g) || []).length;
       expect(countReq).toBe(1);
     });
+
+    it("should not duplicate custom fields from onReqBindings in raw log output", async () => {
+      // Capture raw log lines
+      let raw: string[] = [];
+      const pinoRaw = pino(
+        { level: "info", base: null, timestamp: false },
+        {
+          write: (data) => raw.push(data),
+        },
+      );
+
+      const app = new Hono()
+        .use(
+          pinoLogger({
+            pino: pinoRaw,
+            http: {
+              onReqBindings: (_) => ({
+                req: { url: "/", method: "GET" },
+                customField: "test-value",
+              }),
+              onResMessage: () => "Request completed",
+            },
+          }),
+        )
+        .get("/", async (c) => c.text("ok"));
+
+      const res = await app.request("/");
+      expect(res.status).toBe(200);
+      expect(await res.text()).toBe("ok");
+
+      // Exactly one log emitted
+      expect(raw.length).toBe(1);
+      const line = raw[0];
+
+      // Count occurrences of each field in the raw string
+      const countReq = (line.match(/\"req\":/g) || []).length;
+      const countCustomField = (line.match(/\"customField\":/g) || []).length;
+
+      // Each field should appear exactly once
+      expect(countReq).toBe(1);
+      expect(countCustomField).toBe(1);
+
+      // Verify the custom field value is present
+      const parsed = JSON.parse(line);
+      expect(parsed.customField).toBe("test-value");
+    });
     it("full disable", async () => {
       const { logs } = await mockRequest(false);
 
