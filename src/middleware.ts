@@ -41,18 +41,22 @@ export const pinoLogger = <ContextKey extends string = "logger">(
       return;
     }
 
-    logger.assign(
-      opts?.http?.onReqBindings?.(c) ?? {
-        req: {
-          url: c.req.path,
-          method: c.req.method,
-          headers: c.req.header(),
-        },
+    // Get request bindings (call onReqBindings only once)
+    const reqBindings = opts?.http?.onReqBindings?.(c) ?? {
+      req: {
+        url: c.req.path,
+        method: c.req.method,
+        headers: c.req.header(),
       },
-    );
+    };
 
-    // Create new set of bindings so `req` is not duplicated in logs
-    let bindings = opts?.http?.onReqBindings?.(c) ?? {};
+    // Assign all reqBindings to logger (包括 req 和自訂欄位)
+    // 這些欄位會自動出現在所有後續的日誌中
+    logger.assign(reqBindings);
+
+    // Initialize bindings for dynamic fields (reqId, responseTime, etc.)
+    // 不需要包含 reqBindings 的欄位，因為它們已經在 logger 中了
+    let bindings: Record<string, unknown> = {};
 
     // requestId
     const referRequestIdKey = (opts?.http?.referRequestIdKey ??
