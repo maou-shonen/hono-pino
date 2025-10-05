@@ -50,12 +50,12 @@ export const pinoLogger = <ContextKey extends string = "logger">(
       },
     };
 
-    // Assign all reqBindings to logger (包括 req 和自訂欄位)
-    // 這些欄位會自動出現在所有後續的日誌中
+    // Assign all reqBindings to logger (including req and custom fields)
+    // These fields will automatically appear in all subsequent logs
     logger.assign(reqBindings);
 
     // Initialize bindings for dynamic fields (reqId, responseTime, etc.)
-    // 不需要包含 reqBindings 的欄位，因為它們已經在 logger 中了
+    // No need to include reqBindings fields, as they are already in the logger
     let bindings: Record<string, unknown> = {};
 
     // requestId
