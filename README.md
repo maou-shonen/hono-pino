@@ -1,5 +1,8 @@
 # Hono + Pino
 
+> [!WARNING]
+> This project is now in security-only maintenance mode. We strongly recommend using [LogLayer](https://github.com/theogravity/loglayer) (which includes Hono integration).
+
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![JSR][jsr-version-src]][jsr-version-href]
