@@ -47,8 +47,14 @@
     "url": "https://github.com/maou-shonen/hono-pino/issues"
   },
   "packageManager": "pnpm@10.12.4",
+  "pnpm": {
+    "overrides": {
+      "picomatch": "^4.0.4",
+      "yaml": "^2.8.3"
+    }
+  },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "scripts": {
     "prepare": "husky",
@@ -68,19 +74,19 @@
     "pino": ">=7.1.0"
   },
   "dependencies": {
-    "defu": "^6.1.4"
+    "defu": "^6.1.6"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.1.2",
     "@types/node": "^20.19.9",
-    "@vitest/coverage-v8": "^3.2.4",
-    "hono": "^4.8.5",
+    "@vitest/coverage-v8": "^4.1.2",
+    "hono": "^4.12.10",
     "husky": "^9.1.7",
     "jsr": "^0.13.5",
     "pino": "^10.3.1",
     "pino-abstract-transport": "^2.0.0",
-    "tsup": "^8.5.0",
+    "tsup": "^8.5.1",
     "typescript": "^5.8.3",
-    "vitest": "^3.2.4"
+    "vitest": "^4.1.2"
   }
 }
