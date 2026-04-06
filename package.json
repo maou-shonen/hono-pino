@@ -82,7 +82,7 @@
     "@vitest/coverage-v8": "^4.1.2",
     "hono": "^4.12.10",
     "husky": "^9.1.7",
-    "jsr": "^0.13.5",
+    "jsr": "^0.14.0",
     "pino": "^10.3.1",
     "pino-abstract-transport": "^2.0.0",
     "tsup": "^8.5.1",
