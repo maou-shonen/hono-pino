@@ -21,10 +21,10 @@ importers:
         version: 2.1.2
       '@types/node':
         specifier: ^20.19.9
-        version: 20.19.37
+        version: 20.19.39
       '@vitest/coverage-v8':
         specifier: ^4.1.2
-        version: 4.1.2(vitest@4.1.2(@edge-runtime/vm@4.0.4)(@types/node@20.19.37)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.37)(esbuild@0.27.7)(jiti@2.6.1)))
+        version: 4.1.2(vitest@4.1.2(@edge-runtime/vm@4.0.4)(@types/node@20.19.39)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.39)(esbuild@0.27.7)(jiti@2.6.1)))
       hono:
         specifier: ^4.12.10
         version: 4.12.12
@@ -48,7 +48,7 @@ importers:
         version: 5.8.3
       vitest:
         specifier: ^4.1.2
-        version: 4.1.2(@edge-runtime/vm@4.0.4)(@types/node@20.19.37)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.37)(esbuild@0.27.7)(jiti@2.6.1))
+        version: 4.1.2(@edge-runtime/vm@4.0.4)(@types/node@20.19.39)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.39)(esbuild@0.27.7)(jiti@2.6.1))
 
   examples/cloudflare-workers_vite:
     dependencies:
@@ -58,10 +58,10 @@ importers:
     devDependencies:
       '@cloudflare/vite-plugin':
         specifier: ^1.31.0
-        version: 1.31.0(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0))(workerd@1.20260401.1)(wrangler@4.80.0(@cloudflare/workers-types@4.20260404.1))
+        version: 1.31.0(vite@7.3.1(@types/node@20.19.39)(jiti@2.6.1)(lightningcss@1.32.0))(workerd@1.20260401.1)(wrangler@4.80.0(@cloudflare/workers-types@4.20260404.1))
       vite:
         specifier: ^7.3.1
-        version: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)
+        version: 7.3.1(@types/node@20.19.39)(jiti@2.6.1)(lightningcss@1.32.0)
       vite-ssr-components:
         specifier: ^0.5.0
         version: 0.5.0
@@ -89,16 +89,16 @@ importers:
         version: 0.25.1(hono@4.12.12)(miniflare@4.20260401.0)(wrangler@4.80.0(@cloudflare/workers-types@4.20260404.1))
       '@tailwindcss/vite':
         specifier: ^4.2.2
-        version: 4.2.2(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.37)(esbuild@0.27.7)(jiti@2.6.1))
+        version: 4.2.2(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.39)(esbuild@0.27.7)(jiti@2.6.1))
       tailwindcss:
         specifier: ^4.2.2
         version: 4.2.2
       vite:
         specifier: ^8.0.3
-        version: 8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.37)(esbuild@0.27.7)(jiti@2.6.1)
+        version: 8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.39)(esbuild@0.27.7)(jiti@2.6.1)
       vitest:
         specifier: ^4.1.2
-        version: 4.1.2(@edge-runtime/vm@4.0.4)(@types/node@20.19.37)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.37)(esbuild@0.27.7)(jiti@2.6.1))
+        version: 4.1.2(@edge-runtime/vm@4.0.4)(@types/node@20.19.39)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.39)(esbuild@0.27.7)(jiti@2.6.1))
       wrangler:
         specifier: ^4.80.0
         version: 4.80.0(@cloudflare/workers-types@4.20260404.1)
@@ -1166,8 +1166,8 @@ packages:
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
 
-  '@types/node@20.19.37':
-    resolution: {integrity: sha512-8kzdPJ3FsNsVIurqBs7oodNnCEVbni9yUEkaHbgptDACOPW04jimGagZ51E6+lXUwJjgnBw+hyko/lkFWCldqw==}
+  '@types/node@20.19.39':
+    resolution: {integrity: sha512-orrrD74MBUyK8jOAD/r0+lfa1I2MO6I+vAkmAWzMYbCcgrN4lCrmK52gRFQq/JRxfYPfonkr4b0jcY7Olqdqbw==}
 
   '@typescript-eslint/project-service@8.58.0':
     resolution: {integrity: sha512-8Q/wBPWLQP1j16NxoPNIKpDZFMaxl7yWIoqXWYeWO+Bbd2mjgvoF0dxP2jKZg5+x49rgKdf7Ck473M8PC3V9lg==}
@@ -2268,12 +2268,12 @@ snapshots:
     optionalDependencies:
       workerd: 1.20260401.1
 
-  '@cloudflare/vite-plugin@1.31.0(vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0))(workerd@1.20260401.1)(wrangler@4.80.0(@cloudflare/workers-types@4.20260404.1))':
+  '@cloudflare/vite-plugin@1.31.0(vite@7.3.1(@types/node@20.19.39)(jiti@2.6.1)(lightningcss@1.32.0))(workerd@1.20260401.1)(wrangler@4.80.0(@cloudflare/workers-types@4.20260404.1))':
     dependencies:
       '@cloudflare/unenv-preset': 2.16.0(unenv@2.0.0-rc.24)(workerd@1.20260401.1)
       miniflare: 4.20260401.0
       unenv: 2.0.0-rc.24
-      vite: 7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0)
+      vite: 7.3.1(@types/node@20.19.39)(jiti@2.6.1)(lightningcss@1.32.0)
       wrangler: 4.80.0(@cloudflare/workers-types@4.20260404.1)
       ws: 8.18.0
     transitivePeerDependencies:
@@ -2853,12 +2853,12 @@ snapshots:
       '@tailwindcss/oxide-win32-arm64-msvc': 4.2.2
       '@tailwindcss/oxide-win32-x64-msvc': 4.2.2
 
-  '@tailwindcss/vite@4.2.2(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.37)(esbuild@0.27.7)(jiti@2.6.1))':
+  '@tailwindcss/vite@4.2.2(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.39)(esbuild@0.27.7)(jiti@2.6.1))':
     dependencies:
       '@tailwindcss/node': 4.2.2
       '@tailwindcss/oxide': 4.2.2
       tailwindcss: 4.2.2
-      vite: 8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.37)(esbuild@0.27.7)(jiti@2.6.1)
+      vite: 8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.39)(esbuild@0.27.7)(jiti@2.6.1)
 
   '@tybys/wasm-util@0.10.1':
     dependencies:
@@ -2874,7 +2874,7 @@ snapshots:
 
   '@types/estree@1.0.8': {}
 
-  '@types/node@20.19.37':
+  '@types/node@20.19.39':
     dependencies:
       undici-types: 6.21.0
 
@@ -2913,7 +2913,7 @@ snapshots:
       '@typescript-eslint/types': 8.58.0
       eslint-visitor-keys: 5.0.1
 
-  '@vitest/coverage-v8@4.1.2(vitest@4.1.2(@edge-runtime/vm@4.0.4)(@types/node@20.19.37)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.37)(esbuild@0.27.7)(jiti@2.6.1)))':
+  '@vitest/coverage-v8@4.1.2(vitest@4.1.2(@edge-runtime/vm@4.0.4)(@types/node@20.19.39)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.39)(esbuild@0.27.7)(jiti@2.6.1)))':
     dependencies:
       '@bcoe/v8-coverage': 1.0.2
       '@vitest/utils': 4.1.2
@@ -2925,7 +2925,7 @@ snapshots:
       obug: 2.1.1
       std-env: 4.0.0
       tinyrainbow: 3.1.0
-      vitest: 4.1.2(@edge-runtime/vm@4.0.4)(@types/node@20.19.37)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.37)(esbuild@0.27.7)(jiti@2.6.1))
+      vitest: 4.1.2(@edge-runtime/vm@4.0.4)(@types/node@20.19.39)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.39)(esbuild@0.27.7)(jiti@2.6.1))
 
   '@vitest/expect@4.1.2':
     dependencies:
@@ -2936,13 +2936,13 @@ snapshots:
       chai: 6.2.2
       tinyrainbow: 3.1.0
 
-  '@vitest/mocker@4.1.2(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.37)(esbuild@0.27.7)(jiti@2.6.1))':
+  '@vitest/mocker@4.1.2(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.39)(esbuild@0.27.7)(jiti@2.6.1))':
     dependencies:
       '@vitest/spy': 4.1.2
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.37)(esbuild@0.27.7)(jiti@2.6.1)
+      vite: 8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.39)(esbuild@0.27.7)(jiti@2.6.1)
 
   '@vitest/pretty-format@4.1.2':
     dependencies:
@@ -3743,7 +3743,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vite@7.3.1(@types/node@20.19.37)(jiti@2.6.1)(lightningcss@1.32.0):
+  vite@7.3.1(@types/node@20.19.39)(jiti@2.6.1)(lightningcss@1.32.0):
     dependencies:
       esbuild: 0.27.7
       fdir: 6.5.0(picomatch@4.0.4)
@@ -3752,12 +3752,12 @@ snapshots:
       rollup: 4.60.1
       tinyglobby: 0.2.15
     optionalDependencies:
-      '@types/node': 20.19.37
+      '@types/node': 20.19.39
       fsevents: 2.3.3
       jiti: 2.6.1
       lightningcss: 1.32.0
 
-  vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.37)(esbuild@0.27.7)(jiti@2.6.1):
+  vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.39)(esbuild@0.27.7)(jiti@2.6.1):
     dependencies:
       lightningcss: 1.32.0
       picomatch: 4.0.4
@@ -3765,7 +3765,7 @@ snapshots:
       rolldown: 1.0.0-rc.12(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)
       tinyglobby: 0.2.15
     optionalDependencies:
-      '@types/node': 20.19.37
+      '@types/node': 20.19.39
       esbuild: 0.27.7
       fsevents: 2.3.3
       jiti: 2.6.1
@@ -3773,10 +3773,10 @@ snapshots:
       - '@emnapi/core'
       - '@emnapi/runtime'
 
-  vitest@4.1.2(@edge-runtime/vm@4.0.4)(@types/node@20.19.37)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.37)(esbuild@0.27.7)(jiti@2.6.1)):
+  vitest@4.1.2(@edge-runtime/vm@4.0.4)(@types/node@20.19.39)(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.39)(esbuild@0.27.7)(jiti@2.6.1)):
     dependencies:
       '@vitest/expect': 4.1.2
-      '@vitest/mocker': 4.1.2(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.37)(esbuild@0.27.7)(jiti@2.6.1))
+      '@vitest/mocker': 4.1.2(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.39)(esbuild@0.27.7)(jiti@2.6.1))
       '@vitest/pretty-format': 4.1.2
       '@vitest/runner': 4.1.2
       '@vitest/snapshot': 4.1.2
@@ -3793,11 +3793,11 @@ snapshots:
       tinyexec: 1.0.4
       tinyglobby: 0.2.15
       tinyrainbow: 3.1.0
-      vite: 8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.37)(esbuild@0.27.7)(jiti@2.6.1)
+      vite: 8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@20.19.39)(esbuild@0.27.7)(jiti@2.6.1)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@edge-runtime/vm': 4.0.4
-      '@types/node': 20.19.37
+      '@types/node': 20.19.39
     transitivePeerDependencies:
       - msw
 
