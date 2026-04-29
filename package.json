@@ -46,7 +46,7 @@
   "bugs": {
     "url": "https://github.com/maou-shonen/hono-pino/issues"
   },
-  "packageManager": "pnpm@10.12.4",
+  "packageManager": "pnpm@10.33.2",
   "pnpm": {
     "overrides": {
       "picomatch": "^4.0.4",
