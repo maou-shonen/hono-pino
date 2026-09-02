@@ -20,7 +20,7 @@ jobs:
           run_install: false
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
-          node-version: 20
+          node-version: 24
           cache: pnpm
       - run: pnpm install
 
