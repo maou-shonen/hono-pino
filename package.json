@@ -86,7 +86,7 @@
     "pino": "^10.3.1",
     "pino-abstract-transport": "^2.0.0",
     "tsup": "^8.5.1",
-    "typescript": "^5.8.3",
+    "typescript": "^7.0.0",
     "vitest": "^4.1.2"
   }
 }
