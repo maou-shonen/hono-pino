@@ -15,16 +15,16 @@
     "hono": "^4.0.0"
   },
   "dependencies": {
-    "honox": "^0.1.55"
+    "honox": "^0.1.61"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20260404.1",
-    "@hono/vite-build": "^1.11.0",
-    "@hono/vite-dev-server": "^0.25.1",
-    "@tailwindcss/vite": "^4.2.2",
-    "tailwindcss": "^4.2.2",
-    "vite": "^8.0.3",
-    "vitest": "^4.1.2",
-    "wrangler": "^4.80.0"
+    "@cloudflare/workers-types": "^5.20261003.1",
+    "@hono/vite-build": "^1.11.1",
+    "@hono/vite-dev-server": "^0.26.1",
+    "@tailwindcss/vite": "^4.3.3",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.3.2",
+    "vitest": "^4.1.11",
+    "wrangler": "^4.147.0"
   }
 }
