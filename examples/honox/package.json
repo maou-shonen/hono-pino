@@ -9,7 +9,7 @@
   },
   "private": true,
   "engines": {
-    "node": ">=20.19.0"
+    "node": "^20.19.0 || >=22.12.0"
   },
   "peerDependencies": {
     "hono": "^4.0.0"
